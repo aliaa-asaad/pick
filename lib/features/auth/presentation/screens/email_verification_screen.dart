@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/core/validator.dart';
-import 'package:pick_up/features/auth/register/data/view_model/bloc/register_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
 import 'package:pick_up/features/on_boarding/view/widgets/code_verification_field.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
@@ -23,7 +24,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<RegisterBloc>(context);
+    var bloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
@@ -46,11 +47,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
             padding: EdgeInsets.all(24.0.r),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: BlocBuilder<RegisterBloc, RegisterState>(
+              child: BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
-                  if (state is RegisterError) {
-                    return const Center(child: Text('Error'));
-                  }
                   return Column(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,35 +67,40 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                       SizedBox(
                         height: MediaQueryHelper.height * .04,
                       ),
-                      Row(
-                        children:[CodeVerificationField(
-                            controller: bloc.codeController1,
-                            validator: isValidCode,
-                          ),
-                          CodeVerificationField(
-                            controller: bloc.codeController2,
-                            validator: isValidCode,
-                          ),CodeVerificationField(
-                            controller: bloc.codeController3,
-                            validator: isValidCode,
-                          ),CodeVerificationField(
-                            controller: bloc.codeController4,
-                            validator: isValidCode,
-                          ),CodeVerificationField(
-                            controller: bloc.codeController5,
-                            validator: isValidCode,
-                          ),CodeVerificationField(
-                            controller: bloc.codeController6,
-                            validator: isValidCode,
-                          ),]
-                      ),
+                      ///// make it list.generate
+                      Row(children: [
+                        CodeVerificationField(
+                          controller: bloc.codeController1,
+                          validator: isValidCode,
+                        ),
+                        CodeVerificationField(
+                          controller: bloc.codeController2,
+                          validator: isValidCode,
+                        ),
+                        CodeVerificationField(
+                          controller: bloc.codeController3,
+                          validator: isValidCode,
+                        ),
+                        CodeVerificationField(
+                          controller: bloc.codeController4,
+                          validator: isValidCode,
+                        ),
+                        CodeVerificationField(
+                          controller: bloc.codeController5,
+                          validator: isValidCode,
+                        ),
+                        CodeVerificationField(
+                          controller: bloc.codeController6,
+                          validator: isValidCode,
+                        ),
+                      ]),
                       SizedBox(
                         height: MediaQueryHelper.height * .02,
                       ),
 
                       // if (state is loginLoaded) {
                       CustomButton(
-                        width: state is RegisterLoading
+                        width: state is AuthLoading
                             ? MediaQueryHelper.width * .13
                             : MediaQueryHelper.width,
                         onPressed: () {
@@ -105,6 +108,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                             log('valid');
                             log('log ${bloc.codeController1}');
                             log('log ${bloc.codeController1.text}');
+                            log('log ${bloc.emailController}');
                             log([
                               bloc.codeController1.text,
                               bloc.codeController2.text,
@@ -118,6 +122,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Sending code')),
                             );
+                            bloc.add(CodeVerificationClick());
                           } else {
                             log('not valid');
                           }
@@ -130,10 +135,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                             bloc.codeController6.text,
                           ].join());
                           //log('type= ${bloc.type}');
-
-                          // bloc.add(CodeVerificationClick());
                         },
-                        child: state is RegisterLoading
+                        child: state is AuthLoading
                             ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )
@@ -145,6 +148,15 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                               ),
                         /*  textColor: textColor */
                       ),
+                      SizedBox(
+                        height: MediaQueryHelper.height * .02,
+                      ),
+                      state is AuthError
+                          ? Text(
+                              'هناك خطا في البيانات',
+                              style: TextStyleHelper.subtitle20,
+                            )
+                          : const SizedBox()
                     ],
                   );
                 },

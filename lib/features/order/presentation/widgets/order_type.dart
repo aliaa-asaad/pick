@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 
 class OrderType extends StatefulWidget {
@@ -9,59 +12,56 @@ class OrderType extends StatefulWidget {
 }
 
 class _OrderTypeState extends State<OrderType> {
-  int currentIndex = -1;
-  List<String> content = [
-    'أثاث منزلي',
-    'اجهزة كهربائية',
-    'مواشي وحيوانات',
-    'مواد بناء وديكور',
-  ];
   @override
   Widget build(BuildContext context) {
+    var bloc = BlocProvider.of<OrderBloc>(context);
     return SizedBox(
       height: MediaQueryHelper.height * .18,
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(vertical: 8,),
+        padding: EdgeInsets.symmetric(
+          vertical: 8.r,
+        ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio:2.5,
+          childAspectRatio: 2.5,
           crossAxisSpacing: MediaQueryHelper.width * .05,
           mainAxisSpacing:
               MediaQueryHelper.height * .01, /*  mainAxisExtent: 500 */
         ),
-        itemCount: content.length,
+        itemCount: bloc.orderTypeData.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
             setState(() {
-              currentIndex = index;
+              bloc.orderTypeIndex = index;
             });
           },
           child: Container(
             height: MediaQueryHelper.height * .1,
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: currentIndex == index ? Colors.green : Colors.grey,
-                width: 1.5
-              ),
+                  color: bloc.orderTypeIndex == index
+                      ? Colors.green
+                      : Colors.grey.shade200,
+                  width: 1.5),
               color: Colors.white,
             ),
             child: Row(
               children: [
-                Text(content[index]),
-                Spacer(),
+                Text(bloc.orderTypeData[index]),
+                const Spacer(),
                 Icon(
                   Icons.check_circle,
-                  color: currentIndex == index ? Colors.green : Colors.grey,
+                  color:
+                      bloc.orderTypeIndex == index ? Colors.green : Colors.grey,
                 )
               ],
             ),
           ),
         ),
       ),
-    ) 
-        ;
+    );
   }
 }

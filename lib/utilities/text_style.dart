@@ -9,6 +9,10 @@ abstract class TextStyleHelper {
         fontSize: 20,
         fontWeight: FontWeight.bold,
       );
+      static TextStyle get subtitle18 => const TextStyle(
+        fontSize: 18,
+        /* fontWeight: FontWeight.bold, */
+      );
   static TextStyle get body16 => const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.normal,

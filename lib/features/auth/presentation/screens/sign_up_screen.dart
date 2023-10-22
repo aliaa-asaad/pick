@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/app_widgets/custom_form_field.dart';
 import 'package:pick_up/core/validator.dart';
-import 'package:pick_up/features/auth/register/data/view_model/bloc/register_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
@@ -24,7 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> with Validations {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<RegisterBloc>(context);
+    var bloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -47,13 +48,9 @@ class _SignUpScreenState extends State<SignUpScreen> with Validations {
             padding: EdgeInsets.all(24.0.r),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: BlocBuilder<RegisterBloc, RegisterState>(
+              child: BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
-                  if (state is RegisterError) {
-                    return const Center(child: Text('Error'));
-                  } /* else if (state is RegisterLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } */
+                 
 
                   return Column(
                     children: [
@@ -125,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> with Validations {
                         height: MediaQueryHelper.height * .02,
                       ),
                       CustomButton(
-                        width: state is RegisterLoading
+                        width: state is AuthLoading
                             ? MediaQueryHelper.width * .13
                             : MediaQueryHelper.width,
                         onPressed: () {
@@ -134,15 +131,16 @@ class _SignUpScreenState extends State<SignUpScreen> with Validations {
                             //log(name);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Processing Data')),
-                            );
+                            ); 
+                            bloc.add(RegisterClick());
                           } else {
                             log('not valid');
                           }
                           log('type= ${bloc.type}');
 
-                          bloc.add(RegisterClick());
+                         
                         },
-                        child: state is RegisterLoading
+                        child: state is AuthLoading
                             ? CircularProgressIndicator(
                                 color: Colors.white,
                               )
@@ -154,6 +152,15 @@ class _SignUpScreenState extends State<SignUpScreen> with Validations {
                               ),
                         /*  textColor: textColor */
                       ),
+                       SizedBox(
+                      height: MediaQueryHelper.height * .02,
+                    ),
+                    state is AuthError
+                        ? Text(
+                            'هناك خطا في البيانات',
+                            style: TextStyleHelper.subtitle20,
+                          )
+                        : const SizedBox()
                       ],
                   );
                 },

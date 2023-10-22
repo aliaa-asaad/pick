@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
-import 'package:pick_up/features/auth/register/data/view_model/bloc/register_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/on_boarding/view/widgets/check_card.dart';
+import 'package:pick_up/handlers/localization.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
@@ -22,21 +23,22 @@ class CheckScreen extends StatefulWidget {
 
 class _CheckScreenState extends State<CheckScreen> {
   int _selectedIndex = -1;
-  List<Map<String, dynamic>> content = [
-    {
-      'title': 'عميل',
-      'image': AppImages.unSelectedClient,
-      'selectedImage': AppImages.selectedClient
-    },
-    {
-      'title': 'مندوب',
-      'image': AppImages.unSelectedEmployee,
-      'selectedImage': AppImages.selectedEmployee
-    }
-  ];
+
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<RegisterBloc>(context);
+    List<Map<String, dynamic>> content = [
+      {
+        'title': getLang(context, 'client'),
+        'image': AppImages.unSelectedClient,
+        'selectedImage': AppImages.selectedClient
+      },
+      {
+        'title': 'مندوب',
+        'image': AppImages.unSelectedEmployee,
+        'selectedImage': AppImages.selectedEmployee
+      }
+    ];
+    var bloc = BlocProvider.of<AuthBloc>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -78,13 +80,14 @@ class _CheckScreenState extends State<CheckScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding:  EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 0),
+                      padding: EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 0),
                       child: SizedBox(
                         height: MediaQueryHelper.height * .2,
                         child: GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: content.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: content.length,
                             childAspectRatio: 1 / .87,
                             crossAxisSpacing: MediaQueryHelper.width * .05,
@@ -113,10 +116,11 @@ class _CheckScreenState extends State<CheckScreen> {
                       ),
                     ),
                     Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: 16.w),
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: CustomButton(
                           onPressed: () {
-                            AppRoutes.pushNamedNavigator(routeName: Routes.auth);
+                            AppRoutes.pushNamedNavigator(
+                                routeName: Routes.auth);
                           },
                           text: 'متابعة',
                           background: Theme.of(context).colorScheme.primary),

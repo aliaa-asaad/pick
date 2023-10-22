@@ -12,3 +12,4 @@ final class OrderError extends OrderState {
   final String message;
   OrderError(this.message);
 }
+final class OrderCounter extends OrderState {}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 
@@ -12,38 +13,17 @@ class CarCard extends StatefulWidget {
 }
 
 class _CarCardState extends State<CarCard> {
-  int currentIndex = -1;
-  List<Map<String, dynamic>> carCardData = [
-    {
-      'image': AppImages.car1,
-      'title': 'بيك أب',
-      'length': '2 متر - 3 متر',
-      'weight': '1 طن',
-    },
-    {
-      'image': AppImages.car2,
-      'title': 'دينة شبك',
-      'length': '5 متر - 7 متر',
-      'weight': '2 طن',
-    },
-    {
-      'image': AppImages.car3,
-      'title': 'دينة',
-      'length': '2 متر - 3 متر',
-      'weight': '2 طن',
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQueryHelper.height * .235,
+      height: MediaQueryHelper.height * .239,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: carCardData.length,
+        itemCount: OrderBloc.instance.carCardData.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
             setState(() {
-              currentIndex = index;
+              OrderBloc.instance.carIndex = index;
             });
           },
           child: Container(
@@ -54,8 +34,9 @@ class _CarCardState extends State<CarCard> {
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
               border: Border.all(
-                  color:
-                      currentIndex == index ? Colors.green : Colors.transparent,
+                  color: OrderBloc.instance.carIndex == index
+                      ? Colors.green
+                      : Colors.transparent,
                   width: 2),
               boxShadow: [
                 BoxShadow(
@@ -69,11 +50,11 @@ class _CarCardState extends State<CarCard> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                carCardData[index]['title'],
+                OrderBloc.instance.carCardData[index]['title'],
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Image.asset(
-                carCardData[index]['image'],
+                OrderBloc.instance.carCardData[index]['image'],
                 height: MediaQueryHelper.height * .09,
                 width: MediaQueryHelper.width,
               ),
@@ -84,7 +65,7 @@ class _CarCardState extends State<CarCard> {
                     width: MediaQueryHelper.width * .01,
                   ),
                   Text(
-                    carCardData[index]['length'],
+                    OrderBloc.instance.carCardData[index]['length'],
                     style: const TextStyle(color: Colors.grey),
                   ),
                 ],
@@ -96,13 +77,15 @@ class _CarCardState extends State<CarCard> {
                     width: MediaQueryHelper.width * .01,
                   ),
                   Text(
-                    carCardData[index]['weight'],
+                    OrderBloc.instance.carCardData[index]['weight'],
                     style: const TextStyle(color: Colors.grey),
                   ),
                   const Spacer(),
                   Icon(
                     Icons.check_circle,
-                    color: currentIndex == index ? Colors.green : Colors.grey,
+                    color: OrderBloc.instance.carIndex == index
+                        ? Colors.green
+                        : Colors.grey,
                   )
                 ],
               ),

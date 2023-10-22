@@ -25,6 +25,8 @@ class _CodeVerificationFieldState extends State<CodeVerificationField> {
             FocusScope.of(context).nextFocus();
           }
         },
+        controller: widget.controller,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator,
         style: const TextStyle(
           fontSize: 30,
@@ -40,18 +42,7 @@ class _CodeVerificationFieldState extends State<CodeVerificationField> {
           contentPadding: EdgeInsets.symmetric(
             vertical: 8.r, /* horizontal: 32.r */
           ),
-          //disabledBorder: InputBorder.none,
-          /* hintText: '0',
-          /* hintStyle: const TextStyle(
-            color: Colors.grey,
-            fontSize: 40
-          ),*/*/
-          /* labelStyle: const TextStyle(
-            height: 1.2,
-            color: Colors.black,
-            fontSize: 40,
-            
-          ),  */
+          
           border: OutlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.grey.shade300,

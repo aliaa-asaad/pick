@@ -6,26 +6,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/app_widgets/custom_form_field.dart';
 import 'package:pick_up/core/validator.dart';
-import 'package:pick_up/features/auth/login/data/view_model/bloc/login_bloc.dart';
-import 'package:pick_up/features/auth/login/data/view_model/bloc/login_event.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
-class LoginScreen extends StatefulWidget  {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>with Validations {final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    
+class _LoginScreenState extends State<LoginScreen> with Validations {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<LoginBloc>(context);
+    var bloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -48,13 +49,7 @@ class _LoginScreenState extends State<LoginScreen>with Validations {final Global
             padding: EdgeInsets.all(24.0.r),
             child: SingleChildScrollView(
               child:
-                  BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-                if (state is LoginError) {
-                  return const Center(child: Text('Error'));
-                } else if (state is LoginLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
+                  BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -71,21 +66,21 @@ class _LoginScreenState extends State<LoginScreen>with Validations {final Global
                       height: MediaQueryHelper.height * .04,
                     ),
                     CustomFormField(
-                      validator: isValidPhone,
+                        validator: isValidPhone,
                         icon: AppImages.phone,
                         hintText: 'ادخل رقم الجوال',
                         keyboardType: TextInputType.phone,
-                        controller: bloc.phoneController),
+                        controller: bloc.phoneNumberController),
                     SizedBox(
                       height: MediaQueryHelper.height * .02,
                     ),
                     CustomFormField(
-                      validator: isValidPassword,
+                        validator: isValidPassword,
                         icon: AppImages.password,
                         hintText: 'ادخل كلمة السر',
                         keyboardType: TextInputType.visiblePassword,
                         isPassword: true,
-                        controller: bloc.password),
+                        controller: bloc.passwordController),
                     SizedBox(
                       height: MediaQueryHelper.height * .02,
                     ),
@@ -93,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen>with Validations {final Global
                       alignment: Alignment.centerLeft,
                       child: TextButton(
                         onPressed: () {
+                          bloc.isForgetPassword = true;
                           AppRoutes.pushNamedNavigator(
                               routeName: Routes.forgetPassword);
                         },
@@ -105,24 +101,43 @@ class _LoginScreenState extends State<LoginScreen>with Validations {final Global
                     ),
                     // if (state is loginLoaded) {
                     CustomButton(
+                      width: state is AuthLoading
+                          ? MediaQueryHelper.width * .13
+                          : MediaQueryHelper.width,
+                      child: state is AuthLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              'متابعة',
+                              style: TextStyleHelper.subtitle20.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                            // _formKey.currentState!.save();
-                            //log(name);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
-                            );
-                          } else {
-                            log('not valid');
-                          }
-                         // log('type= ${bloc.type}');
-                        bloc.add(LoginClick());
+                          // _formKey.currentState!.save();
+                          //log(name);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Processing Data')),
+                          );
+                          bloc.add(LoginClick());
+                        } else {
+                          log('not valid');
+                        }
+                        // log('type= ${bloc.type}');
                       },
-                      text: 'متابعة',
-                      background: Theme.of(context)
-                          .colorScheme
-                          .primary, /*  textColor: textColor */
+                      /*  textColor: textColor */
                     ),
+                    SizedBox(
+                      height: MediaQueryHelper.height * .02,
+                    ),
+                    state is AuthError
+                        ? Text(
+                            'هناك خطا في البيانات',
+                            style: TextStyleHelper.subtitle20,
+                          )
+                        : const SizedBox()
                   ],
                 );
 

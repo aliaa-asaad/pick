@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 
-class OrderDataTypeCard extends StatefulWidget {
-  final List<String> content;
-  const OrderDataTypeCard({super.key, required this.content});
+class OrderDetailsTypeCard extends StatefulWidget {
+  final String type;
+  final List<String> orderDetailsTypeData;
+
+  OrderDetailsTypeCard({
+    super.key,
+    /*  required this.orderDetailsTypeIndex, */
+    required this.orderDetailsTypeData,
+    required this.type,
+  });
 
   @override
-  State<OrderDataTypeCard> createState() => _OrderDataTypeCardState();
+  State<OrderDetailsTypeCard> createState() => _OrderDetailsTypeCardState();
 }
 
-class _OrderDataTypeCardState extends State<OrderDataTypeCard> {
-  int currentIndex = -1;
-
+class _OrderDetailsTypeCardState extends State<OrderDetailsTypeCard> {
+  int orderDetailsTypeIndex = -1;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -28,11 +35,26 @@ class _OrderDataTypeCardState extends State<OrderDataTypeCard> {
           mainAxisSpacing:
               MediaQueryHelper.height * .01, /*  mainAxisExtent: 500 */
         ),
-        itemCount: widget.content.length,
+        itemCount: widget.orderDetailsTypeData.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
             setState(() {
-              currentIndex = index;
+              if (widget.type == 'خدمات التحميل والتنزيل') {
+                orderDetailsTypeIndex = index;
+                OrderBloc.instance.orderDetailsTypeIndex =
+                    orderDetailsTypeIndex;
+              } else if (widget.type == 'المصعد الكهربائي') {
+                orderDetailsTypeIndex = index;
+                OrderBloc.instance.additionalServiceIndex1 =
+                    orderDetailsTypeIndex;
+              } else if (widget.type == 'عامل إضافي') {
+                orderDetailsTypeIndex = index;
+                OrderBloc.instance.additionalServiceIndex2 = 0;
+              }
+              // abdalazemSaleh
+              // abdalazem.saleh2@icloud.com
+              /* else if (widget.type == 'المصعد الكهربائي')
+              log('orderDetailsTypeIndex: ${widget.orderDetailsTypeIndex}'); */
             });
           },
           child: Container(
@@ -41,17 +63,21 @@ class _OrderDataTypeCardState extends State<OrderDataTypeCard> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                  color: currentIndex == index ? Colors.green : Colors.grey,
+                  color: orderDetailsTypeIndex == index
+                      ? Colors.green
+                      : Colors.grey.shade200,
                   width: 1.5),
               color: Colors.white,
             ),
             child: Row(
               children: [
-                Text(widget.content[index]),
+                Text(widget.orderDetailsTypeData[index]),
                 const Spacer(),
                 Icon(
                   Icons.check_circle,
-                  color: currentIndex == index ? Colors.green : Colors.grey,
+                  color: orderDetailsTypeIndex == index
+                      ? Colors.green
+                      : Colors.grey,
                 )
               ],
             ),

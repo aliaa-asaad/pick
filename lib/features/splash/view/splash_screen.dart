@@ -16,10 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Future.delayed(const Duration(seconds: 3), () {
+        future: Future.delayed(const Duration(seconds: 3), (){
           AppRoutes.pushNamedNavigator(
                 routeName: Routes.onboarding, replacement: true);
-          /* if (SharedHandler.instance!.getData(
+          if (SharedHandler.instance!.getData(
               key: SharedKeys().isFirstTime, valueType: ValueType.bool)) {
             AppRoutes.pushNamedNavigator(
                 routeName: Routes.onboarding, replacement: true);
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
               AppRoutes.pushNamedNavigator(
                   routeName: Routes.auth, replacement: true);
             }
-          } */
+          }
         }),
         builder: (context, snapshot) {
           return Scaffold(

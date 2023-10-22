@@ -7,7 +7,8 @@ class CustomFormField extends StatefulWidget {
   final String hintText;
   final TextInputType keyboardType;
   final bool isPassword;
-  final bool isSearch;
+  final bool isAuth;
+
   final String icon;
   final String? Function(String?)? validator;
   final TextEditingController controller;
@@ -18,9 +19,9 @@ class CustomFormField extends StatefulWidget {
     required this.keyboardType,
     this.isPassword = false,
     required this.controller,
-    this.isSearch = false,
     this.icon = '',
     this.validator,
+    this.isAuth = true,
   });
 
   @override
@@ -32,12 +33,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: widget.validator,
       keyboardType: widget.keyboardType,
-      textInputAction:
-          widget.isSearch ? TextInputAction.search : TextInputAction.next,
+      textInputAction:TextInputAction.next,
       obscureText: widget.isPassword ? passwordVisible : false,
       controller: widget.controller,
       enabled: true,
@@ -45,52 +44,54 @@ class _CustomFormFieldState extends State<CustomFormField> {
         height: 1.4,
         //fontSize: 16.sp,
       ),
-      
       decoration: InputDecoration(
-          fillColor: Colors.white,
-          filled: true,
-          suffix: widget.isSearch ? const Icon(Icons.search) : const SizedBox(),
-          suffixIcon: widget.isPassword
-              ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      passwordVisible = !passwordVisible;
-                    });
-                  },
-                  icon: passwordVisible
-                      ? SvgPicture.asset(
-                          AppImages.invisiblePassword,
-                        )
-                      : SvgPicture.asset(
-                          AppImages.visiblePassword,
-                        ))
-              : const SizedBox(),
-              
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: SvgPicture.asset(
-              widget.icon,
-            ),
-          ),
-          hintText: widget.hintText,
-          border: OutlineInputBorder(
-            /* borderSide: BorderSide(
+        fillColor: Colors.white,
+        filled: true,
+        suffixIcon: widget.isAuth
+            ? widget.isPassword
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                    icon: passwordVisible
+                        ? SvgPicture.asset(
+                            AppImages.invisiblePassword,
+                          )
+                        : SvgPicture.asset(
+                            AppImages.visiblePassword,
+                          ))
+                : const SizedBox()
+            : null,
+        prefixIcon: widget.isAuth
+            ? Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SvgPicture.asset(
+                  widget.icon,
+                ),
+              )
+            : null,
+        hintText: widget.hintText,
+        border: OutlineInputBorder(
+          /* borderSide: BorderSide(
             style: BorderStyle.solid,
             color: Colors.green,
           ), */
-            borderRadius: BorderRadius.all(
-              Radius.circular(16.0.r),
-            ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(16.0.r),
           ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              style: BorderStyle.solid,
-              color: Colors.grey.shade300,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(16.0.r),
-            ),
-          )),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            color: Colors.grey.shade300,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(16.0.r),
+          ),
+        ),
+      ),
     );
   }
 }

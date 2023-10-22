@@ -1,152 +1,203 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
+import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/handlers/image_picker_handler.dart';
+import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
 class OrderImageScreen extends StatefulWidget {
-  final Function() onPressed;
-  const OrderImageScreen({super.key, required this.onPressed});
+  const OrderImageScreen({
+    super.key,
+  });
 
   @override
   State<OrderImageScreen> createState() => _OrderImageScreenState();
 }
 
 class _OrderImageScreenState extends State<OrderImageScreen> {
-  File? picker;
-  List<File> imageList = [];
+  // File? picker;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(24.0.r),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-               onTap: () async {
+      padding: EdgeInsets.all(24.0.r),
+      physics: const BouncingScrollPhysics(),
+      child: InkWell(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Form(
+          key: OrderBloc.instance.formKey,
+          autovalidateMode: AutovalidateMode.always,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: OrderBloc.instance.imagesList.length > 9
+                    ? null
+                    : () async {
                         var image = await ImagePickerHandler()
                             .getImage(ImageSource.gallery);
                         setState(() {
-                          imageList.add(image);
+                          OrderBloc.instance.imagesList.add(image);
                         });
                       },
-              child: Container(
-                //alignment: Alignment.center,
-                height: MediaQueryHelper.height * 0.25,
-                width: MediaQueryHelper.width,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.primary,
-                    // style: ,
-                    width: 1,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.upload,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 100,
+                child: DottedBorder(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderType: BorderType.RRect,
+                  radius: Radius.circular(16.r),
+                  dashPattern: const [8, 4],
+                  strokeWidth: 1,
+                  child: Container(
+                    //alignment: Alignment.center,
+                    height: MediaQueryHelper.height * 0.23,
+                    padding: EdgeInsets.all(8.r),
+                    width: MediaQueryHelper.width,
+                    decoration: BoxDecoration(
+                      /* color: Color(0xff).withOpacity(.5), */
+                      color: const Color(0xff1c74f20a),
+                      borderRadius: BorderRadius.circular(16.r),
                     ),
-                    TextButton(
-                      onPressed: () async {
-                        var image = await ImagePickerHandler()
-                            .getImage(ImageSource.camera);
-                        setState(() {
-                          imageList.add(image);
-                        });
-                      },
-                      child: const Text(
-                        'صور شحنتك',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    TextButton(
-                      child: Text(
-                        'تصفح المعرض',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      onPressed: () async {
-                        var image = await ImagePickerHandler()
-                            .getImage(ImageSource.gallery);
-                        setState(() {
-                          imageList.add(image);
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQueryHelper.height * .02,
-            ),
-            Text(
-              'الصور',
-              style: TextStyleHelper.subtitle20,
-            ),
-            Column(
-              children: List.generate(
-                imageList.length,
-                (index) => Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(8.r),
-                      height: MediaQueryHelper.height * 0.1,
-                      width: MediaQueryHelper.width * .2,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.r),
-                          image: DecorationImage(
-                              image: FileImage(imageList[index]),
-                              fit: BoxFit.cover)),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          imageList[index].parent.toString().split('/').last.characters.take(10).toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(),
+                        SvgPicture.asset(
+                          AppImages.uploadIcon,
+                          height: MediaQueryHelper.height * .08,
                         ),
-                        Text(
-                            '${(imageList[index].readAsBytesSync().lengthInBytes.toInt() / 1000).toInt()} kb '),
+                        TextButton(
+                          onPressed: OrderBloc.instance.imagesList.length > 9
+                              ? null
+                              : () async {
+                                  var image = await ImagePickerHandler()
+                                      .getImage(ImageSource.camera);
+                                  setState(() {
+                                    OrderBloc.instance.imagesList.add(image);
+                                  });
+                                },
+                          child: Text(
+                            'صور شحنتك',
+                            style: TextStyleHelper.subtitle20
+                                .copyWith(color: Colors.black),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: OrderBloc.instance.imagesList.length > 9
+                              ? null
+                              : () async {
+                                  var image = await ImagePickerHandler()
+                                      .getImage(ImageSource.gallery);
+                                  setState(() {
+                                    OrderBloc.instance.imagesList.add(image);
+                                  });
+                                },
+                          child: Text(
+                            'تصفح المعرض',
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                decoration: TextDecoration.underline),
+                          ),
+                        ),
                       ],
                     ),
-                    Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          imageList.removeAt(index);
-                        });
-                      },
-                      icon: Icon(
-                        Icons.delete,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    )
-                  ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQueryHelper.height * .04,
-            ),
-            CustomButton(
-              onPressed: widget.onPressed,
-              text: 'التالي',
-              background: Theme.of(context).colorScheme.primary,
-            )
-          ],
+              SizedBox(
+                height: MediaQueryHelper.height * .02,
+              ),
+              Text(
+                'الصور',
+                style: TextStyleHelper.subtitle20,
+              ),
+              Column(
+                children: List.generate(
+                  OrderBloc.instance.imagesList.length,
+                  (index) => Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(8.r),
+                        height: MediaQueryHelper.height * 0.1,
+                        width: MediaQueryHelper.width * .2,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.r),
+                            image: DecorationImage(
+                                image: FileImage(
+                                    OrderBloc.instance.imagesList[index]),
+                                fit: BoxFit.cover)),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            OrderBloc.instance.imagesList[index].parent
+                                .toString()
+                                .split('/')
+                                .last
+                                .characters
+                                .take(10)
+                                .toString(),
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(),
+                          ),
+                          Text(
+                              '${OrderBloc.instance.imagesList[index].readAsBytesSync().lengthInBytes.toInt() ~/ 1000} kb '),
+                        ],
+                      ),
+                      const Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              OrderBloc.instance.imagesList.removeAt(index);
+                            });
+                          },
+                          icon: SvgPicture.asset(AppImages.deleteIcon))
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: MediaQueryHelper.height * .04,
+              ),
+              CustomButton(
+                onPressed: () {
+                  if (OrderBloc.instance.formKey.currentState!.validate()) {
+                    if (OrderBloc.instance.isValidImages()) {
+                      log('valid');
+                      OrderBloc.instance.viewCounter(back: false);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('حفظ البيانات')),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content:
+                                Text('الرجاء ادخال كل البيانات المطلوبة ')),
+                      );
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('الرجاء ادخال كل البيانات المطلوبة ')),
+                    );
+                  }
+                },
+                text: 'التالي',
+                background: Theme.of(context).colorScheme.primary,
+              )
+            ],
+          ),
         ),
       ),
     );

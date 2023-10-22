@@ -1,112 +1,259 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:pick_up/app_widgets/custom_button.dart';
+import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/features/order/presentation/widgets/confirm_content.dart';
+import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
-class OrderConfirmScreen extends StatelessWidget {
-  const OrderConfirmScreen({super.key});
+class OrderConfirmScreen extends StatefulWidget {
+  const OrderConfirmScreen({
+    super.key,
+  });
 
+  @override
+  State<OrderConfirmScreen> createState() => _OrderConfirmScreenState();
+}
+
+class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> content = [
-      {'title': 'نوع الشاحنة', 'content': 'نوع الشاحنة', 'isTruck': true},
-      {'title': 'نوع الشاحنة', 'content': 'نوع الشاحنة', 'isTruck': false},
-      {'title': 'نوع الشحنة', 'content': 'نوع الشاحنة', 'isTruck': false},
-      {'title': 'مواصفات شحنتك', 'content': 'نوع الشاحنة', 'isTruck': false},
+      {'title': 'نوع الشاحنة', 'content': 'نوع الشاحنة'},
+      {
+        'title': 'نوع الشحنة',
+        'content':
+            OrderBloc.instance.orderTypeData[OrderBloc.instance.orderTypeIndex]
+      },
+      {
+        'title': 'مواصفات شحنتك',
+        'content': OrderBloc.instance.orderDescriptionController.text
+      },
       {
         'title': 'خدمات التحميل والتنزيل',
-        'content': 'نوع الشاحنة',
-        'isTruck': false
+        'content': OrderBloc.instance
+            .orderDetailsTypeData[OrderBloc.instance.orderDetailsTypeIndex],
       },
-      {'title': 'المصعد الكهربائي', 'content': 'نوع الشاحنة', 'isTruck': false},
-      {'title': 'عامل إضافي', 'content': 'نوع الشاحنة', 'isTruck': false},
+      {
+        'title': 'المصعد الكهربائي',
+        'content': OrderBloc.instance
+            .additionalService[OrderBloc.instance.additionalServiceIndex1]
+      },
+      {
+        'title': 'عامل إضافي',
+        'content': OrderBloc.instance
+            .additionalService[OrderBloc.instance.additionalServiceIndex2]
+      },
     ];
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.all(16.0.r),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: MediaQueryHelper.height,
-            width: MediaQueryHelper.width,
+          Stack(
+            children: [
+              SizedBox(
+                height: MediaQueryHelper.height * .78,
+                width: MediaQueryHelper.width,
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                    right: MediaQueryHelper.width * .015,
+                    top: MediaQueryHelper.height * .02),
+                height: MediaQueryHelper.height * .72,
+                width: MediaQueryHelper.width * .003,
+                color: Colors.grey,
+              ),
+              Column(
+                children: List.generate(
+                  content.length,
+                  (index) => ConfirmContent(
+                      title: content[index]['title'],
+                      content: content[index]['content'],
+                      card: index == 0
+                          ? Row(
+                              children: [
+                                Image.asset(
+                                  AppImages.car1,
+                                  height: MediaQueryHelper.height * .1,
+                                  width: MediaQueryHelper.width * .3,
+                                ),
+                                SizedBox(
+                                  width: MediaQueryHelper.width * .03,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('بيك اب'),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(AppImages.length),
+                                        SizedBox(
+                                          width: MediaQueryHelper.width * .01,
+                                        ),
+                                        const Text(
+                                          '2 متر - 3 متر',
+                                          style: TextStyle(),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(AppImages.weight),
+                                        SizedBox(
+                                          width: MediaQueryHelper.width * .01,
+                                        ),
+                                        const Text(
+                                          '1 طن',
+                                          style: TextStyle(),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )
+                          : null),
+                ),
+              )
+            ],
           ),
-          Container(
-            margin: EdgeInsets.only(
-                left: MediaQueryHelper.width * .015,
-                top: MediaQueryHelper.height * .02),
-            height: MediaQueryHelper.height,
-            width: MediaQueryHelper.width * .005,
+          SizedBox(
+            height: MediaQueryHelper.height * .02,
+          ),
+          const Divider(
+            //thickness: 1.5,
             color: Colors.grey,
           ),
-          Column(
-            children: List.generate(
-              content.length,
-              (index) => ConfirmContent(
-                  title: content[index]['title'],
-                  content: content[index]['content'],
-                  isTruck: content[index]['isTruck']),
-            ),
-          )
-          /* SizedBox(
-            height: MediaQueryHelper.height,
-            child: ListView.builder(
-              itemBuilder: (context, index) => 
-              itemCount: content.length,
-            ),
-          ), */
-          /* Column(
+          Row(
             children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 8.0.r),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 6.r,
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      // child: Icon(Icons.check),
-                    ),
-                    SizedBox(
-                      width: MediaQueryHelper.width * .03,
-                    ),
-                    Text(
-                      'نوع الشاحنة',
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary),
-                    ),
-                  ],
-                ),
+              const Text(
+                'موقع استلام البضائع',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 8.0.r),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 6.r,
-                      backgroundColor: Colors.grey,
-                      // child: Icon(Icons.check),
-                    ),
-                    SizedBox(
-                      width: MediaQueryHelper.width * .03,
-                    ),
-                    Expanded(
-                      child: Container(
-                        //width: MediaQueryHelper.width ,
-                        padding: EdgeInsets.all(8.0.r),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                        child: Text(
-                          'نوع الشاحنة',
-                        ),
-                      ),
-                    )
-                  ],
+              const Spacer(),
+              TextButton.icon(
+                onPressed: () {
+                  OrderBloc.instance.viewCounter(back: true);
+                },
+                icon: SvgPicture.asset(AppImages.mapIcon),
+                label: const Text(
+                  'تعديل',
+                  style: TextStyle(color: Color(0xff4F5E7B)),
                 ),
               ),
             ],
+          ),
+          Row(
+            children: [
+              SvgPicture.asset(AppImages.locationIcon),
+              SizedBox(
+                width: MediaQueryHelper.width * .02,
+              ),
+               Text(
+                OrderBloc.instance.orderRecieveLocationController.text,
+                style: TextStyle(
+                  color: Color(0xff4F5E7B),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              const Text(
+                'موقع توصيل البضائع',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const Spacer(),
+              TextButton.icon(
+                onPressed: () {
+                  OrderBloc.instance.viewCounter(back: true);
+                },
+                icon: SvgPicture.asset(AppImages.mapIcon),
+                label: const Text(
+                  'تعديل',
+                  style: TextStyle(color: Color(0xff4F5E7B)),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SvgPicture.asset(AppImages.locationIcon),
+              SizedBox(
+                width: MediaQueryHelper.width * .02,
+              ),
+               Text(
+                OrderBloc.instance.orderSendLocationController.text,
+                style: TextStyle(color: Color(0xff4F5E7B)),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: MediaQueryHelper.height * .02,
+          ),
+          const Divider(
+            //thickness: 1.5,
+            color: Colors.grey,
+          ),
+          Text(
+            'التكلفة التقريبية',
+            style: TextStyleHelper.subtitle20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('رسوم التوصيل',
+                  style: TextStyleHelper.subtitle18
+                      .copyWith(color: const Color(0xff4F5E7B))),
+              const Spacer(),
+              Text('150 ريال',
+                  style: TextStyleHelper.subtitle18
+                      .copyWith(color: const Color(0xff4F5E7B))),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('تكلفة العامل الاضافي',
+                  style: TextStyleHelper.subtitle18
+                      .copyWith(color: const Color(0xff4F5E7B))),
+              const Spacer(),
+              Text('150 ريال',
+                  style: TextStyleHelper.subtitle18
+                      .copyWith(color: const Color(0xff4F5E7B))),
+            ],
+          ),
+          SizedBox(
+            height: MediaQueryHelper.height * .02,
+          ),
+          const Divider(
+            //thickness: 1.5,
+            color: Colors.grey,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('الاجمالي',
+                  style: TextStyleHelper.subtitle18
+                      .copyWith(color: const Color(0xff4F5E7B))),
+              const Spacer(),
+              Text('300 ريال',
+                  style: TextStyleHelper.subtitle18
+                      .copyWith(color: const Color(0xff4F5E7B))),
+            ],
+          ),
+          Text('شامل قيمة الضربية المضافة',
+              style: TextStyleHelper.subtitle18.copyWith(color: Colors.grey)),
+          CustomButton(
+            onPressed: () {
+              OrderBloc.instance.viewCounter(back: false);
+            },
+            text: 'التالي',
           )
-         */
         ],
       ),
     );

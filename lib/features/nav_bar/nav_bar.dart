@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/home/presentation/screens/home_screen.dart';
-import 'package:pick_up/features/order/presentation/screens/order_screen.dart';
+import 'package:pick_up/features/my_order/presentation/screens/my_order_screen.dart';
 import 'package:pick_up/features/profile/presentation/screens/profile_screen.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
@@ -108,7 +108,8 @@ class CustomNavigationBarState extends State<CustomNavigationBar> {
                 highlightColor: Colors.transparent,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [AnimatedContainer(
+                  children: [
+                    AnimatedContainer(
                       duration: const Duration(milliseconds: 1500),
                       curve: Curves.fastLinearToSlowEaseIn,
                       margin: EdgeInsets.only(
@@ -124,13 +125,13 @@ class CustomNavigationBarState extends State<CustomNavigationBar> {
                           : 0,
                       decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10),
                           )),
                     ),
-                 
-                   // SizedBox(height: MediaQueryHelper.width * .01),
+
+                    // SizedBox(height: MediaQueryHelper.width * .01),
                     SvgPicture.asset(
                       screens[index]['icon'],
                       height: MediaQueryHelper.height * .033,
@@ -143,18 +144,17 @@ class CustomNavigationBarState extends State<CustomNavigationBar> {
                               Theme.of(context).colorScheme.secondaryContainer,
                               BlendMode.srcIn),
                     ),
-                  //  SizedBox(height: MediaQueryHelper.width * .01),
+                    //  SizedBox(height: MediaQueryHelper.width * .01),
                     Text(
                       screens[index]['title'],
                       style: TextStyle(
                         fontSize: MediaQueryHelper.width * .03,
                         color: index == currentIndex
                             ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context)
-                                .colorScheme
-                                .secondaryContainer,
-                      ),),
-                     ],
+                            : Theme.of(context).colorScheme.secondaryContainer,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -167,8 +167,12 @@ class CustomNavigationBarState extends State<CustomNavigationBar> {
     {
       'title': 'طلباتى',
       'icon': AppImages.orders,
-      'screen': const OrderScreen()
+      'screen': const MyOrderScreen()
     },
-    {'title': 'الحساب', 'icon': AppImages.profile, 'screen': const ProfileScreen()},
+    {
+      'title': 'الحساب',
+      'icon': AppImages.profile,
+      'screen': const ProfileScreen()
+    },
   ];
 }

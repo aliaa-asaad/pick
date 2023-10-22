@@ -8,7 +8,12 @@ mixin Validations {
     }
     return null;
   }
-
+String? isValidContent(String? email) {
+    if (email!.isEmpty) {
+      return "الرجاء ادخال البيانات بشكل صحيح";
+    } 
+    return null;
+  }
   String? isValidPassword(String? password) {
     if (password!.isEmpty) {
       return "الرجاء ادخال كلمة المرور";

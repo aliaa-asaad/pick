@@ -6,14 +6,10 @@ import 'package:pick_up/utilities/text_style.dart';
 class ConfirmContent extends StatelessWidget {
   final String title;
   final String? content;
-  
-  final bool isTruck;
+  final Widget? card;
+ 
   const ConfirmContent(
-      {super.key,
-      required this.title,
-      this.content,
-      
-      this.isTruck = false});
+      {super.key, required this.title, this.content,  this.card});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +29,8 @@ class ConfirmContent extends StatelessWidget {
               ),
               Text(
                 title,
-                 style: TextStyleHelper.subtitle20.copyWith(
-                   color: Theme.of(context).colorScheme.primary
-                 ),
-               
+                style: TextStyleHelper.subtitle20
+                    ,
               ),
             ],
           ),
@@ -46,26 +40,20 @@ class ConfirmContent extends StatelessWidget {
           child: Row(
             children: [
               CircleAvatar(
-                radius: 6.r,
-                backgroundColor: Colors.grey,
-                
-              ),
+                  radius: 6.r, backgroundColor: const Color(0xff4F5E7B)),
               SizedBox(
                 width: MediaQueryHelper.width * .03,
               ),
               Expanded(
                 child: Container(
-                  
                   padding: EdgeInsets.all(8.0.r),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    color: Colors.white,
+                    /* border: Border.all(color: Colors.grey), */
                     borderRadius: BorderRadius.circular(10.r),
                   ),
-                  child: isTruck
-                      ? Container(
-                          width: MediaQueryHelper.width,
-                          child: Text('بيك اب'),)
-                      : Text(
+                  child: card
+                      ??Text(
                           content!,
                         ),
                 ),
@@ -73,7 +61,6 @@ class ConfirmContent extends StatelessWidget {
             ],
           ),
         ),
-        
       ],
     );
   }

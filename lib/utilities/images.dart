@@ -11,7 +11,7 @@ class AppImages {
   static const orderIcon1 = 'assets/svg/order_icon1.svg';
   static const orderIcon2 = 'assets/svg/order_icon2.svg';
   static const orderIcon3 = 'assets/svg/order_icon3.svg';
-  static const orderIcon4 = 'assets/svg/order_icon3.svg';
+  static const orderIcon4 = 'assets/svg/order_icon4.svg';
   static const ksa = 'assets/svg/ksa.svg';
   static const car1 = 'assets/images/car1.png';
   static const car2 = 'assets/images/car2.png';
@@ -30,4 +30,10 @@ class AppImages {
   static const homeCardIcon3 = 'assets/svg/home_card_icon3.svg';
   static const visiblePassword = 'assets/svg/visible_password.svg';
   static const invisiblePassword = 'assets/svg/invisible_password.svg';
+  static const orderLocation = 'assets/svg/order_location.svg';
+  static const orderLocationPNG = 'assets/images/order_location.png';
+  static const uploadIcon = 'assets/svg/upload_icon.svg';
+  static const deleteIcon = 'assets/svg/delete_icon.svg';
+  static const mapIcon = 'assets/svg/map_icon.svg';
+  static const locationIcon = 'assets/svg/location_icon.svg';
 }

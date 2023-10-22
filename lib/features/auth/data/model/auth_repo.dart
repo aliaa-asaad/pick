@@ -2,28 +2,25 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:pick_up/config/end_points.dart';
-import 'package:pick_up/core/email_verification_model.dart';
+import 'package:pick_up/features/auth/data/model/email_verification_model.dart';
 import 'package:pick_up/core/user_model.dart';
+import 'package:pick_up/features/auth/data/model/forget_password_model.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
 
-class RegisterRepo {
-  /* final Network _pickupNetwork = Network(); */
-
-  /* Future<AuthModel> registerRequest(Map<String, dynamic> data) async {
+class AuthRepo {
+ 
+  Future<UserModel> loginRequest(Map<String, dynamic> data) async {
     try {
-      Response res = await Network.instance!.post(
-        url: ApiNames.baseUrl + ApiNames.registerEndPoint,
-        body: data,
-      );
-
-      return AuthModel.fromJson(res.data);
+      Response res =
+          await Network.instance!.post(url: ApiNames.loginEndPoint, body: data);
+      log('res.data: ${res.data}');
+      return UserModel.fromJson(res.data);
     } catch (e) {
       rethrow;
     }
-  } */
-
-  Future<UserModel> registerRequest(Map<String, dynamic> data) async {
+  }
+   Future<UserModel> registerRequest(Map<String, dynamic> data) async {
     try {
       Response res = await Network.instance!.post(
           url: SharedHandler.instance!.getData(
@@ -50,16 +47,26 @@ class RegisterRepo {
       rethrow;
     }
   }
-
-  /* Future<DriverRegisterModel> driverClientRequest(
+  Future<ForgetPasswordModel> forgetPasswordRequest(
       Map<String, dynamic> data) async {
     try {
       Response res = await Network.instance!
-          .post(url: ApiNames.driverRegisterEndPoint, body: data);
+          .post(url: ApiNames.forgetPasswordEndPoint, body: data);
       log('res.data: ${res.data}');
-      return DriverRegisterModel.fromJson(res.data);
+      return ForgetPasswordModel.fromJson(res.data);
     } catch (e) {
       rethrow;
     }
-  } */
+  }
+  Future<UserModel> resetPasswordRequest(
+      Map<String, dynamic> data) async {
+    try {
+      Response res = await Network.instance!
+          .post(url: ApiNames.resetPasswordEndPoint, body: data);
+      log('res.data: ${res.data}');
+      return UserModel.fromJson(res.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

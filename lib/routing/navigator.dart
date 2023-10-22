@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pick_up/features/auth/login/presentation/screens/forgot_password.dart';
-import 'package:pick_up/features/auth/login/presentation/screens/login_screen.dart';
-import 'package:pick_up/features/auth/login/presentation/screens/new_password.dart';
-import 'package:pick_up/features/auth/register/presentation/screens/email_verification.dart';
-import 'package:pick_up/features/auth/register/presentation/screens/sign_up_screen.dart';
+import 'package:pick_up/features/auth/presentation/screens/forgot_password_screen.dart';
+import 'package:pick_up/features/auth/presentation/screens/login_screen.dart';
+import 'package:pick_up/features/auth/presentation/screens/new_password_screen.dart';
+import 'package:pick_up/features/auth/presentation/screens/email_verification_screen.dart';
+import 'package:pick_up/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:pick_up/features/home/presentation/screens/home_screen.dart';
 import 'package:pick_up/features/nav_bar/nav_bar.dart';
 import 'package:pick_up/features/on_boarding/view/screens/auth_screen.dart';

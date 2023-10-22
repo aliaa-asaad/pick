@@ -7,7 +7,7 @@ class AppTheme {
     buttonTheme: const ButtonThemeData(
       buttonColor: Color(0xff981A1E),
     ),
-    scaffoldBackgroundColor: Color(0xffF2F4FA),
+    scaffoldBackgroundColor: Color(0xffF4F4F5),
     
     colorScheme: ColorScheme.light(
       primary: const Color(0xffF3C857),
