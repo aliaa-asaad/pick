@@ -22,27 +22,28 @@ class _CodeVerificationFieldState extends State<CodeVerificationField> {
       child: TextFormField(
         onChanged: (value) {
           if (value.length == 1) {
-            FocusScope.of(context).nextFocus();
+            FocusScope.of(context).previousFocus();
           }
         },
         controller: widget.controller,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator,
         style: const TextStyle(
+          locale: Locale('en', 'US'),
           fontSize: 30,
           height: 1.2,
         ),
+        textInputAction: TextInputAction.next,
         keyboardType: TextInputType.number,
         cursorRadius: const Radius.circular(16),
-        /* inputFormatters: [
+        inputFormatters: [
           LengthLimitingTextInputFormatter(1),
-        ], */
+        ],
         textAlign: TextAlign.center,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
             vertical: 8.r, /* horizontal: 32.r */
           ),
-          
           border: OutlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.grey.shade300,

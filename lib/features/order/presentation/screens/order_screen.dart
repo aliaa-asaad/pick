@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -111,8 +110,8 @@ class _OrderScreenState extends State<OrderScreen> {
                   (index) => Column(
                     children: [
                       Row(
-                        //mainAxisAlignment: MainAxisAlignment.center,
-                        //crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           CircleAvatar(
                             radius: 26.r,
@@ -141,11 +140,14 @@ class _OrderScreenState extends State<OrderScreen> {
                           ),
                           index <= icons.length - 2
                               ? Row(
+                             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: List.generate(
-                                      4,
+                                      5,
                                       (indexContainer) => Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 2.w),
+                                            margin: indexContainer == 4
+                                                ? EdgeInsets.zero
+                                                : EdgeInsets.symmetric(
+                                                    horizontal: 2.w),
                                             width: 5,
                                             height: 1,
                                             color: currentStep > index
@@ -154,15 +156,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     .colorScheme
                                                     .primary,
                                           )),
-                                ) /* DottedBorder(
-                                  customPath: (size) =>
-                                      customPath, // PathBuilder
-                                  color: currentStep > index
-                                      ? Colors.green
-                                      : Theme.of(context).colorScheme.primary,
-                                  dashPattern: const [8, 3],
-                                  strokeWidth: 1,
-                                  child: const SizedBox()) */
+                                ) 
                               : const SizedBox()
                         ],
                       ),

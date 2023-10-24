@@ -1,71 +1,45 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
-class StudyHome extends StatefulWidget {
-  const StudyHome({super.key});
+class SlideContainer extends StatefulWidget {
+  const SlideContainer({Key? key}) : super(key: key);
 
   @override
-  State<StudyHome> createState() => _StudyHomeState();
+  _SlideContainerState createState() => _SlideContainerState();
 }
 
-class _StudyHomeState extends State<StudyHome> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-   String? isValidEmail(String? email){
-    if(email!.isEmpty){
-      return "الرجاء ادخال البريد الألكتروني بشكل صحيح";
-    }
-    else if (
-      !RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)
-    ){
-      return "الرجاء ادخال البريد الألكتروني";
-    }
-    return "";
+class _SlideContainerState extends State<SlideContainer>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _offset;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+    _offset = Tween<Offset>(begin: const Offset(1, 0.0), end: Offset(10,0))
+        .animate(_controller);
+    _controller.forward();
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    String name = '';
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            autovalidateMode: AutovalidateMode.always,
-            key: _formKey,
-            child: InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: Column(
-                children: [
-                  TextFormField(
-                    onChanged: (value) {
-                      //  FocusScope.of(context).requestFocus(FocusNode());
-                      name = value;
-                    },
-                    validator: isValidEmail,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          log(name);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
-                          );
-                        } else
-                          log('not valid');
-                        /* log('${_formKey.currentState!.}'); */
-                      },
-                      child: const Text('Submit'))
-                ],
-              ),
-            ),
-          ),
+      body: SlideTransition(
+        position: _offset,
+        child: Container(
+          color: Colors.cyan,
+          height: 50.0,
+          width: 2,
+          child: const Text("hello"),
         ),
       ),
     );

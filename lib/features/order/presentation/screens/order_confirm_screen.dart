@@ -21,7 +21,10 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> content = [
-      {'title': 'نوع الشاحنة', 'content': 'نوع الشاحنة'},
+      {
+        'title': 'نوع الشاحنة',
+        'content': 'OrderBloc.instance.carCardData[OrderBloc.instance.carIndex]'
+      },
       {
         'title': 'نوع الشحنة',
         'content':
@@ -39,12 +42,12 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
       {
         'title': 'المصعد الكهربائي',
         'content': OrderBloc.instance
-            .additionalService[OrderBloc.instance.additionalServiceIndex1]
+            .additionalService[OrderBloc.instance.elevatorAvilabelIndex]
       },
       {
         'title': 'عامل إضافي',
         'content': OrderBloc.instance
-            .additionalService[OrderBloc.instance.additionalServiceIndex2]
+            .additionalService[OrderBloc.instance.extramanAvilabelIndex]
       },
     ];
     return SingleChildScrollView(
@@ -65,7 +68,7 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                     top: MediaQueryHelper.height * .02),
                 height: MediaQueryHelper.height * .72,
                 width: MediaQueryHelper.width * .003,
-                color: Colors.grey,
+                //color: Colors.grey,
               ),
               Column(
                 children: List.generate(
@@ -77,7 +80,8 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                           ? Row(
                               children: [
                                 Image.asset(
-                                  AppImages.car1,
+                                  OrderBloc.instance.carCardData[
+                                      OrderBloc.instance.carIndex]['image'],
                                   height: MediaQueryHelper.height * .1,
                                   width: MediaQueryHelper.width * .3,
                                 ),
@@ -87,16 +91,19 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text('بيك اب'),
+                                    Text(OrderBloc.instance.carCardData[
+                                        OrderBloc.instance.carIndex]['title']),
                                     Row(
                                       children: [
                                         SvgPicture.asset(AppImages.length),
                                         SizedBox(
                                           width: MediaQueryHelper.width * .01,
                                         ),
-                                        const Text(
-                                          '2 متر - 3 متر',
-                                          style: TextStyle(),
+                                        Text(
+                                          OrderBloc.instance.carCardData[
+                                                  OrderBloc.instance.carIndex]
+                                              ['length'],
+                                          style: const TextStyle(),
                                         ),
                                       ],
                                     ),
@@ -106,9 +113,11 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                                         SizedBox(
                                           width: MediaQueryHelper.width * .01,
                                         ),
-                                        const Text(
-                                          '1 طن',
-                                          style: TextStyle(),
+                                        Text(
+                                          OrderBloc.instance.carCardData[
+                                                  OrderBloc.instance.carIndex]
+                                              ['weight'],
+                                          style: const TextStyle(),
                                         ),
                                       ],
                                     ),
@@ -153,9 +162,9 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
               SizedBox(
                 width: MediaQueryHelper.width * .02,
               ),
-               Text(
+              Text(
                 OrderBloc.instance.orderRecieveLocationController.text,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xff4F5E7B),
                 ),
               ),
@@ -186,9 +195,9 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
               SizedBox(
                 width: MediaQueryHelper.width * .02,
               ),
-               Text(
+              Text(
                 OrderBloc.instance.orderSendLocationController.text,
-                style: TextStyle(color: Color(0xff4F5E7B)),
+                style: const TextStyle(color: Color(0xff4F5E7B)),
               ),
             ],
           ),

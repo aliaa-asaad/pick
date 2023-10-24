@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
@@ -16,11 +18,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Future.delayed(const Duration(seconds: 3), (){
-          AppRoutes.pushNamedNavigator(
-                routeName: Routes.onboarding, replacement: true);
+        future: Future.delayed(const Duration(seconds: 3), () async {
+          /* AppRoutes.pushNamedNavigator(
+                routeName: Routes.onboarding, replacement: true); */
           if (SharedHandler.instance!.getData(
               key: SharedKeys().isFirstTime, valueType: ValueType.bool)) {
+            log('isFirstTime=true');
             AppRoutes.pushNamedNavigator(
                 routeName: Routes.onboarding, replacement: true);
           } else {
@@ -28,8 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 key: SharedKeys().isLogin, valueType: ValueType.bool)) {
               AppRoutes.pushNamedNavigator(
                   routeName: Routes.navBar, replacement: true);
-            }
-            else{
+            } else {
               AppRoutes.pushNamedNavigator(
                   routeName: Routes.auth, replacement: true);
             }

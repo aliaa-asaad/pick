@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "643644338116",
+    "project_id": "pick-up-18ea0",
+    "storage_bucket": "pick-up-18ea0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643644338116:android:e58ce722bc1b459f6c3e91",
+        "android_client_info": {
+          "package_name": "com.example.pick_up"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqQnv6fuwTF4jyXIMTUPJLNqrrERwN2is"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

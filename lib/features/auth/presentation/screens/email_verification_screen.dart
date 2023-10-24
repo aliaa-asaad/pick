@@ -70,19 +70,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                       ///// make it list.generate
                       Row(children: [
                         CodeVerificationField(
-                          controller: bloc.codeController1,
-                          validator: isValidCode,
-                        ),
-                        CodeVerificationField(
-                          controller: bloc.codeController2,
-                          validator: isValidCode,
-                        ),
-                        CodeVerificationField(
-                          controller: bloc.codeController3,
-                          validator: isValidCode,
-                        ),
-                        CodeVerificationField(
-                          controller: bloc.codeController4,
+                          controller: bloc.codeController6,
                           validator: isValidCode,
                         ),
                         CodeVerificationField(
@@ -90,7 +78,19 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                           validator: isValidCode,
                         ),
                         CodeVerificationField(
-                          controller: bloc.codeController6,
+                          controller: bloc.codeController4,
+                          validator: isValidCode,
+                        ),
+                        CodeVerificationField(
+                          controller: bloc.codeController3,
+                          validator: isValidCode,
+                        ),
+                        CodeVerificationField(
+                          controller: bloc.codeController2,
+                          validator: isValidCode,
+                        ),
+                        CodeVerificationField(
+                          controller: bloc.codeController1,
                           validator: isValidCode,
                         ),
                       ]),

@@ -1,4 +1,4 @@
-class SendOrderModel {
+/* class SendOrderModel {
   bool? status;
   String? errNum;
   String? msg;
@@ -99,6 +99,25 @@ class Data {
     data['deleviryFloor'] = deleviryFloor;
     data['created'] = created;
     data['clientSecret'] = clientSecret;
+    return data;
+  }
+}
+ */
+class SendOrderDataModel {
+  String? message;
+  int? orderId;
+
+  SendOrderDataModel({this.message, this.orderId});
+
+  SendOrderDataModel.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    orderId = json['order_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['order_id'] = orderId;
     return data;
   }
 }

@@ -13,15 +13,23 @@ import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/utilities/theme.dart';
+import 'package:pusher_beams/pusher_beams.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
+  /* const instanceID = '00000000-0000-0000-0000-000000000000';
+  await PusherBeams.instance.start(instanceID);
+  await PusherBeams.instance.setDeviceInterests(['hello']); */
   await SharedHandler.init();
   Network.init();
-  runApp(ScreenUtilInit(
+  runApp(
+    ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => const MyApp()));
+      builder: (context, child) => const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +46,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AuthBloc(),
         ),
-        BlocProvider(create: (context) => OrderBloc(),)
+        BlocProvider(
+          create: (context) => OrderBloc(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -50,14 +60,14 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [AppRoutes.routeObserver],
         scaffoldMessengerKey: AppRoutes.scaffoldState,
         localizationsDelegates: const [
-            AppLocale.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [ Locale("ar")],
-          locale: Locale("ar"),
-        home: const CustomNavigationBar(),
+          AppLocale.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale("ar")],
+        locale: Locale("ar"),
+        home: const SplashScreen(),
       ),
     );
   }

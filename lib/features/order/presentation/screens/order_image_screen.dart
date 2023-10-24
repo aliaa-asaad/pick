@@ -5,7 +5,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/handlers/image_picker_handler.dart';
@@ -46,10 +45,12 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                 onTap: OrderBloc.instance.imagesList.length > 9
                     ? null
                     : () async {
-                        var image = await ImagePickerHandler()
-                            .getImage(ImageSource.gallery);
+                        List<File> image =
+                            await ImagePickerHandler().getImage();
                         setState(() {
-                          OrderBloc.instance.imagesList.add(image);
+                          for (var i in image) {
+                            OrderBloc.instance.imagesList.add(i);
+                          }
                         });
                       },
                 child: DottedBorder(
@@ -65,7 +66,7 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                     width: MediaQueryHelper.width,
                     decoration: BoxDecoration(
                       /* color: Color(0xff).withOpacity(.5), */
-                      color: const Color(0xff1c74f20a),
+                      color: const Color(0xffF3C95B73).withOpacity(.5),
                       borderRadius: BorderRadius.circular(16.r),
                     ),
                     child: Column(
@@ -79,8 +80,8 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                           onPressed: OrderBloc.instance.imagesList.length > 9
                               ? null
                               : () async {
-                                  var image = await ImagePickerHandler()
-                                      .getImage(ImageSource.camera);
+                                  var image =
+                                      await ImagePickerHandler().getCameraImage();
                                   setState(() {
                                     OrderBloc.instance.imagesList.add(image);
                                   });
@@ -95,10 +96,12 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                           onPressed: OrderBloc.instance.imagesList.length > 9
                               ? null
                               : () async {
-                                  var image = await ImagePickerHandler()
-                                      .getImage(ImageSource.gallery);
+                                  List<File> image = await ImagePickerHandler()
+                                      .getImage();
                                   setState(() {
-                                    OrderBloc.instance.imagesList.add(image);
+                                    for (var i in image) {
+                                      OrderBloc.instance.imagesList.add(i);
+                                    }
                                   });
                                 },
                           child: Text(

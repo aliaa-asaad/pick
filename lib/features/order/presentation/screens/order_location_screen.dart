@@ -172,7 +172,6 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                     CustomFormField(
                         validator: isValidContent,
                         isAuth: false,
-                        
                         hintText: 'ابحث عن عنوان الاستلام',
                         keyboardType: TextInputType.name,
                         controller:
@@ -187,7 +186,6 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                     CustomFormField(
                         validator: isValidContent,
                         isAuth: false,
-                        
                         hintText: 'ابحث عن عنوان التسليم',
                         keyboardType: TextInputType.name,
                         controller:
@@ -200,7 +198,7 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                           if (OrderBloc.instance.isValidLocation()) {
                             log('valid');
                             OrderBloc.instance.viewCounter(back: false);
-
+                            OrderBloc.instance.add(OrderDataClick());
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('حفظ البيانات')),
                             );

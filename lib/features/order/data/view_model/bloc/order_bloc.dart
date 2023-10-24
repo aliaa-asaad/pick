@@ -13,29 +13,12 @@ part 'order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc() : super(OrderInitial()) {
-    // on<OrderClick>(sendOrder);
+    on<OrderDataClick>(_sendOrder);
   }
   static OrderBloc get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
-  final SendOrderRepo _sendOrderRepo = SendOrderRepo();
-  late SendOrderModel _sendOrderModel;
-  /*  String truckType = '';
-  String shipmentType = '';
-  String shipmentDescription = '';
-  String shipmentLat = '';
-  String shipmentLong = '';
-  String deliveryLat = '';
-  String deliveryLong = '';
-  List<File> images = [];
-  String price = '';
-  String km = '';
-  String isLoadShipmentAvilabel = '';
-  String isExtraManAvilabel = '';
-  String isElevatorAvilabel = '';
-  String pickUpFloor = '';
-  String deleviryFloor = '';
-  String created = '';
-  String clientSecret = ''; */
+  final SendOrderRepo _sendOrderDataRepo = SendOrderRepo();
+  late SendOrderDataModel _sendOrderDataModel;
 
 /////////////////////////////////////////////
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -69,6 +52,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     'مواد بناء وديكور',
   ];
   TextEditingController orderDescriptionController = TextEditingController();
+  int orderDetailsTypeInitialIndex = -1;
   int orderDetailsTypeIndex = -1;
 
   List<String> orderDetailsTypeData = [
@@ -81,8 +65,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     'متوفر',
     'غير متوفر',
   ];
-  int additionalServiceIndex1 = -1;
-  int additionalServiceIndex2 = -1;
+  int elevatorAvilabelIndex = -1;
+  int extramanAvilabelIndex = -1;
   TextEditingController orderRecieveLocationController =
       TextEditingController();
   TextEditingController orderSendLocationController = TextEditingController();
@@ -94,8 +78,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     log('orderDetailsTypeIndex1:$orderDetailsTypeIndex');
     log('orderRecieveFloorController.text.isNotEmpty :${orderRecieveFloorController.text.isNotEmpty}');
     log('orderSendFloorController.text.isNotEmpty :${orderSendFloorController.text.isNotEmpty}');
-    log('additionalServiceIndex1:$additionalServiceIndex1');
-    log('additionalServiceIndex2:$additionalServiceIndex2');
+    log('additionalServiceIndex1:$elevatorAvilabelIndex');
+    log('additionalServiceIndex2:$extramanAvilabelIndex');
 
     return carIndex != -1 &&
         orderTypeIndex != -1 &&
@@ -103,8 +87,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         orderDetailsTypeIndex != -1 &&
         orderRecieveFloorController.text.isNotEmpty &&
         orderSendFloorController.text.isNotEmpty &&
-        additionalServiceIndex1 != -1 &&
-        additionalServiceIndex2 != -1;
+        elevatorAvilabelIndex != -1 &&
+        extramanAvilabelIndex != -1;
   }
 
   bool isValidLocation() {
@@ -125,12 +109,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     if (back == true) {
       log('back');
       currentStep - 2;
-       emit(OrderCounter());
+      emit(OrderCounter());
     } else {
       currentStep++;
     }
     emit(OrderCounter());
   }
+
   /*  int orderCar = -1;
     int carIndex = -1;
     int orderType = -1;
@@ -147,38 +132,29 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     int orderPrice = -1;
     int orderDate = -1;
     int orderTime = -1; */
-  /*  sendOrder(OrderEvent events, Emitter emit) async {
+  _sendOrder(OrderEvent events, Emitter emit) async {
     emit(OrderLoading());
     try {
       Map<String, dynamic> data = {
-        "truckType": truckType,
-        "shipmentType": shipmentType,
-        "shipmentDescription": shipmentDescription,
-        "shipmentLat": shipmentLat,
-        "shipmentLong": shipmentLong,
-        "deliveryLat": deliveryLat,
-        "deliveryLong": deliveryLong,
-        "price": price,
+        "carType": carIndex,
+        "shipmentType": orderTypeIndex,
+        "shipmentDescription": orderDescriptionController.text,
+        "pickupFloor": int.parse(orderRecieveFloorController.text),
+        "deleviryFloor": int.parse(orderSendFloorController.text),
+        "elevatorAvilabel": elevatorAvilabelIndex,
+        "extramanAvilabel": extramanAvilabelIndex,
+        "pickupLocation": orderRecieveLocationController.text,
         // To Do : check loop for images
-        "images": images,
-        "km": km,
-        "isLoadShipmentAvilabel": isLoadShipmentAvilabel,
-        "isExtraManAvilabel": isExtraManAvilabel,
-        "isElevatorAvilabel": isElevatorAvilabel,
-        "pickUpFloor": pickUpFloor,
-        "deleviryFloor": deleviryFloor,
-        "created": created,
-        "clientSecret": clientSecret,
+        "deleviryLocation": orderSendLocationController.text,
       };
-      _sendOrderModel = await _sendOrderRepo.sendOrderRequest(data);
+      _sendOrderDataModel = await _sendOrderDataRepo.sendOrderRequest(data);
 
-      AppRoutes.pushNamedNavigator(
+      /* AppRoutes.pushNamedNavigator(
         routeName: Routes.payment, /*  replacement: true */
-      );
+      ); */
       emit(OrderLoaded());
     } catch (e) {
       emit(OrderError(e.toString()));
     }
   }
- */
 }

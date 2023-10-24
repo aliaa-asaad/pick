@@ -122,8 +122,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
         _userModel = await _authRepo.loginRequest(data);
         SharedHandler.instance!
             .setData(SharedKeys().user, value: _userModel.client!.toJson());
+        SharedHandler.instance!
+            .setData(SharedKeys().token, value: _userModel.authToken);
+        log('login token: ${_userModel.authToken}');
         SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
-        SharedHandler.instance!.setData(SharedKeys().isFirstTime, value: true);
+        SharedHandler.instance!.setData(SharedKeys().isFirstTime, value: false);
         //SharedHandler.saveLoginData(_authModel);
         //SharedHandler.setData(_authModel);
         //log(' ${_loginModel.client!.accessToken!}');
@@ -190,12 +193,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       log('verified');
       log('isForgetPassword : $isForgetPassword');
       if (isForgetPassword == false) {
-       await SharedHandler.instance!
+        log('aliaa');
+        log('model: ${_userModel.client!.toJson()}');
+        await SharedHandler.instance!
             .setData(SharedKeys().user, value: _userModel.client!.toJson());
-       await SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
-      await  SharedHandler.instance!
+        await SharedHandler.instance!
+            .setData(SharedKeys().isLogin, value: true);
+        log('token: ${_userModel.authToken}');
+        await SharedHandler.instance!
             .setData(SharedKeys().token, value: _userModel.authToken);
-       await SharedHandler.instance!.setData(SharedKeys().isFirstTime, value: true);
+        await SharedHandler.instance!
+            .setData(SharedKeys().isFirstTime, value: false);
       }
 
       //SharedHandler.instance!.setData(SharedKeys().userType, value: type);
@@ -256,10 +264,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
             .getData(key: SharedKeys().userType, valueType: ValueType.int)
       };
       _userModel = await _authRepo.resetPasswordRequest(data);
-    await  SharedHandler.instance!
+      await SharedHandler.instance!
           .setData(SharedKeys().user, value: _userModel.client!.toJson());
-     await SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
-     await SharedHandler.instance!.setData(SharedKeys().isFirstTime, value: true);
+      await SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
+      await SharedHandler.instance!
+          .setData(SharedKeys().isFirstTime, value: true);
       //SharedHandler.saveLoginData(_authModel);
       //SharedHandler.setData(_authModel);
       //log(' ${_loginModel.client!.accessToken!}');
