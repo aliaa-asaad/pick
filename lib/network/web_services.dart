@@ -90,7 +90,7 @@ log("Post -> headers2: ${_dio.options.headers}");
   }
 }
 
-class DioHelper {
+/* class DioHelper {
   static final _dio = Dio(BaseOptions(
     baseUrl: 'https://api.nmc.com.eg/public/api/',
   ));
@@ -146,3 +146,4 @@ class CustomResponse {
     this.stauts,
   });
 }
+ */
