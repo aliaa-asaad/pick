@@ -4,6 +4,8 @@
 sealed  */
 class AuthEvent {}
 
+
+
 final class LoginClick extends AuthEvent {}
 
 final class RegisterClick extends AuthEvent {}

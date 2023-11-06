@@ -32,6 +32,8 @@ class _OrderDataScreenState extends State<OrderDataScreen> with Validations {
         },
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+              focusColor: Colors.transparent,
         child: Form(
           key: OrderBloc.instance.formKey,
           autovalidateMode: AutovalidateMode.always,
@@ -61,7 +63,7 @@ class _OrderDataScreenState extends State<OrderDataScreen> with Validations {
                     const TitleText(title: 'خدمات التحميل والتنزيل'),
                     OrderDetailsTypeCard(
                       orderDetailsTypeData:
-                          OrderBloc.instance.orderDetailsTypeData,
+                          OrderBloc.instance.additionalService,
                       type: 'خدمات التحميل والتنزيل',
                     ),
                     const TitleText(title: 'حدد طابق الاستلام والتسليم'),

@@ -1,5 +1,5 @@
 class AppImages {
-  static const logo = 'assets/svg/logo.svg';
+  static const logo = 'assets/images/logo.png';
   static const onBoarding1 = 'assets/images/on_boarding1.png';
   static const onBoarding2 = 'assets/images/on_boarding2.png';
   static const onBoarding3 = 'assets/images/on_boarding3.png';
@@ -36,4 +36,26 @@ class AppImages {
   static const deleteIcon = 'assets/svg/delete_icon.svg';
   static const mapIcon = 'assets/svg/map_icon.svg';
   static const locationIcon = 'assets/svg/location_icon.svg';
+  static const settingsIcon = 'assets/svg/settings_icon.svg';
+  static const infoIcon = 'assets/svg/info_icon.svg';
+  static const localizationIcon = 'assets/svg/localization_icon.svg';
+  static const logoutIcon = 'assets/svg/logout_icon.svg';
+  static const policyIcon = 'assets/svg/policy_icon.svg';
+  static const callCenterIcon = 'assets/svg/call_center_icon.svg';
+  static const editFieldIcon = 'assets/svg/edit_field_icon.svg';
+  static const uploadImageIcon = 'assets/svg/upload_image_icon.svg';
+  static const revenueIcon = 'assets/svg/revenue_icon.svg';
+  static const orderStatusIcon1 = 'assets/svg/order_status_icon1.svg';
+  static const orderStatusIcon2 = 'assets/svg/order_status_icon2.svg';
+  static const orderStatusIcon3 = 'assets/svg/order_status_icon3.svg';
+  static const orderStatusIcon4 = 'assets/svg/order_status_icon4.svg';
+  static const orderStatusIconBody12 = 'assets/images/order_status_icon_body1,2.png';
+  static const orderStatusIconBody3 = 'assets/images/order_status_icon_body3.png';
+  static const orderStatusIconBody4 = 'assets/images/order_status_icon_body4.png';
+  static const orderStatusIconBody5 = 'assets/images/order_status_icon_body5.png';
+  static const paymentIcon = 'assets/svg/payment_icon.svg';
+  static const costIcon = 'assets/svg/cost_icon.svg';
+
+  
+
 }

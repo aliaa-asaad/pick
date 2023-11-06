@@ -39,7 +39,7 @@ class AuthScreen extends StatelessWidget {
               const Spacer(),
               CustomButton(
                   textColor: Colors.white,
-                  background: Theme.of(context).colorScheme.primary,
+                
                   onPressed: () {
                     AppRoutes.pushNamedNavigator(
                       routeName: Routes.signUp,
@@ -47,8 +47,8 @@ class AuthScreen extends StatelessWidget {
                   },
                   text: 'إنشاء حساب'),
               CustomButton(
-                  textColor: Theme.of(context).colorScheme.primary,
-                  background: Theme.of(context).colorScheme.secondary,
+                  textColor: Theme.of(context).colorScheme.secondary,
+                  background: Theme.of(context).colorScheme.secondary.withOpacity(.16),
                   onPressed: () {
                     AppRoutes.pushNamedNavigator(
                       routeName: Routes.login,

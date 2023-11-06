@@ -19,6 +19,7 @@ class _CarCardState extends State<CarCard> {
       height: MediaQueryHelper.height * .239,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal:16.r),
         itemCount: OrderBloc.instance.carCardData.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {

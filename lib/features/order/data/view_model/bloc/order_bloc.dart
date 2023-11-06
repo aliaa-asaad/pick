@@ -1,11 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pick_up/features/order/data/model/order_repo.dart';
 import 'package:pick_up/features/order/data/model/send_order_model.dart';
+import 'package:pick_up/handlers/location_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
+import 'package:pick_up/routing/routes.dart';
 import 'package:pick_up/utilities/images.dart';
 
 part 'order_event.dart';
@@ -13,15 +16,19 @@ part 'order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc() : super(OrderInitial()) {
-    on<OrderDataClick>(_sendOrder);
+    on<OrderDataClick>(_sendOrderData);
+    on<OrderImagesClick>(_sendOrderImages);
+    on<OrderSubmitClick>(_sendSubmitOrder);
   }
   static OrderBloc get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
   final SendOrderRepo _sendOrderDataRepo = SendOrderRepo();
-  late SendOrderDataModel _sendOrderDataModel;
+  late OrderImagesDataModel _orderImagesDataModel;
+  late OrderDataModel _orderDataModel;
+  late OrderSubmitModel _orderSubmitModel;
 
 /////////////////////////////////////////////
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+      final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int currentStep = 0;
   int carIndex = -1;
   List<Map<String, dynamic>> carCardData = [
@@ -55,10 +62,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   int orderDetailsTypeInitialIndex = -1;
   int orderDetailsTypeIndex = -1;
 
-  List<String> orderDetailsTypeData = [
-    'مطلوبة',
-    'غير مطلوبة',
-  ];
+ 
   TextEditingController orderRecieveFloorController = TextEditingController();
   TextEditingController orderSendFloorController = TextEditingController();
   List<String> additionalService = [
@@ -71,6 +75,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       TextEditingController();
   TextEditingController orderSendLocationController = TextEditingController();
   List<File> imagesList = [];
+  
   bool isValidData() {
     log('carIndex:$carIndex');
     log('orderTypeIndex:$orderTypeIndex');
@@ -116,25 +121,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     emit(OrderCounter());
   }
 
-  /*  int orderCar = -1;
-    int carIndex = -1;
-    int orderType = -1;
-    
-    int orderHolder = -1;
-    
-    int oredrElevetor = -1;
-    int orderAdditionalWorker = -1;
-    List orderImages = [];
-    String orderRecieveLocation = '';
-    String orderSendLocation = ''; */
-  /* int paymentType = -1;
-    int orderStatus = -1;
-    int orderPrice = -1;
-    int orderDate = -1;
-    int orderTime = -1; */
-  _sendOrder(OrderEvent events, Emitter emit) async {
+  _sendOrderData(OrderEvent events, Emitter emit) async {
     emit(OrderLoading());
     try {
+      List<double> picupCoordinates=await LocationHandler.getLocationFromAddress(location: orderRecieveLocationController.text);
+      List<double> deliveryCoordinates=await LocationHandler.getLocationFromAddress(location: orderRecieveLocationController.text);
+      
       Map<String, dynamic> data = {
         "carType": carIndex,
         "shipmentType": orderTypeIndex,
@@ -143,18 +135,76 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         "deleviryFloor": int.parse(orderSendFloorController.text),
         "elevatorAvilabel": elevatorAvilabelIndex,
         "extramanAvilabel": extramanAvilabelIndex,
-        "pickupLocation": orderRecieveLocationController.text,
+        'pickupLat':picupCoordinates[0],
+        'pickupLong':picupCoordinates[1],
+        'deleviryLat':deliveryCoordinates[0],
+        'deleviryLong':deliveryCoordinates[1],
+        /* "pickupLocation": orderRecieveLocationController.text,
         // To Do : check loop for images
-        "deleviryLocation": orderSendLocationController.text,
+        "deleviryLocation": orderSendLocationController.text, */
       };
-      _sendOrderDataModel = await _sendOrderDataRepo.sendOrderRequest(data);
 
+      _orderDataModel = await _sendOrderDataRepo.sendOrderRequest(data);
+      log('_sendOrderDataModel: $_orderDataModel');
+      viewCounter(back: false);
       /* AppRoutes.pushNamedNavigator(
         routeName: Routes.payment, /*  replacement: true */
       ); */
       emit(OrderLoaded());
     } catch (e) {
-      emit(OrderError(e.toString()));
+      emit(OrderError('order bloc error:$e'));
+    }
+  }
+
+  _sendOrderImages(OrderEvent events, Emitter emit) async {
+    emit(OrderLoading());
+    try {
+      Map<String, dynamic> data = {};
+      data = {
+        "order_id": _orderDataModel.orderId.toString(),
+      };
+      for (int i = 0; i < imagesList.length; i++) {
+        //  data['images[$i]'] = imagesList[i];
+        data['images[$i]'] = MultipartFile.fromFileSync(
+          imagesList[i].path,
+          filename: imagesList[i].path.split("/").last,
+        );
+      }
+
+      log('messages: ${data.toString()}');
+      // data['order_id'] = _sendOrderDataModel.orderId;
+      _orderImagesDataModel =
+          await _sendOrderDataRepo.sendImagesRequest(FormData.fromMap(data));
+      /* log('_sendOrderDataModel: $_sendOrderDataModel'); */
+      log('send images success');
+      viewCounter(back: false);
+      /* AppRoutes.pushNamedNavigator(
+        routeName: Routes.payment, /*  replacement: true */
+      ); */
+      emit(OrderLoaded());
+    } catch (e) {
+      emit(OrderError('order images bloc error:$e'));
+    }
+  }
+
+  _sendSubmitOrder(OrderEvent events, Emitter emit) async {
+    emit(OrderLoading());
+    try {
+      Map<String, dynamic> data = {};
+      data = {
+        "order_id": _orderImagesDataModel.orderId,
+      };
+      log('submit data: ${data.toString()}');
+      _orderSubmitModel =
+          await _sendOrderDataRepo.sendSubmitRequest(data);
+
+      log('send images success');
+      AppRoutes.pushNamedNavigator(
+        routeName: Routes.payment, /*  replacement: true */
+      );
+      emit(OrderLoaded());
+    } catch (e) {
+      emit(OrderError('order Submit bloc error:$e'));
     }
   }
 }

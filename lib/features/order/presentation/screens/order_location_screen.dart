@@ -103,6 +103,7 @@ class _OrderLocationScreenState extends State<OrderLocationScreen> {
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/app_widgets/custom_form_field.dart';
@@ -110,6 +111,7 @@ import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
 class OrderLocationScreen extends StatefulWidget {
   const OrderLocationScreen({
@@ -124,109 +126,136 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
     with Validations {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Form(
-        key: OrderBloc.instance.formKey,
-        autovalidateMode: AutovalidateMode.always,
-        child: InkWell(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          focusColor: Colors.transparent,
-          child: Column(
-            children: [
-              Image.asset(
-                AppImages.orderLocationPNG,
-                height: MediaQueryHelper.height * .35,
-              ),
-              Container(
-                width: MediaQueryHelper.width,
-                height: MediaQueryHelper.height * 0.52,
-                padding: EdgeInsets.all(24.0.r),
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade300,
-                      spreadRadius: 0.5,
-                      blurRadius: 7,
-                      offset: const Offset(0, -3), // changes position of shadow
-                    ),
-                  ],
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.r),
-                    topRight: Radius.circular(20.r),
+    return BlocBuilder<OrderBloc, OrderState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Form(
+            key: OrderBloc.instance.formKey,
+            autovalidateMode: AutovalidateMode.always,
+            child: InkWell(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              child: Column(
+                children: [
+                  Image.asset(
+                    AppImages.orderLocationPNG,
+                    height: MediaQueryHelper.height * .35,
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('موقع الاستلام'),
-                    SizedBox(
-                      height: MediaQueryHelper.height * .01,
+                  Container(
+                    width: MediaQueryHelper.width,
+                    height: MediaQueryHelper.height * 0.52,
+                    padding: EdgeInsets.all(24.0.r),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade300,
+                          spreadRadius: 0.5,
+                          blurRadius: 7,
+                          offset: const Offset(0, -3), // changes position of shadow
+                        ),
+                      ],
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.r),
+                        topRight: Radius.circular(20.r),
+                      ),
                     ),
-                    CustomFormField(
-                        validator: isValidContent,
-                        isAuth: false,
-                        hintText: 'ابحث عن عنوان الاستلام',
-                        keyboardType: TextInputType.name,
-                        controller:
-                            OrderBloc.instance.orderRecieveLocationController),
-                    SizedBox(
-                      height: MediaQueryHelper.height * .01,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('موقع الاستلام'),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .01,
+                        ),
+                        CustomFormField(
+                            validator: isValidContent,
+                            isAuth: false,
+                            hintText: 'ابحث عن عنوان الاستلام',
+                            keyboardType: TextInputType.name,
+                            controller:
+                                OrderBloc.instance.orderRecieveLocationController),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .01,
+                        ),
+                        const Text('موقع التسليم'),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .01,
+                        ),
+                        CustomFormField(
+                            validator: isValidContent,
+                            isAuth: false,
+                            hintText: 'ابحث عن عنوان التسليم',
+                            keyboardType: TextInputType.name,
+                            controller:
+                                OrderBloc.instance.orderSendLocationController),
+    SizedBox(
+                      height: MediaQueryHelper.height * .02,
                     ),
-                    const Text('موقع التسليم'),
-                    SizedBox(
-                      height: MediaQueryHelper.height * .01,
+                    state is OrderError
+                        ? Text(
+                            'هناك خطا في ارسال البيانات',
+                            style: TextStyleHelper.subtitle20,
+                          )
+                        : const SizedBox(),
+                        Center(
+                          child: CustomButton(
+                            onPressed: () {
+                              if (OrderBloc.instance.formKey.currentState!
+                                  .validate()) {
+                                if (OrderBloc.instance.isValidLocation()) {
+                                  log('valid');
+                                 /*  OrderBloc.instance.viewCounter(back: false); */
+                                  OrderBloc.instance.add(OrderDataClick());
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('حفظ البيانات')),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'الرجاء ادخال كل البيانات المطلوبة ')),
+                                  );
+                                }
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text('الرجاء ادخال كل البيانات المطلوبة ')),
+                                );
+                              }
+                            },
+                             width: state is OrderLoading
+                            ? MediaQueryHelper.width * .13
+                            : MediaQueryHelper.width,
+                                              child: state is OrderLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                'متابعة',
+                                style: TextStyleHelper.subtitle20.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            
+                          ),
+                        )
+                        //Spacer()
+                      ],
                     ),
-                    CustomFormField(
-                        validator: isValidContent,
-                        isAuth: false,
-                        hintText: 'ابحث عن عنوان التسليم',
-                        keyboardType: TextInputType.name,
-                        controller:
-                            OrderBloc.instance.orderSendLocationController),
-
-                    CustomButton(
-                      onPressed: () {
-                        if (OrderBloc.instance.formKey.currentState!
-                            .validate()) {
-                          if (OrderBloc.instance.isValidLocation()) {
-                            log('valid');
-                            OrderBloc.instance.viewCounter(back: false);
-                            OrderBloc.instance.add(OrderDataClick());
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('حفظ البيانات')),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      'الرجاء ادخال كل البيانات المطلوبة ')),
-                            );
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content:
-                                    Text('الرجاء ادخال كل البيانات المطلوبة ')),
-                          );
-                        }
-                      },
-                      text: 'التالي',
-                    )
-                    //Spacer()
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

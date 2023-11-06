@@ -26,6 +26,7 @@ class UserModel {
 }
 
 class Client {
+  int? id;
   String? fullName;
   String? phoneNumber;
   String? email;
@@ -34,7 +35,7 @@ class Client {
   bool? isValid;
 
   Client(
-      {this.fullName,
+      {this.id,this.fullName,
       this.phoneNumber,
       this.email,
       this.imageUrl,
@@ -42,6 +43,7 @@ class Client {
       this.isValid});
 
   Client.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     fullName = json['fullName'];
     phoneNumber = json['phoneNumber'];
     email = json['email'];
@@ -52,6 +54,7 @@ class Client {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['fullName'] = fullName;
     data['phoneNumber'] = phoneNumber;
     data['email'] = email;

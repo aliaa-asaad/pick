@@ -1,66 +1,16 @@
-/* import 'package:pick_up/core/auth_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-class SharedHandler {
-  static late SharedPreferences preferences;
-  static Future<void> init() async {
-    preferences = await SharedPreferences.getInstance();
-  }
-
-  static Future<bool> saveValue(int count) async {
-    return await preferences.setInt("count", count);
-  }
-
-  static int getValue() {
-    return preferences.getInt("count") ?? 1;
-  }
-
-  static Future<bool> saveImageProfile(String url) async {
-    return await preferences.setString("image", url);
-  }
-
-  static String getImage() {
-    return preferences.getString("image") ?? "";
-  }
-
-  static String getPhone() {
-    return preferences.getString("phoneNumber") ?? "";
-  }
-
-  static String getEmail() {
-    return preferences.getString("email") ?? "";
-  }
-
-  static String getToken() {
-    return preferences.getString("auth-token") ?? "";
-  }
-
-  static Future saveLoginData(AuthModel user) async {
-    await preferences.setString("phoneNumber", user.client!.mobilePhone!);
-    // await preferences.setString("email",user.client.!);
-    await preferences.setString("auth-token", user.client!.accessToken!);
-    await preferences.setInt("id", user.client!.id!);
-  }
-
-  static Future saveSignUpData(data) async {
-    await preferences.setString("phoneNumber", data.client.phoneNumber);
-    await preferences.setString("email", data.client.email);
-  }
-}
- */
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedKeys {
   String isLogin = "IS_LOGIN";
-  
+
   String user = "USER";
   String token = "TOKEN";
   String rememberMe = "REMEMBER_ME";
   String lang = "LANG";
   String theme = "THEME";
-  String  isFirstTime = "Is_FIRST_TIME";
+  String isNotFirstTime = "Is_NOT_FIRST_TIME";
 
   String userType = "USER_TYPE";
 }
@@ -72,7 +22,7 @@ class SharedHandler {
   late final SharedPreferences _sharedPreferences;
   //بخليه برايفت عشان مقدرش اعمل اوبجكت من الكلاس دا من برا
   SharedHandler._internal();
-  // بعمل اوبجكت من الكلاس دا من جوا الكلاس من خلال اني بدي البرايفت كونستراكتور للانستانس اللي اتعمل فوق دا 
+  // بعمل اوبجكت من الكلاس دا من جوا الكلاس من خلال اني بدي البرايفت كونستراكتور للانستانس اللي اتعمل فوق دا
   // وبرن الميثود كلها فالمين بالتالي هيكريت الاوبجكت اول ما بستخدم الابلكيشن ومش هيتكريت اي اوبجكت غير اللي عملته
   static init() async {
     if (instance == null) {
@@ -83,7 +33,6 @@ class SharedHandler {
 
   Future<void> setData(String key, {dynamic value}) async {
     if (value is String) {
-      
       _sharedPreferences.setString(key, value);
     } else if (value is bool) {
       _sharedPreferences.setBool(key, value);

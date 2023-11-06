@@ -1,13 +1,14 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/model/auth_repo.dart';
 import 'package:pick_up/features/auth/data/model/email_verification_model.dart';
 import 'package:pick_up/features/auth/data/model/forget_password_model.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
+import 'package:pick_up/features/notification/data/view_model/cubit/notification_cubit.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
@@ -17,6 +18,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   AuthBloc() : super(AuthInitial()) {
     on<LoginClick>(_login);
+
     on<RegisterClick>(_register);
     on<CodeVerificationClick>(_verifyCode);
     on<ForgetPasswordClick>(_forgetPassword);
@@ -34,8 +36,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       }
     }); */
   }
+  static AuthBloc get instance =>
+      BlocProvider.of(AppRoutes.navigatorState.currentContext!);
   final AuthRepo _authRepo = AuthRepo();
-  late UserModel _userModel;
+  late UserModel userModel;
   late EmailVerifiactionModel _emailVerifiactionModel;
   late ForgetPasswordModel _forgetPasswordModel;
   int type = -1;
@@ -109,6 +113,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     return confirmPasswordError.isEmpty && passwordError.isEmpty;
   }
 
+  checkValidation() {
+    emit(AuthLoading());
+
+    if (type != -1) {
+      AppRoutes.pushNamedNavigator(routeName: Routes.auth);
+      emit(AuthLoaded());
+    } else {
+      log('check else error');
+      emit(AuthError());
+    }
+  }
+
   _login(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
@@ -119,20 +135,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
           "type": SharedHandler.instance!
               .getData(key: SharedKeys().userType, valueType: ValueType.int)
         };
-        _userModel = await _authRepo.loginRequest(data);
+        userModel = await _authRepo.loginRequest(data);
         SharedHandler.instance!
-            .setData(SharedKeys().user, value: _userModel.client!.toJson());
+            .setData(SharedKeys().user, value: userModel.client!.toJson());
         SharedHandler.instance!
-            .setData(SharedKeys().token, value: _userModel.authToken);
-        log('login token: ${_userModel.authToken}');
+            .setData(SharedKeys().token, value: userModel.authToken);
+        log('login token: ${userModel.authToken}');
         SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
-        SharedHandler.instance!.setData(SharedKeys().isFirstTime, value: false);
+        SharedHandler.instance!
+            .setData(SharedKeys().isNotFirstTime, value: true);
         //SharedHandler.saveLoginData(_authModel);
         //SharedHandler.setData(_authModel);
-        //log(' ${_loginModel.client!.accessToken!}');
-        _userModel.client!.isValid!
-            ? AppRoutes.pushNamedNavigator(
-                routeName: Routes.navBar, replacement: true)
+        //log(' ${_loginModel.client!.accesxsToken!}');
+        log('before pusher');
+        NotificationCubit.instance.getPusherBeams();
+        log('after pusher');
+        userModel.client!.isValid!
+            ? SharedHandler.instance!.getData(
+                        key: SharedKeys().userType, valueType: ValueType.int) ==
+                    0
+                ? AppRoutes.pushNamedNavigator(
+                    routeName: Routes.clientNavBar, replacement: true)
+                : AppRoutes.pushNamedNavigator(
+                    routeName: Routes.driverNavBar, replacement: true)
             : AppRoutes.pushNamedNavigator(
                 routeName: Routes.emailVerification, replacement: true);
         emit(AuthLoaded());
@@ -153,7 +178,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
           'password': passwordController.text,
           'phoneNumber': phoneNumberController.text,
         };
-        _userModel = await _authRepo.registerRequest(data);
+        userModel = await _authRepo.registerRequest(data);
         log('success');
         /* SharedHandler.instance!
           .setData(SharedKeys().user, value: _userModel.client!.toJson());
@@ -177,7 +202,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     emit(AuthLoading());
     try {
       Map<String, dynamic> data = {
-        'email': emailController.text,
+        'phoneNumber': phoneNumberController.text,
         'otp': [
           codeController1.text,
           codeController2.text,
@@ -194,23 +219,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       log('isForgetPassword : $isForgetPassword');
       if (isForgetPassword == false) {
         log('aliaa');
-        log('model: ${_userModel.client!.toJson()}');
+        log('model: ${userModel.client!.toJson()}');
         await SharedHandler.instance!
-            .setData(SharedKeys().user, value: _userModel.client!.toJson());
+            .setData(SharedKeys().user, value: userModel.client!.toJson());
         await SharedHandler.instance!
             .setData(SharedKeys().isLogin, value: true);
-        log('token: ${_userModel.authToken}');
+        log('token: ${userModel.authToken}');
         await SharedHandler.instance!
-            .setData(SharedKeys().token, value: _userModel.authToken);
+            .setData(SharedKeys().token, value: userModel.authToken);
         await SharedHandler.instance!
-            .setData(SharedKeys().isFirstTime, value: false);
+            .setData(SharedKeys().isNotFirstTime, value: true);
       }
 
       //SharedHandler.instance!.setData(SharedKeys().userType, value: type);
       isForgetPassword
           ? AppRoutes.pushNamedNavigator(routeName: Routes.newPassword)
-          : AppRoutes.pushNamedNavigator(
-              routeName: Routes.navBar, replacement: true);
+          : SharedHandler.instance!.getData(
+                      key: SharedKeys().userType, valueType: ValueType.int) ==
+                  0
+              ? AppRoutes.pushNamedNavigator(
+                  routeName: Routes.clientNavBar, replacement: true)
+              : AppRoutes.pushNamedNavigator(
+                  routeName: Routes.driverNavBar, replacement: true);
 
       emit(AuthLoaded());
     } catch (e) {
@@ -263,18 +293,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
         "type": SharedHandler.instance!
             .getData(key: SharedKeys().userType, valueType: ValueType.int)
       };
-      _userModel = await _authRepo.resetPasswordRequest(data);
+      userModel = await _authRepo.resetPasswordRequest(data);
       await SharedHandler.instance!
-          .setData(SharedKeys().user, value: _userModel.client!.toJson());
+          .setData(SharedKeys().user, value: userModel.client!.toJson());
       await SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
       await SharedHandler.instance!
-          .setData(SharedKeys().isFirstTime, value: true);
+          .setData(SharedKeys().isNotFirstTime, value: true);
       //SharedHandler.saveLoginData(_authModel);
       //SharedHandler.setData(_authModel);
       //log(' ${_loginModel.client!.accessToken!}');
       /* _userModel.client!.isValid!
             ?  */
-      AppRoutes.pushNamedNavigator(routeName: Routes.navBar, replacement: true);
+      SharedHandler.instance!.getData(
+                  key: SharedKeys().userType, valueType: ValueType.int) ==
+              0
+          ? AppRoutes.pushNamedNavigator(
+              routeName: Routes.clientNavBar, replacement: true)
+          : AppRoutes.pushNamedNavigator(
+              routeName: Routes.driverNavBar, replacement: true);
       /* : AppRoutes.pushNamedNavigator(
                 routeName: Routes.emailVerification, replacement: true); */
       emit(AuthLoaded());
@@ -292,7 +328,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
         SharedKeys().user,
         SharedKeys().isLogin,
         SharedKeys().token,
-        SharedKeys().isFirstTime
+        SharedKeys().isNotFirstTime
       ]);
       isForgetPassword = false;
       AppRoutes.pushNamedNavigator(routeName: Routes.check, replacement: true);

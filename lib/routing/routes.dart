@@ -10,12 +10,21 @@ abstract class Routes {
   static const String forgetPassword = "/forget_password";
   static const String emailVerification = "/email_verification";
   static const String newPassword = "/new_password";
-  static const String navBar = "/nav_bar";
+  static const String clientNavBar = "/client_nav_bar";
+   static const String driverNavBar = "/driver_nav_bar";
   static const String profile = "/profile";
   static const String order = "/order";
   static const String orderImage = "/order_image";
   static const String orderData = "/order_data";
   static const String orderLocation = "/order_location";
   static const String orderConfirm = "/order_confirm";
+  static const String orderDetails = "/order_details";
+  static const String driverOrderStatus = "/driver_order_status";
   static const String payment = "/payment";
+  static const String editProfile = "/edit_profile";
+  static const String bills = "/bills";
+  static const String about = "/about";
+  static const String localization = "/localization";
+  static const String callCenter = "/call_center";
+  static const String policy = "/policy";
 }

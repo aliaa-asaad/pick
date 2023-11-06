@@ -1,45 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 
-class SlideContainer extends StatefulWidget {
-  const SlideContainer({Key? key}) : super(key: key);
 
+class MyHomePage extends StatefulWidget {
   @override
-  _SlideContainerState createState() => _SlideContainerState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _SlideContainerState extends State<SlideContainer>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<Offset> _offset;
+class _MyHomePageState extends State<MyHomePage> {
+  String _location = 'القاهرة';
+  double? _latitude;
+  double? _longitude;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    );
-    _offset = Tween<Offset>(begin: const Offset(1, 0.0), end: Offset(10,0))
-        .animate(_controller);
-    _controller.forward();
+    getLocationFromAddress();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  Future<void> getLocationFromAddress() async {
+    try {
+      List<Location> locations = await locationFromAddress(_location);
+      setState(() {
+        _latitude = locations[0].latitude;
+        _longitude = locations[0].longitude;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SlideTransition(
-        position: _offset,
-        child: Container(
-          color: Colors.cyan,
-          height: 50.0,
-          width: 2,
-          child: const Text("hello"),
+      appBar: AppBar(
+        title: Text('Geocoding Example'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Address: $_location'),
+            SizedBox(height: 20),
+            Text('Latitude: ${_latitude ?? 'Unknown'}'),
+            SizedBox(height: 10),
+            Text('Longitude: ${_longitude ?? 'Unknown'}'),
+          ],
         ),
       ),
     );

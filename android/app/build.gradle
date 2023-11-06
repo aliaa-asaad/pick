@@ -71,7 +71,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation 'com.pusher:push-notifications-android:${ANDROID_SDK_VERSION}'
     testImplementation 'junit:junit:4.12'
-    def multidex_version = "2.0.1"
+    def multidex_version = "1.0.3"
     implementation "androidx.multidex:multidex:$multidex_version"
 }
-apply plugin: 'com.google.gms.google-services'
+

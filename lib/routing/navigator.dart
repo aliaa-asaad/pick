@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:pick_up/features/auth/presentation/screens/email_verification_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/login_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/new_password_screen.dart';
-import 'package:pick_up/features/auth/presentation/screens/email_verification_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:pick_up/features/home/presentation/screens/home_screen.dart';
-import 'package:pick_up/features/nav_bar/nav_bar.dart';
+import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';
+import 'package:pick_up/features/my_order/presentation/screens/driver_order_status_screen.dart';
+import 'package:pick_up/features/my_order/presentation/screens/order_details_screen.dart';
+import 'package:pick_up/features/nav_bar/client_nav_bar.dart';
+import 'package:pick_up/features/nav_bar/driver_nav_bar.dart';
 import 'package:pick_up/features/on_boarding/view/screens/auth_screen.dart';
 import 'package:pick_up/features/on_boarding/view/screens/check_screen.dart';
 import 'package:pick_up/features/on_boarding/view/screens/on_boarding.dart';
 import 'package:pick_up/features/order/presentation/screens/order_screen.dart';
-import 'package:pick_up/features/payment/presentation/screens/payment.dart';
+import 'package:pick_up/features/payment/presentation/screens/payment_screen.dart';
+import 'package:pick_up/features/profile/presentation/screens/about_screen.dart';
+import 'package:pick_up/features/profile/presentation/screens/bills_screen.dart';
+import 'package:pick_up/features/profile/presentation/screens/call_center_screen.dart';
+import 'package:pick_up/features/profile/presentation/screens/edit_profile.dart';
+import 'package:pick_up/features/profile/presentation/screens/localization_screen.dart';
+import 'package:pick_up/features/profile/presentation/screens/policy_screen.dart';
+import 'package:pick_up/features/profile/presentation/screens/profile_screen.dart';
 import 'package:pick_up/features/splash/view/splash_screen.dart';
 import 'package:pick_up/routing/routes.dart';
 
@@ -43,15 +53,40 @@ class AppRoutes {
         return AppRoutes.aniamtedNavigation(screen: const NewPassword());
       case Routes.signUp:
         return AppRoutes.aniamtedNavigation(screen: const SignUpScreen());
-      case Routes.navBar:
+      case Routes.clientNavBar:
         return AppRoutes.aniamtedNavigation(
-            screen: const CustomNavigationBar());
+            screen: const ClientNavigationBar());
+      case Routes.driverNavBar:
+        return AppRoutes.aniamtedNavigation(
+            screen: const DriverNavigationBar());
       case Routes.home:
         return AppRoutes.aniamtedNavigation(screen: const HomeScreen());
       case Routes.order:
         return AppRoutes.aniamtedNavigation(screen: const OrderScreen());
+      case Routes.orderDetails:
+        return MaterialPageRoute(
+          builder: (context) => OrderDetailsScreen(
+            orderId: settings.arguments as int,
+          ),
+        );
+      case Routes.driverOrderStatus:
+        return AppRoutes.aniamtedNavigation(screen: const DriverOrderStatusScreen());  
       case Routes.payment:
         return AppRoutes.aniamtedNavigation(screen: const PaymentScreen());
+      case Routes.editProfile:
+        return AppRoutes.aniamtedNavigation(screen: const EditProfileScreen());
+      case Routes.bills:
+        return AppRoutes.aniamtedNavigation(screen: const BillsScreen());
+      case Routes.about:
+        return AppRoutes.aniamtedNavigation(screen: const AboutScreen());
+      case Routes.localization:
+        return AppRoutes.aniamtedNavigation(screen: const LocalizationScreen());
+      case Routes.callCenter:
+        return AppRoutes.aniamtedNavigation(screen: const CallCenterScreen());
+      case Routes.policy:
+        return AppRoutes.aniamtedNavigation(screen: const PolicyScreen());
+        case Routes.profile:
+        return AppRoutes.aniamtedNavigation(screen: const ProfileScreen());
       /* case Routes.orderData:
         return AppRoutes.aniamtedNavigation(screen: const OrderDataScreen());
       case Routes.orderImage:
@@ -63,9 +98,10 @@ class AppRoutes {
         return AppRoutes.aniamtedNavigation(screen: const OrderConfirmScreen()); */
       default:
         return AppRoutes.aniamtedNavigation(
-            screen: const Scaffold(
-          body: Center(child: Text('Error')),
-        ));
+          screen: const Scaffold(
+            body: Center(child: Text('No screen')),
+          ),
+        );
     }
   }
 

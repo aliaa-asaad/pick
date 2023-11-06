@@ -123,10 +123,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               child: CustomButton(
                   textColor: currentIndex == onBoardingList.length - 1
                       ? Colors.white
-                      : Theme.of(context).colorScheme.primary,
-                  background: currentIndex == onBoardingList.length - 1
-                      ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.secondary,
+                  background: currentIndex == onBoardingList.length - 1
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.secondary.withOpacity(.16),
                   onPressed: () {
                     if (currentIndex == onBoardingList.length - 1) {
                       AppRoutes.pushNamedNavigator(

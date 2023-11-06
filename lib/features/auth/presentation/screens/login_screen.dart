@@ -8,6 +8,7 @@ import 'package:pick_up/app_widgets/custom_form_field.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
+import 'package:pick_up/features/notification/data/view_model/cubit/notification_cubit.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
 import 'package:pick_up/utilities/images.dart';
@@ -122,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
                             const SnackBar(content: Text('Processing Data')),
                           );
                           bloc.add(LoginClick());
+                          //BlocProvider.of<NotificationCubit>(context).getPusherBeams();
                         } else {
                           log('not valid');
                         }

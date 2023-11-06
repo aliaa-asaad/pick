@@ -4,16 +4,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/utilities/images.dart';
 
 class CustomFormField extends StatefulWidget {
-  final String hintText;
+  final String? hintText;
   final TextInputType keyboardType;
   final bool isPassword;
   final bool isAuth;
-
+  final Color? fillColor;
   final String icon;
   final String? Function(String?)? validator;
   final TextEditingController controller;
-
-  const CustomFormField({
+  final Widget? iconWidget;
+  final Color? hintColor;
+  const CustomFormField({ 
     super.key,
     required this.hintText,
     required this.keyboardType,
@@ -22,6 +23,9 @@ class CustomFormField extends StatefulWidget {
     this.icon = '',
     this.validator,
     this.isAuth = true,
+    this.fillColor,
+    this.iconWidget,
+    this.hintColor, 
   });
 
   @override
@@ -36,7 +40,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: widget.validator,
       keyboardType: widget.keyboardType,
-      textInputAction:TextInputAction.next,
+      textInputAction: TextInputAction.next,
       obscureText: widget.isPassword ? passwordVisible : false,
       controller: widget.controller,
       enabled: true,
@@ -45,7 +49,9 @@ class _CustomFormFieldState extends State<CustomFormField> {
         //fontSize: 16.sp,
       ),
       decoration: InputDecoration(
-        fillColor: Colors.white,
+   
+        fillColor: widget.fillColor ?? Colors.white,
+        
         filled: true,
         suffixIcon: widget.isAuth
             ? widget.isPassword
@@ -61,17 +67,22 @@ class _CustomFormFieldState extends State<CustomFormField> {
                           )
                         : SvgPicture.asset(
                             AppImages.visiblePassword,
-                          ))
+                          ),
+                  )
                 : const SizedBox()
-            : null,
+            : Padding(
+              padding:  EdgeInsets.all(12.0.r),
+              child: widget.iconWidget,
+            ),
         prefixIcon: widget.isAuth
             ? Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding:  EdgeInsets.all(12.0.r),
                 child: SvgPicture.asset(
                   widget.icon,
                 ),
               )
             : null,
+        hintStyle: TextStyle(color: widget.hintColor ?? Colors.grey),
         hintText: widget.hintText,
         border: OutlineInputBorder(
           /* borderSide: BorderSide(

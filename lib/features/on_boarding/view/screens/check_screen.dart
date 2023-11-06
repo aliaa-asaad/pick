@@ -13,6 +13,7 @@ import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
 class CheckScreen extends StatefulWidget {
   const CheckScreen({super.key});
@@ -38,7 +39,6 @@ class _CheckScreenState extends State<CheckScreen> {
         'selectedImage': AppImages.selectedEmployee
       }
     ];
-    var bloc = BlocProvider.of<AuthBloc>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -77,55 +77,65 @@ class _CheckScreenState extends State<CheckScreen> {
                         topLeft: Radius.circular(36),
                         topRight: Radius.circular(36)),
                     color: Colors.white),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 0),
-                      child: SizedBox(
-                        height: MediaQueryHelper.height * .2,
-                        child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: content.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: content.length,
-                            childAspectRatio: 1 / .87,
-                            crossAxisSpacing: MediaQueryHelper.width * .05,
-                          ),
-                          itemBuilder: (context, index) => CheckCard(
-                            color: _selectedIndex == index
-                                ? Theme.of(context).colorScheme.primary
-                                : Colors.white,
-                            title: content[index]['title'],
-                            image: _selectedIndex == index
-                                ? content[index]['selectedImage']
-                                : content[index]['image'],
-                            onTap: () {
-                              setState(() {
-                                _selectedIndex = index;
-                                bloc.type = _selectedIndex;
-                                SharedHandler.instance!.setData(
-                                    SharedKeys().userType,
-                                    value: bloc.type);
-                                log('type= ${bloc.type}');
-                                log('shared= ${SharedHandler.instance!.setData(SharedKeys().userType, value: bloc.type)}');
-                              });
-                            },
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 0),
+                          child: SizedBox(
+                            height: MediaQueryHelper.height * .2,
+                            child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: content.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: content.length,
+                                childAspectRatio: 1 / .87,
+                                crossAxisSpacing: MediaQueryHelper.width * .05,
+                              ),
+                              itemBuilder: (context, index) => CheckCard(
+                                color: _selectedIndex == index
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : Colors.white,
+                                title: content[index]['title'],
+                                image: _selectedIndex == index
+                                    ? content[index]['selectedImage']
+                                    : content[index]['image'],
+                                onTap: () {
+                                  setState(() {
+                                    _selectedIndex = index;
+                                    AuthBloc.instance.type = _selectedIndex;
+                                    SharedHandler.instance!.setData(
+                                        SharedKeys().userType,
+                                        value: AuthBloc.instance.type);
+                                    log('type= ${AuthBloc.instance.type}');
+                                    log('shared= ${SharedHandler.instance!.setData(SharedKeys().userType, value: AuthBloc.instance.type)}');
+                                  });
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: CustomButton(
-                          onPressed: () {
-                            AppRoutes.pushNamedNavigator(
-                                routeName: Routes.auth);
-                          },
-                          text: 'متابعة',
-                          background: Theme.of(context).colorScheme.primary),
-                    )
-                  ],
+                        state is AuthError /* && bloc.type == -1 */
+                            ? Text(
+                                'بالرجاء اختيار نوع الحساب',
+                                style: TextStyleHelper.subtitle20,
+                              )
+                            : const SizedBox(),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: CustomButton(
+                              onPressed: () {AuthBloc.instance.checkValidation();
+                               
+                              },
+                              text: 'متابعة',
+                              background:
+                                  Theme.of(context).colorScheme.secondary),
+                        )
+                      ],
+                    );
+                  },
                 ),
               ),
             )

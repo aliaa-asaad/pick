@@ -1,7 +1,9 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pick_up/app_widgets/custom_order_app_bar.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/features/order/presentation/screens/order_confirm_screen.dart';
 import 'package:pick_up/features/order/presentation/screens/order_data_screen.dart';
@@ -18,14 +20,7 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  @override
-  Path customPath = Path()
-        ..moveTo(0, 0)
-        ..lineTo(50, 0)
-      /* ..lineTo(20, 200)
-      ..lineTo(100, 100)
-      ..lineTo(20, 20) */
-      ;
+ 
   int currentStep = 0;
   @override
   Widget build(BuildContext context) {
@@ -65,7 +60,10 @@ class _OrderScreenState extends State<OrderScreen> {
               iconTheme:
                   IconThemeData(color: Theme.of(context).colorScheme.primary),
               actions: const [
-                Icon(Icons.notifications),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.notifications),
+                ),
               ],
               title: Text(
                 'إنشاء طلب جديد',
@@ -86,92 +84,8 @@ class _OrderScreenState extends State<OrderScreen> {
                 icon: const Icon(Icons.arrow_back),
               )),
           body: Column(children: [
-            Container(
-              height: MediaQueryHelper.height * .13,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20.r),
-                    bottomRight: Radius.circular(20.r),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade300,
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ]),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(
-                  icons.length,
-                  (index) => Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 26.r,
-                            backgroundColor: currentStep > index
-                                ? Colors.green
-                                : Theme.of(context).colorScheme.primary,
-                            child: CircleAvatar(
-                              radius: 25.r,
-                              backgroundColor: currentStep > index
-                                  ? Colors.green
-                                  : currentStep == index
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Colors.white,
-                              child: currentStep > index
-                                  ? const Icon(Icons.check_circle,
-                                      color: Colors.white)
-                                  : SvgPicture.asset(
-                                      icons[index]['icon'],
-                                      color: currentStep == index
-                                          ? Colors.white
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                    ),
-                            ),
-                          ),
-                          index <= icons.length - 2
-                              ? Row(
-                             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: List.generate(
-                                      5,
-                                      (indexContainer) => Container(
-                                            margin: indexContainer == 4
-                                                ? EdgeInsets.zero
-                                                : EdgeInsets.symmetric(
-                                                    horizontal: 2.w),
-                                            width: 5,
-                                            height: 1,
-                                            color: currentStep > index
-                                                ? Colors.green
-                                                : Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                          )),
-                                ) 
-                              : const SizedBox()
-                        ],
-                      ),
-                      Text(
-                        icons[index]['title'],
-                        style: TextStyle(
-                            color: currentStep == index
-                                ? Theme.of(context).colorScheme.primary
-                                : Colors.grey),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            CustomOrderAppBar(
+                icons: icons, currentStep: currentStep, ),
             Expanded(
                 child: currentStep < 0
                     ? const SizedBox()
@@ -182,3 +96,4 @@ class _OrderScreenState extends State<OrderScreen> {
     );
   }
 }
+
