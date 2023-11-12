@@ -11,7 +11,8 @@ class DriverRevenueScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text('الارباح',
-            style: TextStyleHelper.subtitle20.copyWith(color: Theme.of(context).colorScheme.primary)),
+            style: TextStyleHelper.subtitle19
+                .copyWith(color: Theme.of(context).colorScheme.primary)),
         backgroundColor: Colors.transparent,
       ),
     );

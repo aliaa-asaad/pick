@@ -20,7 +20,6 @@ class ConfirmContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      
       children: [
         Padding(
           padding: EdgeInsets.only(bottom: 8.0.r),
@@ -35,7 +34,7 @@ class ConfirmContent extends StatelessWidget {
                 width: MediaQueryHelper.width * .03,
               ),
               Text(title,
-                  style: TextStyleHelper.body16.copyWith(
+                  style: TextStyleHelper.body15.copyWith(
                       color: const Color(0xff001833),
                       fontWeight: FontWeight.bold)),
             ],

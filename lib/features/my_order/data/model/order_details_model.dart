@@ -47,18 +47,18 @@ class OrderDetails {
       this.date});
 
   OrderDetails.fromJson(Map<String, dynamic> json) {
-    id = json['id']??0;
-    carType = json['carType']??'';
-    shipmentType = json['shipmentType']??'';
-    shipmentDescription = json['shipmentDescription']??'';
-    pickupFloor = json['pickupFloor']??0;
-    deleviryFloor = json['deleviryFloor']??0;
-    elevatorAvilabel = json['elevatorAvilabel']??true;
-    extramanAvilabel = json['extramanAvilabel']??true;
-    pickupLocation = json['pickupLocation']??'القاهرة';
-    deliveryLocation = json['deleviryLocation']??'القاهرة';
-    orderStatus = json['orderStatus']??0;
-    date = json['date']??'';
+    id = json['id'];
+    carType = json['carType'];
+    shipmentType = json['shipmentType'];
+    shipmentDescription = json['shipmentDescription'];
+    pickupFloor = json['pickupFloor'];
+    deleviryFloor = json['deleviryFloor'];
+    elevatorAvilabel = json['elevatorAvilabel'];
+    extramanAvilabel = json['extramanAvilabel'];
+    pickupLocation = json['pickupLocation'];
+    deliveryLocation = json['deleviryLocation'];
+    orderStatus = json['orderStatus'];
+    date = json['date'];
   }
 
   Map<String, dynamic> toJson() {

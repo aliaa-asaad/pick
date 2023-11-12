@@ -102,7 +102,7 @@ class _OrderDataScreenState extends State<OrderDataScreen> with Validations {
                         if (OrderBloc.instance.formKey.currentState!.validate()) {
                           if (OrderBloc.instance.isValidData()) {
                             log('valid');
-                            OrderBloc.instance.viewCounter(back: false);
+                            OrderBloc.instance.viewCounter();
               
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('حفظ البيانات')),

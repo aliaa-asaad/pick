@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
 class CheckCard extends StatelessWidget {
@@ -33,9 +34,12 @@ class CheckCard extends StatelessWidget {
             ]),
         child: Column(
           children: [
-            Image.asset(image),
+            Image.asset(
+              image,
+              height: MediaQueryHelper.height * .1,
+            ),
             const Spacer(),
-            Text(title, style: TextStyleHelper.body16)
+            Text(title, style: TextStyleHelper.body15)
           ],
         ),
       ),

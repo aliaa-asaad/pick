@@ -28,7 +28,9 @@ class CustomButton extends StatelessWidget {
         child: AnimatedContainer(
           // padding: EdgeInsets.symmetric(horizontal: 16.w),
           width: width ?? MediaQueryHelper.width,
-          margin: EdgeInsets.symmetric(vertical: 12.r, /* horizontal: 16.r */),
+          margin: EdgeInsets.symmetric(
+            vertical: 12.r, /* horizontal: 16.r */
+          ),
           height: MediaQueryHelper.height * .06,
           curve: Curves.easeInOut,
           alignment: Alignment.center,
@@ -37,7 +39,7 @@ class CustomButton extends StatelessWidget {
           decoration: BoxDecoration(
               color: background ?? Theme.of(context).colorScheme.secondary,
               borderRadius: BorderRadius.circular(32.r)
-    
+
               /* shape: state is RegisterLoading
                               ? BoxShape.circle
                               : null, */
@@ -45,7 +47,7 @@ class CustomButton extends StatelessWidget {
           duration: const Duration(seconds: 1),
           child: child ??
               Text(text!,
-                  style: TextStyleHelper.subtitle20
+                  style: TextStyleHelper.subtitle19
                       .copyWith(color: textColor ?? Colors.white)),
         ),
       ),

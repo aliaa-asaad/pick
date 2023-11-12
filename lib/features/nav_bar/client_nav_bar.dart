@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';
 import 'package:pick_up/features/my_order/presentation/screens/client_order_screen.dart';
@@ -78,8 +79,8 @@ class ClientNavigationBarState extends State<ClientNavigationBar> {
             color: Theme.of(context).colorScheme.primaryContainer,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade400,
-                blurRadius: 16,
+                color: Colors.grey.shade300,
+                blurRadius: 12.r,
                 offset: const Offset(0, 0),
               ),
             ],

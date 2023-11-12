@@ -16,7 +16,7 @@ class _CarCardState extends State<CarCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQueryHelper.height * .239,
+      height: MediaQueryHelper.height * .25,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal:16.r),
@@ -28,8 +28,8 @@ class _CarCardState extends State<CarCard> {
             });
           },
           child: Container(
-            padding: EdgeInsets.all(8.r),
-            width: MediaQueryHelper.width * .5,
+            padding: EdgeInsets.all(12.r),
+            width: MediaQueryHelper.width * .53,
             margin: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -41,7 +41,7 @@ class _CarCardState extends State<CarCard> {
                   width: 2),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.shade300,
                   spreadRadius: 1,
                   blurRadius: 5,
                   offset: const Offset(0, 3), // changes position of shadow

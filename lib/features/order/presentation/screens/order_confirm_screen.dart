@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pick_up/app_widgets/confirm_additional_services.dart';
+import 'package:pick_up/app_widgets/confirm_content.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
-import 'package:pick_up/app_widgets/confirm_additional_services.dart';
 import 'package:pick_up/features/order/presentation/widgets/confirm_car_card.dart';
-import 'package:pick_up/app_widgets/confirm_content.dart';
 import 'package:pick_up/features/order/presentation/widgets/order_location.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
@@ -131,17 +131,17 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                 ),
                 Text(
                   'التكلفة التقريبية',
-                  style: TextStyleHelper.subtitle20,
+                  style: TextStyleHelper.subtitle19,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('رسوم التوصيل',
-                        style: TextStyleHelper.subtitle18
+                        style: TextStyleHelper.subtitle17
                             .copyWith(color: const Color(0xff4F5E7B))),
                     const Spacer(),
                     Text('150 ريال',
-                        style: TextStyleHelper.subtitle18
+                        style: TextStyleHelper.subtitle17
                             .copyWith(color: const Color(0xff4F5E7B))),
                   ],
                 ),
@@ -149,11 +149,11 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('تكلفة العامل الاضافي',
-                        style: TextStyleHelper.subtitle18
+                        style: TextStyleHelper.subtitle17
                             .copyWith(color: const Color(0xff4F5E7B))),
                     const Spacer(),
                     Text('150 ريال',
-                        style: TextStyleHelper.subtitle18
+                        style: TextStyleHelper.subtitle17
                             .copyWith(color: const Color(0xff4F5E7B))),
                   ],
                 ),
@@ -168,16 +168,16 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('الاجمالي',
-                        style: TextStyleHelper.subtitle18
+                        style: TextStyleHelper.subtitle17
                             .copyWith(color: const Color(0xff4F5E7B))),
                     const Spacer(),
                     Text('300 ريال',
-                        style: TextStyleHelper.subtitle18
+                        style: TextStyleHelper.subtitle17
                             .copyWith(color: const Color(0xff4F5E7B))),
                   ],
                 ),
                 Text('شامل قيمة الضربية المضافة',
-                    style: TextStyleHelper.subtitle18
+                    style: TextStyleHelper.subtitle17
                         .copyWith(color: Colors.grey)),
                 CustomButton(
                   onPressed: () {
@@ -213,7 +213,7 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                         )
                       : Text(
                           'متابعة',
-                          style: TextStyleHelper.subtitle20.copyWith(
+                          style: TextStyleHelper.subtitle19.copyWith(
                             color: Colors.white,
                           ),
                         ),

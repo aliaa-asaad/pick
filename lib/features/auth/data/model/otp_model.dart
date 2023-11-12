@@ -1,9 +1,9 @@
-class EmailVerifiactionModel {
+class OTPModel {
   String? message;
 
-  EmailVerifiactionModel({this.message});
+  OTPModel({this.message});
 
-  EmailVerifiactionModel.fromJson(Map<String, dynamic> json) {
+  OTPModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
   }
 

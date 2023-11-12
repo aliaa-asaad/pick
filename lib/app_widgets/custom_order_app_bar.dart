@@ -21,6 +21,7 @@ class CustomOrderAppBar extends StatelessWidget {
     Path customPath = Path()
       ..moveTo(-60.w, 0.w)
       ..lineTo(0.w, 0.w);
+    int dashIndex = 2;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.r),
       height: MediaQueryHelper.height * .13,
@@ -48,39 +49,44 @@ class CustomOrderAppBar extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 26.r,
-                    backgroundColor: currentStep > index
-                        ? Colors.green
-                        : isDriver
-                            ? Colors.white
-                            : Theme.of(context).colorScheme.primary,
-                    child: CircleAvatar(
-                      radius: 25.r,
-                      backgroundColor: currentStep > index
-                          ? Colors.green
-                          : currentStep == index
-                              ? isDriver
-                                  ? Colors.white
-                                  : Theme.of(context).colorScheme.primary
+                   CircleAvatar(
+                          radius: 26.r,
+                          backgroundColor: currentStep > index
+                              ? Colors.green
                               : isDriver
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Colors.white,
-                      child: currentStep > index
-                          ? const Icon(Icons.check_circle, color: Colors.white)
-                          : SvgPicture.asset(
-                              icons[index]['icon'],
-                              color: currentStep == index
-                                  ? isDriver
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Colors.white
-                                  : isDriver
-                                      ? Colors.white
-                                      : Theme.of(context).colorScheme.primary,
-                            ),
-                    ),
-                  ),
-                  index <= icons.length - 2
+                                  ? Colors.white
+                                  : Theme.of(context).colorScheme.primary,
+                          child: CircleAvatar(
+                            radius: 25.r,
+                            backgroundColor: currentStep > index
+                                ? Colors.green
+                                : currentStep == index
+                                    ? isDriver
+                                        ? Colors.white
+                                        : Theme.of(context).colorScheme.primary
+                                    : isDriver
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Colors.white,
+                            child: currentStep > index
+                                ? const Icon(Icons.check_circle,
+                                    color: Colors.white)
+                                : SvgPicture.asset(
+                                    icons[index]['icon'],
+                                    color: currentStep == index
+                                        ? isDriver
+                                            ? Theme.of(context)
+                                                .colorScheme
+                                                .primary
+                                            : Colors.white
+                                        : isDriver
+                                            ? Colors.white
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                  ),
+                          ),
+                        ),
+                  index <= icons.length - dashIndex
                       ? DottedBorder(
                           padding: EdgeInsets.symmetric(horizontal: 2.w),
                           customPath: (size) => customPath,
@@ -98,12 +104,16 @@ class CustomOrderAppBar extends StatelessWidget {
                 ],
               ),
               Text(
-                icons[index]['title'],
-                style: TextStyle(
-                    color: currentStep == index
-                        ? isDriver?Colors.white:Theme.of(context).colorScheme.primary
-                        : isDriver?Colors.white.withOpacity(.4): Colors.grey),
-              )
+                      icons[index]['title'],
+                      style: TextStyle(
+                          color: currentStep == index
+                              ? isDriver
+                                  ? Colors.white
+                                  : Theme.of(context).colorScheme.primary
+                              : isDriver
+                                  ? Colors.white.withOpacity(.4)
+                                  : Colors.grey),
+                    )
             ],
           ),
         ),

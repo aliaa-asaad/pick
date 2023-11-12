@@ -24,14 +24,14 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen>
     with Validations {
-      File? image;
+  File? image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: MediaQueryHelper.height * .1,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text('الحساب'),
+        title:  Text('الحساب',style: TextStyleHelper.subtitle17,),
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -89,12 +89,12 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                             right: 0,
                             child: InkWell(
                               onTap: () async {
-                              setState(() {
-                                image=null;
-                              });
-                                image=await ImagePickerHandler().getSingleImage();
-                                ProfileBloc.instance.image =
-                                    image;
+                                setState(() {
+                                  image = null;
+                                });
+                                image =
+                                    await ImagePickerHandler().getSingleImage();
+                                ProfileBloc.instance.image = image;
                                 ProfileBloc.instance.add(UploadImage());
                               },
                               child: CircleAvatar(
@@ -145,7 +145,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                       state is ProfileError
                           ? Text(
                               'هناك خطا في البيانات',
-                              style: TextStyleHelper.subtitle20,
+                              style: TextStyleHelper.subtitle19,
                             )
                           : const SizedBox(),
                       SizedBox(
@@ -172,7 +172,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                               )
                             : Text(
                                 'حفظ التعديلات',
-                                style: TextStyleHelper.subtitle20.copyWith(
+                                style: TextStyleHelper.subtitle19.copyWith(
                                   color: Colors.white,
                                 ),
                               ),

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:pick_up/core/user_model.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/notification/data/model/notification_model.dart';
 import 'package:pick_up/features/notification/data/model/notification_repo.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
@@ -23,27 +24,30 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> getPusherBeams() async {
     try {
       emit(NotificationLoading());
-
-      log("id :${SharedHandler.instance!.getData(key: SharedKeys().user, valueType: ValueType.map)['id']}");
+      await PusherBeams.instance.clearAllState();
       final BeamsAuthProvider provider = BeamsAuthProvider()
         ..authUrl = 'https://pickupksa.com/api/public/api/pusher/beams-auth'
         ..headers = {
           'Content-Type': 'application/json',
-          'Authorization':
+          'authorization':
               'Bearer ${SharedHandler.instance!.getData(key: SharedKeys().token, valueType: ValueType.string)}'
         }
         ..queryParams = {
           'user_id': SharedHandler.instance!
               .getData(key: SharedKeys().user, valueType: ValueType.map)['id']
-              .toString()
+              .toString(),
+              'type':AuthBloc.instance.type.toString()
         }
         ..credentials = 'omit';
+      log('pusher user id:${SharedHandler.instance!.getData(key: SharedKeys().user, valueType: ValueType.map)['id']}');
 
       await PusherBeams.instance.setUserId(
-          '3',
+          SharedHandler.instance!
+              .getData(key: SharedKeys().user, valueType: ValueType.map)['id']
+              .toString(),
           provider,
           (error) => {
-                if (error != null) {log('error:$error')}
+                if (error != null) {log('provider error:$error')}
                 // Success! Do something...
               });
       log('notificationModel: ${PusherBeams.instance.getDeviceInterests()}');

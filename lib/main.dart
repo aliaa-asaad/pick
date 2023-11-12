@@ -7,14 +7,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/config/end_points.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/login_bloc/login_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/otp_bloc/otp_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/register_bloc/register_bloc.dart';
 import 'package:pick_up/features/client_home/data/view_model/cubit/home_cubit.dart';
-import 'package:pick_up/features/my_order/data/view_model/cubit/my_order_cubit.dart';
-import 'package:pick_up/features/my_order/presentation/screens/driver_order_status_screen.dart';
+import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
 import 'package:pick_up/features/notification/data/view_model/cubit/notification_cubit.dart';
 import 'package:pick_up/features/on_boarding/view/screens/on_boarding.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/features/profile/data/view_model/bloc/profile_bloc.dart';
-import 'package:pick_up/features/splash/view/splash_screen.dart';
 import 'package:pick_up/handlers/localization.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
@@ -34,14 +35,7 @@ void main() async {
   //push notification is received while the app is in the foreground
   PusherBeams.instance.onMessageReceivedInTheForeground(
       (notification) => log('notifications: $notification'));
-  final BeamsAuthProvider beamsAuthProvider = BeamsAuthProvider()
-    ..authUrl = 'https://pickupksa.com/api/public/api/pusher/beams-auth'
-    ..headers = {'Content-Type': 'application/json'}
-    ..queryParams = {'user_id': '1'}
-    ..credentials = 'omit';
-  /* await PusherBeams.instance.addDeviceInterest('bananas');
-await PusherBeams.instance.removeDeviceInterest('bananas');
-await PusherBeams.instance.clearDeviceInterests(); */
+
   await SharedHandler.init();
   Network.init();
   runApp(
@@ -62,10 +56,19 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => HomeCubit() /* ..getImageSlider() */,
+          create: (context) => HomeCubit()..getImageSlider(),
         ),
         BlocProvider(
           create: (context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(),
+        ),
+        BlocProvider(
+          create: (context) => RegisterBloc(),
+        ),
+        BlocProvider(
+          create: (context) => OTPBloc(),
         ),
         BlocProvider(
           create: (context) => OrderBloc(),
@@ -77,7 +80,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ProfileBloc(),
         ),
         BlocProvider(
-          create: (context) => MyOrderCubit(),
+          create: (context) => MyOrderBloc(),
         )
       ],
       child: MaterialApp(
@@ -97,7 +100,7 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: const [Locale("ar")],
         locale: const Locale("ar"),
-        home: const SplashScreen(),
+        home: const OnBoardingScreen(),
       ),
     );
   }

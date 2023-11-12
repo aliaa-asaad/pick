@@ -157,7 +157,8 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                           color: Colors.grey.shade300,
                           spreadRadius: 0.5,
                           blurRadius: 7,
-                          offset: const Offset(0, -3), // changes position of shadow
+                          offset:
+                              const Offset(0, -3), // changes position of shadow
                         ),
                       ],
                       color: Theme.of(context).scaffoldBackgroundColor,
@@ -178,8 +179,8 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                             isAuth: false,
                             hintText: 'ابحث عن عنوان الاستلام',
                             keyboardType: TextInputType.name,
-                            controller:
-                                OrderBloc.instance.orderRecieveLocationController),
+                            controller: OrderBloc
+                                .instance.orderRecieveLocationController),
                         SizedBox(
                           height: MediaQueryHelper.height * .01,
                         ),
@@ -194,15 +195,15 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                             keyboardType: TextInputType.name,
                             controller:
                                 OrderBloc.instance.orderSendLocationController),
-    SizedBox(
-                      height: MediaQueryHelper.height * .02,
-                    ),
-                    state is OrderError
-                        ? Text(
-                            'هناك خطا في ارسال البيانات',
-                            style: TextStyleHelper.subtitle20,
-                          )
-                        : const SizedBox(),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ),
+                        state is OrderError
+                            ? Text(
+                                'هناك خطا في ارسال البيانات',
+                                style: TextStyleHelper.subtitle19,
+                              )
+                            : const SizedBox(),
                         Center(
                           child: CustomButton(
                             onPressed: () {
@@ -210,10 +211,11 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                                   .validate()) {
                                 if (OrderBloc.instance.isValidLocation()) {
                                   log('valid');
-                                 /*  OrderBloc.instance.viewCounter(back: false); */
+                                  /*  OrderBloc.instance.viewCounter(back: false); */
                                   OrderBloc.instance.add(OrderDataClick());
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('حفظ البيانات')),
+                                    const SnackBar(
+                                        content: Text('حفظ البيانات')),
                                   );
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -225,25 +227,24 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content:
-                                          Text('الرجاء ادخال كل البيانات المطلوبة ')),
+                                      content: Text(
+                                          'الرجاء ادخال كل البيانات المطلوبة ')),
                                 );
                               }
                             },
-                             width: state is OrderLoading
-                            ? MediaQueryHelper.width * .13
-                            : MediaQueryHelper.width,
-                                              child: state is OrderLoading
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : Text(
-                                'متابعة',
-                                style: TextStyleHelper.subtitle20.copyWith(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            
+                            width: state is OrderLoading
+                                ? MediaQueryHelper.width * .13
+                                : MediaQueryHelper.width,
+                            child: state is OrderLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text(
+                                    'متابعة',
+                                    style: TextStyleHelper.subtitle19.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
                         )
                         //Spacer()

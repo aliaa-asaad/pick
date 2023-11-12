@@ -18,19 +18,47 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
-  PageController _controller = PageController();
+  int currentImage = 0;
+  final PageController _pageController =
+      PageController(initialPage: 0, viewportFraction: 1);
 
   @override
   void initState() {
-    _controller = PageController(initialPage: 0);
     super.initState();
+    _pageController.addListener(() {
+      setState(() {
+        currentImage = _pageController.page!.round();
+      });
+    });
+    Future.delayed(const Duration(seconds: 2), () {
+      _animateSlider();
+    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _pageController.dispose();
+    _animateSlider();
     super.dispose();
+  }
+
+  void _animateSlider() {
+    if (currentImage < HomeCubit.instance.imageSlider.length - 1) {
+      currentImage++;
+    } else {
+      currentImage = 0;
+    }
+
+    _pageController.animateToPage(
+      currentImage,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
+
+    Future.delayed(const Duration(seconds: 2), () {
+      
+      _animateSlider();
+    });
   }
 
   List<Map<String, dynamic>> cardContent = [
@@ -59,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         centerTitle: true,
         title: const Text('الرئيسية'),
-        titleTextStyle: TextStyleHelper.subtitle20.copyWith(
+        titleTextStyle: TextStyleHelper.subtitle19.copyWith(
             color: Theme.of(context).colorScheme.primary, fontFamily: 'Cairo'),
       ),
       body: SafeArea(
@@ -70,21 +98,25 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(16.r),
-                height: MediaQueryHelper.height * 0.2,
+                // padding: EdgeInsets.all(8.r),
+                height: MediaQueryHelper.height * 0.22,
                 width: MediaQueryHelper.width,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    color: Colors.white),
+                  borderRadius:
+                      BorderRadius.circular(8.r), /* color: Colors.white */
+                ),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       BlocBuilder<HomeCubit, HomeState>(
                         builder: (context, state) {
                           if (state is HomeLoading) {
-                            return const Center(
-                                child: CircularProgressIndicator());
+                            return Padding(
+                              padding: EdgeInsets.all(8.0.r),
+                              child: const Center(
+                                  child: CircularProgressIndicator()),
+                            );
                           }
                           if (state is HomeError) {
                             return const Center(child: Text('error'));
@@ -93,68 +125,70 @@ class _HomeScreenState extends State<HomeScreen> {
                             return SizedBox(
                               height: MediaQueryHelper.height * .2,
                               width: MediaQueryHelper.width,
-                              child: FutureBuilder(
-                                  future: Future.delayed(
-                                      const Duration(seconds: 3), () {
-                                    if (currentIndex ==
-                                        cardContent.length - 1) {
-                                      setState(() {
-                                        currentIndex = 0;
-                                      });
-                                      Future.delayed(
-                                          const Duration(seconds: 3),
-                                          () => _controller
-                                              .jumpToPage(currentIndex));
-                                    }
-                                    _controller.nextPage(
-                                      duration: const Duration(seconds: 2),
-                                      curve: Curves.ease,
-                                    );
-                                    Future.delayed(const Duration(seconds: 3),
-                                        () {
-                                      _controller.keepPage;
-                                    });
-                                  }),
-                                  builder: (context, snapshot) {
-                                    return PageView.builder(
-                                      physics: const BouncingScrollPhysics(),
-                                      itemCount: cardContent.length,
-                                      onPageChanged: (int index) {
-                                        setState(() {
-                                          currentIndex = index;
-                                        });
-                                      },
-                                      controller: _controller,
-                                      itemBuilder: (context, index) =>
-                                          Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(16.r),
-                                            image: DecorationImage(
-                                                image: NetworkImage(state
-                                                    .imageSlider
-                                                    .data![index]
-                                                    .imageUrl!),
-                                                fit: BoxFit.cover)
-                                            //image: DecorationImage(image: )
-                                            ),
+                              child: PageView.builder(
+                                controller: _pageController,
+                                itemCount:
+                                    HomeCubit.instance.imageSlider.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return AnimatedBuilder(
+                                    animation: _pageController,
+                                    builder:
+                                        (BuildContext context, Widget? widget) {
+                                      double value = 1.0;
+                                      if (_pageController
+                                          .position.haveDimensions) {
+                                        value = _pageController.page! - index;
+                                        value = (1 - (value.abs() * 0.1))
+                                            .clamp(0.0, 2.0);
+                                      }
+                                      return Center(
+                                        child: SizedBox(
+                                          height:
+                                              Curves.easeOut.transform(value) *
+                                                  200,
+                                          width:
+                                              Curves.easeOut.transform(value) *
+                                                  MediaQueryHelper.width,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(
+                                                0), // Remove padding around the image
+                                            child: widget,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 3.0.r),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(16.r),
+                                        child: Image.network(
+                                          HomeCubit.instance.imageSlider[index]
+                                              .imageUrl!,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
-                                    );
-                                  }),
+                                    ),
+                                  );
+                                },
+                              ),
                             );
                           }
                           return const Text('null');
                         },
+                      ),
+                      SizedBox(
+                        height: MediaQueryHelper.height * .01,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
                           cardContent.length,
                           (index) => CustomDot(
-                            currentIndex: currentIndex,
+                            currentIndex: currentImage,
                             index: index,
-                            color: currentIndex == index
+                            color: currentImage == index
                                 ? Theme.of(context).colorScheme.primary
                                 : Colors.grey,
                           ),
@@ -165,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: MediaQueryHelper.height * .02,
               ),
-              Text('خدمات بيك اب', style: TextStyleHelper.subtitle20),
+              Text('خدمات بيك اب', style: TextStyleHelper.subtitle19),
               SizedBox(
                 height: MediaQueryHelper.height * .02,
               ),
@@ -188,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           boxShadow: [
                             BoxShadow(
                                 color:
-                                    Colors.grey.shade400 /* spreadRadius: 5 */,
+                                    Colors.grey.shade300 /* spreadRadius: 5 */,
                                 blurRadius: 5)
                           ]),
                       child: Row(
@@ -201,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Text(
                                       cardContent[index]['title'],
-                                      style: TextStyleHelper.subtitle20
+                                      style: TextStyleHelper.subtitle19
                                           .copyWith(
                                               color: Theme.of(context)
                                                   .colorScheme
@@ -209,14 +243,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Text(
                                       cardContent[index]['description'],
-                                      style: TextStyleHelper.body16
+                                      style: TextStyleHelper.body15
                                           .copyWith(color: Colors.grey),
                                     )
                                   ]),
                             ),
                           ),
-                          ClipRRect(borderRadius: BorderRadius.circular(16),
-                            clipBehavior: Clip.hardEdge,
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              clipBehavior: Clip.hardEdge,
                               child:
                                   SvgPicture.asset(cardContent[index]['icon']))
                         ],

@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class TextStyleHelper {
-  static TextStyle get title25 =>  TextStyle(
-        fontSize: 25.sp,
+  static TextStyle get title24 => TextStyle(
+        fontSize: 24.sp,
         fontWeight: FontWeight.bold,
       );
-  static TextStyle get subtitle20 =>  TextStyle(
-        fontSize: 20.sp,
+  static TextStyle get subtitle19 => TextStyle(
+        fontSize: 19.sp,
         fontWeight: FontWeight.bold,
       );
-      static TextStyle get subtitle18 =>  TextStyle(
-        fontSize: 18.sp,
+  static TextStyle get subtitle17 => TextStyle(
+        fontSize: 17.sp,
         /* fontWeight: FontWeight.bold, */
       );
-  static TextStyle get body16 =>  TextStyle(
-        fontSize: 16.sp,
+  static TextStyle get body15 => TextStyle(
+        fontSize: 15.sp,
         fontWeight: FontWeight.normal,
       );
-  static TextStyle get caption12 =>  TextStyle(
-        fontSize: 12.sp,
+  static TextStyle get caption11 => TextStyle(
+        fontSize: 11.sp,
         fontWeight: FontWeight.normal,
       );
-  static TextStyle get button14 =>  TextStyle(
-        fontSize: 14.sp,
+  static TextStyle get button13 => TextStyle(
+        fontSize: 13.sp,
         fontWeight: FontWeight.bold,
       );
 }

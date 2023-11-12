@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
+import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
@@ -51,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          // physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.only(top: 32.h),
           child: Column(children: [
             CircleAvatar(
@@ -66,7 +67,7 @@ class ProfileScreen extends StatelessWidget {
             Text(
               SharedHandler.instance!.getData(
                   key: SharedKeys().user, valueType: ValueType.map)['fullName'],
-              style: TextStyleHelper.subtitle18.copyWith(color: Colors.white),
+              style: TextStyleHelper.subtitle17.copyWith(color: Colors.white),
             ),
             SizedBox(
               height: MediaQueryHelper.height * .01,
@@ -75,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
               SharedHandler.instance!.getData(
                   key: SharedKeys().user,
                   valueType: ValueType.map)['phoneNumber'],
-              style: TextStyleHelper.subtitle18.copyWith(color: Colors.white),
+              style: TextStyleHelper.subtitle17.copyWith(color: Colors.white),
             ),
             SizedBox(
               height: MediaQueryHelper.height * .06,
@@ -96,6 +97,9 @@ class ProfileScreen extends StatelessWidget {
                     onTap: () {
                       AppRoutes.pushNamedNavigator(
                           routeName: content[index]['route']);
+                      if (index == content.length - 1) {
+                        AuthBloc.instance.add(LogoutClick());
+                      }
                     },
                     child: ListTile(
                       minLeadingWidth: 20.w,
@@ -107,14 +111,17 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       title: Text(
                         "${content[index]['title']}",
-                        style: TextStyleHelper.subtitle18.copyWith(
+                        style: TextStyleHelper.subtitle17.copyWith(
                           fontWeight: FontWeight.bold,
                           color: index == content.length - 1
                               ? Colors.red
                               : const Color(0xff4F5E7B),
                         ),
                       ),
-                      leading: SvgPicture.asset(content[index]['icon']),
+                      leading: SvgPicture.asset(
+                        content[index]['icon'],
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 ),

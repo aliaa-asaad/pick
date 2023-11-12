@@ -8,7 +8,7 @@ import 'package:pick_up/app_widgets/custom_form_field.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
-import 'package:pick_up/features/notification/data/view_model/cubit/notification_cubit.dart';
+import 'package:pick_up/features/auth/data/view_model/login_bloc/login_bloc.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
 import 'package:pick_up/utilities/images.dart';
@@ -23,11 +23,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with Validations {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  @override
+ 
 
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
       ),
       body: SafeArea(
           child: Form(
-        key: _formKey,
+        key: LoginBloc.instance.formKey,
         autovalidateMode: AutovalidateMode.always,
         child: InkWell(
           onTap: () {
@@ -50,13 +50,13 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
             padding: EdgeInsets.all(24.0.r),
             child: SingleChildScrollView(
               child:
-                  BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+                  BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'تسجيل دخول',
-                      style: TextStyleHelper.title25,
+                      style: TextStyleHelper.title24,
                     ),
                     SizedBox(
                       height: MediaQueryHelper.height * .02,
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
                         icon: AppImages.phone,
                         hintText: 'ادخل رقم الجوال',
                         keyboardType: TextInputType.phone,
-                        controller: bloc.phoneNumberController),
+                        controller: LoginBloc.instance.phoneNumberController),
                     SizedBox(
                       height: MediaQueryHelper.height * .02,
                     ),
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
                         hintText: 'ادخل كلمة السر',
                         keyboardType: TextInputType.visiblePassword,
                         isPassword: true,
-                        controller: bloc.passwordController),
+                        controller: LoginBloc.instance.passwordController),
                     SizedBox(
                       height: MediaQueryHelper.height * .02,
                     ),
@@ -89,40 +89,41 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
                       alignment: Alignment.centerLeft,
                       child: TextButton(
                         onPressed: () {
-                          bloc.isForgetPassword = true;
+                          AuthBloc.instance.isForgetPassword = true;
                           AppRoutes.pushNamedNavigator(
                               routeName: Routes.forgetPassword);
                         },
                         child: Text(
                           'هل نسيت كلمة المرور؟',
-                          style: TextStyleHelper.body16.copyWith(
+                          style: TextStyleHelper.body15.copyWith(
                               color: Theme.of(context).colorScheme.primary),
                         ),
                       ),
                     ),
                     // if (state is loginLoaded) {
                     CustomButton(
-                      width: state is AuthLoading
+                      width: state is LoginLoading
                           ? MediaQueryHelper.width * .13
                           : MediaQueryHelper.width,
-                      child: state is AuthLoading
+                      child: state is LoginLoading
                           ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
                           : Text(
                               'متابعة',
-                              style: TextStyleHelper.subtitle20.copyWith(
+                              style: TextStyleHelper.subtitle19.copyWith(
                                 color: Colors.white,
                               ),
                             ),
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
+                        if (LoginBloc.instance.formKey.currentState!
+                            .validate()) {
                           // _formKey.currentState!.save();
                           //log(name);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Processing Data')),
                           );
-                          bloc.add(LoginClick());
+                          LoginBloc.instance.add(LoginPost());
                           //BlocProvider.of<NotificationCubit>(context).getPusherBeams();
                         } else {
                           log('not valid');
@@ -134,10 +135,10 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
                     SizedBox(
                       height: MediaQueryHelper.height * .02,
                     ),
-                    state is AuthError
+                    state is LoginError
                         ? Text(
                             'هناك خطا في البيانات',
-                            style: TextStyleHelper.subtitle20,
+                            style: TextStyleHelper.subtitle19,
                           )
                         : const SizedBox()
                   ],

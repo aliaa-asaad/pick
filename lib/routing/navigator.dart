@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pick_up/features/auth/presentation/screens/email_verification_screen.dart';
+import 'package:pick_up/features/auth/presentation/screens/otp_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/login_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/new_password_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';
+import 'package:pick_up/features/my_order/data/model/all_orders_model.dart';
 import 'package:pick_up/features/my_order/presentation/screens/driver_order_status_screen.dart';
 import 'package:pick_up/features/my_order/presentation/screens/order_details_screen.dart';
 import 'package:pick_up/features/nav_bar/client_nav_bar.dart';
@@ -47,8 +48,7 @@ class AppRoutes {
       case Routes.forgetPassword:
         return AppRoutes.aniamtedNavigation(screen: const ForgotPassword());
       case Routes.emailVerification:
-        return AppRoutes.aniamtedNavigation(
-            screen: const EmailVerificationScreen());
+        return AppRoutes.aniamtedNavigation(screen: const OTPScreen());
       case Routes.newPassword:
         return AppRoutes.aniamtedNavigation(screen: const NewPassword());
       case Routes.signUp:
@@ -70,7 +70,9 @@ class AppRoutes {
           ),
         );
       case Routes.driverOrderStatus:
-        return AppRoutes.aniamtedNavigation(screen: const DriverOrderStatusScreen());  
+        return AppRoutes.aniamtedNavigation(
+            screen: DriverOrderStatusScreen(
+                orderModel: settings.arguments as Orders));
       case Routes.payment:
         return AppRoutes.aniamtedNavigation(screen: const PaymentScreen());
       case Routes.editProfile:
@@ -85,7 +87,7 @@ class AppRoutes {
         return AppRoutes.aniamtedNavigation(screen: const CallCenterScreen());
       case Routes.policy:
         return AppRoutes.aniamtedNavigation(screen: const PolicyScreen());
-        case Routes.profile:
+      case Routes.profile:
         return AppRoutes.aniamtedNavigation(screen: const ProfileScreen());
       /* case Routes.orderData:
         return AppRoutes.aniamtedNavigation(screen: const OrderDataScreen());
@@ -122,10 +124,15 @@ class AppRoutes {
   static pushNamedNavigator(
       {required String routeName,
       Object? arguments,
-      bool replacement = false}) {
-    if (replacement) {
+      bool replacement = false,
+      bool replacementAll = false}) {
+    if (replacement == true) {
       navigatorState.currentState!
           .pushReplacementNamed(routeName, arguments: arguments);
+    } else if (replacementAll == true) {
+      navigatorState.currentState!.pushNamedAndRemoveUntil(
+          routeName, (route) => false,
+          arguments: arguments);
     } else {
       navigatorState.currentState!.pushNamed(routeName, arguments: arguments);
     }

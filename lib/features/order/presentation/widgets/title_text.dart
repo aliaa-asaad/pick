@@ -9,7 +9,7 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyleHelper.subtitle20,
+      style: TextStyleHelper.subtitle19,
     );
   }
 }

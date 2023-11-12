@@ -25,7 +25,7 @@ class SendOrderRepo {
     } */
   }
 
-  Future<OrderImagesDataModel> sendImagesRequest(FormData data) async {
+  Future<OrderDataModel> sendImagesRequest(FormData data) async {
     /* try { */
     Response res = await Network.instance!.post(
         url: ApiNames.orderImagesEndPoint,
@@ -35,7 +35,7 @@ class SendOrderRepo {
     log('repo response ${res.data}');
     if (res.statusCode! >= 200 && res.statusCode! < 300) {
       log('status 200');
-      return OrderImagesDataModel.fromJson(res.data);
+      return OrderDataModel.fromJson(res.data);
     } else {
       log('send order images repo error:${res.data}');
       throw Exception('Failed to load data!');

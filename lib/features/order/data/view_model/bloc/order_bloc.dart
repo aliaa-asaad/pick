@@ -23,7 +23,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   static OrderBloc get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
   final SendOrderRepo _sendOrderDataRepo = SendOrderRepo();
-  late OrderImagesDataModel _orderImagesDataModel;
+  //late OrderImagesDataModel _orderImagesDataModel;
   late OrderDataModel _orderDataModel;
   late OrderSubmitModel _orderSubmitModel;
 
@@ -110,14 +110,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     return imagesList.isNotEmpty;
   }
 
-  void viewCounter({required bool back}) {
-    if (back == true) {
-      log('back');
-      currentStep - 2;
-      emit(OrderCounter());
-    } else {
-      currentStep++;
-    }
+  void viewCounter() {
+    currentStep++;
+    
     emit(OrderCounter());
   }
 
@@ -135,18 +130,19 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         "deleviryFloor": int.parse(orderSendFloorController.text),
         "elevatorAvilabel": elevatorAvilabelIndex,
         "extramanAvilabel": extramanAvilabelIndex,
+        'uploadaAndDownloadServices':orderDetailsTypeIndex,
         'pickupLat':picupCoordinates[0],
         'pickupLong':picupCoordinates[1],
         'deleviryLat':deliveryCoordinates[0],
         'deleviryLong':deliveryCoordinates[1],
-        /* "pickupLocation": orderRecieveLocationController.text,
+        "pickupLocation": orderRecieveLocationController.text,
         // To Do : check loop for images
-        "deleviryLocation": orderSendLocationController.text, */
+        "deleviryLocation": orderSendLocationController.text,
       };
 
       _orderDataModel = await _sendOrderDataRepo.sendOrderRequest(data);
       log('_sendOrderDataModel: $_orderDataModel');
-      viewCounter(back: false);
+      viewCounter();
       /* AppRoutes.pushNamedNavigator(
         routeName: Routes.payment, /*  replacement: true */
       ); */
@@ -173,11 +169,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
       log('messages: ${data.toString()}');
       // data['order_id'] = _sendOrderDataModel.orderId;
-      _orderImagesDataModel =
+      _orderDataModel =
           await _sendOrderDataRepo.sendImagesRequest(FormData.fromMap(data));
       /* log('_sendOrderDataModel: $_sendOrderDataModel'); */
       log('send images success');
-      viewCounter(back: false);
+      viewCounter();
       /* AppRoutes.pushNamedNavigator(
         routeName: Routes.payment, /*  replacement: true */
       ); */
@@ -192,7 +188,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     try {
       Map<String, dynamic> data = {};
       data = {
-        "order_id": _orderImagesDataModel.orderId,
+        "order_id": _orderDataModel.orderId,
       };
       log('submit data: ${data.toString()}');
       _orderSubmitModel =

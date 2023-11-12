@@ -7,24 +7,23 @@ import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
+import 'package:pick_up/features/auth/data/view_model/otp_bloc/otp_bloc.dart';
 import 'package:pick_up/features/on_boarding/view/widgets/code_verification_field.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
-class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({super.key});
+class OTPScreen extends StatefulWidget {
+  const OTPScreen({super.key});
 
   @override
-  State<EmailVerificationScreen> createState() =>
-      _EmailVerificationScreenState();
+  State<OTPScreen> createState() => _OTPScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen>
-    with Validations {
+class _OTPScreenState extends State<OTPScreen> with Validations {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<AuthBloc>(context);
+   // var bloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
@@ -33,7 +32,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
       ),
       body: SafeArea(
           child: Form(
-        key: _formKey,
+        key: OTPBloc.instance.formKey,
         autovalidateMode: AutovalidateMode.always,
         child: InkWell(
           onTap: () {
@@ -47,7 +46,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
             padding: EdgeInsets.all(24.0.r),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: BlocBuilder<AuthBloc, AuthState>(
+              child: BlocBuilder<OTPBloc, OTPState>(
                 builder: (context, state) {
                   return Column(
                     //mainAxisAlignment: MainAxisAlignment.center,
@@ -55,94 +54,80 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                     children: [
                       Text(
                         'تفعيل البريد الالكتروني',
-                        style: TextStyleHelper.title25,
+                        style: TextStyleHelper.title24,
                       ),
                       SizedBox(
                         height: MediaQueryHelper.height * .02,
                       ),
                       const Text(
-                        'تم ارسال كود التفعيل المكون من 6 ارقام فى رسالة قصيرة على البريد',
+                        'تم ارسال كود التفعيل المكون من 4 ارقام فى رسالة قصيرة على البريد',
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
                         height: MediaQueryHelper.height * .04,
                       ),
                       ///// make it list.generate
-                      Row(children: [
-                        CodeVerificationField(
-                          controller: bloc.codeController6,
-                          validator: isValidCode,
-                        ),
-                        CodeVerificationField(
-                          controller: bloc.codeController5,
-                          validator: isValidCode,
-                        ),
-                        CodeVerificationField(
-                          controller: bloc.codeController4,
-                          validator: isValidCode,
-                        ),
-                        CodeVerificationField(
-                          controller: bloc.codeController3,
-                          validator: isValidCode,
-                        ),
-                        CodeVerificationField(
-                          controller: bloc.codeController2,
-                          validator: isValidCode,
-                        ),
-                        CodeVerificationField(
-                          controller: bloc.codeController1,
-                          validator: isValidCode,
-                        ),
-                      ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CodeVerificationField(
+                              controller: OTPBloc.instance.codeController4,
+                            ),
+                            CodeVerificationField(
+                              controller: OTPBloc.instance.codeController3,
+                            ),
+                            CodeVerificationField(
+                              controller: OTPBloc.instance.codeController2,
+                            ),
+                            CodeVerificationField(
+                              controller: OTPBloc.instance.codeController1,
+                            ),
+                          ]),
                       SizedBox(
                         height: MediaQueryHelper.height * .02,
                       ),
 
                       // if (state is loginLoaded) {
                       CustomButton(
-                        width: state is AuthLoading
+                        width: state is OTPLoading
                             ? MediaQueryHelper.width * .13
                             : MediaQueryHelper.width,
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (OTPBloc.instance.formKey.currentState!.validate()) {
                             log('valid');
-                            log('log ${bloc.codeController1}');
-                            log('log ${bloc.codeController1.text}');
-                            log('log ${bloc.emailController}');
+                            log('log ${OTPBloc.instance.codeController1}');
+                            log('log ${OTPBloc.instance.codeController1.text}');
+                          //  log('log ${OTPBloc.instance.emailController}');
                             log([
-                              bloc.codeController1.text,
-                              bloc.codeController2.text,
-                              bloc.codeController3.text,
-                              bloc.codeController4.text,
-                              bloc.codeController5.text,
-                              bloc.codeController6.text,
+                              OTPBloc.instance.codeController1.text,
+                              OTPBloc.instance.codeController2.text,
+                              OTPBloc.instance.codeController3.text,
+                              OTPBloc.instance.codeController4.text,
                             ].join());
                             // _formKey.currentState!.save();
                             //log(name);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Sending code')),
                             );
-                            bloc.add(CodeVerificationClick());
+                            OTPBloc.instance.add(OTPPost());
                           } else {
                             log('not valid');
                           }
                           log([
-                            bloc.codeController1.text,
-                            bloc.codeController2.text,
-                            bloc.codeController3.text,
-                            bloc.codeController4.text,
-                            bloc.codeController5.text,
-                            bloc.codeController6.text,
+                            OTPBloc.instance.codeController1.text,
+                            OTPBloc.instance.codeController2.text,
+                            OTPBloc.instance.codeController3.text,
+                            OTPBloc.instance.codeController4.text,
                           ].join());
                           //log('type= ${bloc.type}');
                         },
-                        child: state is AuthLoading
+                        child: state is OTPLoading
                             ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )
                             : Text(
                                 'تفعيل البريد الالكتروني',
-                                style: TextStyleHelper.subtitle20.copyWith(
+                                style: TextStyleHelper.subtitle19.copyWith(
                                   color: Colors.white,
                                 ),
                               ),
@@ -151,10 +136,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                       SizedBox(
                         height: MediaQueryHelper.height * .02,
                       ),
-                      state is AuthError
+                      state is OTPError
                           ? Text(
                               'هناك خطا في البيانات',
-                              style: TextStyleHelper.subtitle20,
+                              style: TextStyleHelper.subtitle19,
                             )
                           : const SizedBox()
                     ],

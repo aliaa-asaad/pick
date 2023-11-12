@@ -53,7 +53,7 @@ class _NewPasswordState extends State<NewPassword> with Validations {
                     children: [
                       Text(
                         'كلمة مرور جديدة',
-                        style: TextStyleHelper.title25,
+                        style: TextStyleHelper.title24,
                       ),
                       SizedBox(
                         height: MediaQueryHelper.height * .02,
@@ -112,7 +112,7 @@ class _NewPasswordState extends State<NewPassword> with Validations {
                               )
                             : Text(
                                 'تأكيد كلمة المرور',
-                                style: TextStyleHelper.subtitle20.copyWith(
+                                style: TextStyleHelper.subtitle19.copyWith(
                                   color: Colors.white,
                                 ),
                               ), /*  textColor: textColor */

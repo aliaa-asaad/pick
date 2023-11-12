@@ -1,24 +1,25 @@
-
 class OrderDataModel {
   String? message;
   int? orderId;
-
+  int? price;
   OrderDataModel({this.message, this.orderId});
 
   OrderDataModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     orderId = json['order_id'];
+    price = json['price'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
     data['order_id'] = orderId;
+    data['price'] = price;
     return data;
   }
 }
 
-class OrderImagesDataModel {
+/* class OrderImagesDataModel {
   String? message;
   String? orderId;
 
@@ -35,7 +36,7 @@ class OrderImagesDataModel {
     data['order_id'] = orderId;
     return data;
   }
-}
+} */
 
 class OrderSubmitModel {
   String? message;

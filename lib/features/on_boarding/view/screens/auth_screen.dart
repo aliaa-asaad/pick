@@ -33,13 +33,12 @@ class AuthScreen extends StatelessWidget {
               Image.asset(AppImages.onBoarding4),
               Text(
                 'بيك أب \nالأفضل والأسرع والأمن',
-                style: TextStyleHelper.title25,
+                style: TextStyleHelper.title24,
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
               CustomButton(
                   textColor: Colors.white,
-                
                   onPressed: () {
                     AppRoutes.pushNamedNavigator(
                       routeName: Routes.signUp,
@@ -48,7 +47,8 @@ class AuthScreen extends StatelessWidget {
                   text: 'إنشاء حساب'),
               CustomButton(
                   textColor: Theme.of(context).colorScheme.secondary,
-                  background: Theme.of(context).colorScheme.secondary.withOpacity(.16),
+                  background:
+                      Theme.of(context).colorScheme.secondary.withOpacity(.16),
                   onPressed: () {
                     AppRoutes.pushNamedNavigator(
                       routeName: Routes.login,

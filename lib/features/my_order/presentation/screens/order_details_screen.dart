@@ -1,11 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pick_up/app_widgets/custom_button.dart';
-import 'package:pick_up/features/my_order/data/view_model/cubit/my_order_cubit.dart';
 import 'package:pick_up/app_widgets/confirm_additional_services.dart';
-import 'package:pick_up/features/order/presentation/widgets/confirm_car_card.dart';
 import 'package:pick_up/app_widgets/confirm_content.dart';
+import 'package:pick_up/app_widgets/custom_button.dart';
+import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
+import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_event.dart';
+import 'package:pick_up/features/order/presentation/widgets/confirm_car_card.dart';
 import 'package:pick_up/features/order/presentation/widgets/order_location.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
@@ -14,46 +17,41 @@ import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
-class OrderDetailsScreen extends StatelessWidget {
+class OrderDetailsScreen extends StatefulWidget {
   final int orderId;
   const OrderDetailsScreen({super.key, required this.orderId});
 
   @override
+  State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
+}
+
+class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    MyOrderBloc.instance.getOrderDetails(orderId: widget.orderId);
+    log('order data is ${MyOrderBloc.instance.orderDetailsModel.toString()}');
+    log('order description is ${MyOrderBloc.instance.orderDetailsModel.shipmentDescription.toString()}');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    MyOrderBloc.instance.getAllOrders();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    MyOrderCubit.instance.getOrderDetails(orderId: orderId);
-    List<Map<String, dynamic>> content = [
-      {'title': 'نوع الشاحنة', 'content': 'نوع الشحنة'},
-      {
-        'title': 'نوع الشحنة',
-        'content': MyOrderCubit.instance.orderDetailsModel.shipmentType??'اثاث'
-      },
-      {
-        'title': 'مواصفات شحنتك',
-        'content': MyOrderCubit.instance.orderDetailsModel.shipmentDescription??'اثاث'
-      },
-    ];
-    List<Map<String, dynamic>> additionalService = [
-      {
-        'title': 'خدمات التحميل والتنزيل',
-        'type': /* MyOrderCubit.instance.orderDetailsModel. */ 'غير متوفر',
-      },
-      {
-        'title': 'المصعد الكهربائي',
-        'type': MyOrderCubit.instance.orderDetailsModel.elevatorAvilabel,
-      },
-      {
-        'title': 'عامل إضافي',
-        'type': MyOrderCubit.instance.orderDetailsModel.extramanAvilabel,
-      },
-    ];
+    // MyOrderBloc.instance.getOrderDetails(orderId: widget.orderId);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: MediaQueryHelper.height * .1,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
         title: Text(
-          'تفاصيل طلب رقم $orderId',
-          style: TextStyleHelper.body16.copyWith(
+          'تفاصيل طلب رقم ${widget.orderId}',
+          style: TextStyleHelper.body15.copyWith(
               color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold),
         ),
@@ -66,7 +64,7 @@ class OrderDetailsScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: BlocBuilder<MyOrderCubit, MyOrderState>(
+        child: BlocBuilder<MyOrderBloc, MyOrderState>(
           builder: (context, state) {
             if (state is MyOrderLoading) {
               return const Center(
@@ -77,6 +75,37 @@ class OrderDetailsScreen extends StatelessWidget {
                 child: Text('error'),
               );
             } else if (state is MyOrderLoaded) {
+              List<Map<String, dynamic>> content = [
+                {'title': 'نوع الشاحنة', 'content': 'نوع الشحنة'},
+                {
+                  'title': 'نوع الشحنة',
+                  'content': MyOrderBloc
+                      .instance.orderDetailsModel.shipmentType /* ?? 'اثاث' */
+                },
+                {
+                  'title': 'مواصفات شحنتك',
+                  'content': MyOrderBloc.instance.orderDetailsModel
+                      .shipmentDescription /* ?? 'اثاث' */
+                },
+              ];
+              List<Map<String, dynamic>> additionalService = [
+                {
+                  'title': 'خدمات التحميل والتنزيل',
+                  'type': /* MyOrderCubit.instance.orderDetailsModel. */
+                      'غير متوفر',
+                },
+                {
+                  'title': 'المصعد الكهربائي',
+                  'type': MyOrderBloc
+                      .instance.orderDetailsModel.elevatorAvilabel /* 0 */,
+                },
+                {
+                  'title': 'عامل إضافي',
+                  'type': MyOrderBloc
+                      .instance.orderDetailsModel.extramanAvilabel /* 0 */,
+                },
+              ];
+
               return SingleChildScrollView(
                 padding: EdgeInsets.all(24.r),
                 physics: const BouncingScrollPhysics(),
@@ -85,12 +114,12 @@ class OrderDetailsScreen extends StatelessWidget {
                     OrderLocation(
                         isDetails: true,
                         title: 'موقع استلام البضائع',
-                        location: MyOrderCubit
+                        location: MyOrderBloc
                             .instance.orderDetailsModel.pickupLocation!),
                     OrderLocation(
                         isDetails: true,
                         title: 'موقع توصيل البضائع',
-                        location: MyOrderCubit
+                        location: MyOrderBloc
                             .instance.orderDetailsModel.deliveryLocation!),
                     SizedBox(
                       height: MediaQueryHelper.height * .04,
@@ -106,7 +135,7 @@ class OrderDetailsScreen extends StatelessWidget {
                             card: index == 0
                                 ? ConfirmCarCard(
                                     image: AppImages.car1,
-                                    title: MyOrderCubit
+                                    title: MyOrderBloc
                                         .instance.orderDetailsModel.carType!,
                                     length: 'طول الشاحنة',
                                     weight: 'وزن الشاحنة',
@@ -129,15 +158,37 @@ class OrderDetailsScreen extends StatelessWidget {
                                 : 'غير متوفر'),
                       ),
                     ),
+                    /* MyOrderBloc.instance.tabBarCurrentIndex == 1
+                        ? const SizedBox()
+                        : */
                     CustomButton(
                       onPressed: () {
-                        SharedHandler.instance!.getData(
-                                    key: SharedKeys().userType,
-                                    valueType: ValueType.int) ==
-                                0
-                            ? null
-                            : AppRoutes.pushNamedNavigator(
+                        if (SharedHandler.instance!.getData(
+                                key: SharedKeys().userType,
+                                valueType: ValueType.int) ==
+                            1) {
+                          if (MyOrderBloc.instance.tabBarCurrentIndex == 0) {
+                            /* setState(() {
+                              MyOrderBloc.instance.orderId = widget.orderModel.id!;
+                            }); */
+
+                            MyOrderBloc.instance.add(OrderStatusClick());
+                            Navigator.pop(context);
+                          } else if (MyOrderBloc.instance.tabBarCurrentIndex ==
+                              2) {
+                            AppRoutes.pushNamedNavigator(
                                 routeName: Routes.driverOrderStatus);
+
+                            MyOrderBloc.instance.add(OrderStatusClick());
+                          }
+
+                          /* AppRoutes.pushNamedNa
+                                vigator(
+                              routeName: Routes.driverOrderStatus);
+
+                          MyOrderBloc.instance.add(OrderStatusClick()); */
+                          MyOrderBloc.instance.add(OrderStatusClick());
+                        }
                       },
                       text: 'تقديم',
                     )

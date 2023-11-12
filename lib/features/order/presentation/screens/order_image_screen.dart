@@ -71,7 +71,10 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                         width: MediaQueryHelper.width,
                         decoration: BoxDecoration(
                           /* color: Color(0xff).withOpacity(.5), */
-                          color:  Theme.of(context).colorScheme.secondary.withOpacity(.06),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(.06),
                           borderRadius: BorderRadius.circular(16.r),
                         ),
                         child: Column(
@@ -95,7 +98,7 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                                         },
                               child: Text(
                                 'صور شحنتك',
-                                style: TextStyleHelper.subtitle20
+                                style: TextStyleHelper.subtitle19
                                     .copyWith(color: Colors.black),
                               ),
                             ),
@@ -130,7 +133,7 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                   ),
                   Text(
                     'الصور',
-                    style: TextStyleHelper.subtitle20,
+                    style: TextStyleHelper.subtitle19,
                   ),
                   Column(
                     children: List.generate(
@@ -184,7 +187,7 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                   state is OrderError
                       ? Text(
                           'هناك خطا في ارسال البيانات',
-                          style: TextStyleHelper.subtitle20,
+                          style: TextStyleHelper.subtitle19,
                         )
                       : const SizedBox(),
                   CustomButton(
@@ -221,7 +224,7 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                           )
                         : Text(
                             'متابعة',
-                            style: TextStyleHelper.subtitle20.copyWith(
+                            style: TextStyleHelper.subtitle19.copyWith(
                               color: Colors.white,
                             ),
                           ),

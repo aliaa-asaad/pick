@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
 class DriverLocationDetails extends StatelessWidget {
+  final String pickupLocation;
+  final String deliveryLocation;
   const DriverLocationDetails({
-    super.key,
+    super.key, required this.pickupLocation, required this.deliveryLocation,
   });
 
   @override
@@ -16,7 +19,8 @@ class DriverLocationDetails extends StatelessWidget {
       {
         'icon': AppImages.locationIcon,
         'title': 'موقع استلام البضائع',
-        'subtitle': 'طريق السعدي بجدة',
+        'subtitle':pickupLocation,
+           
       },
       {
         'icon': AppImages.costIcon,
@@ -26,7 +30,7 @@ class DriverLocationDetails extends StatelessWidget {
       {
         'icon': AppImages.locationIcon,
         'title': 'موقع توصيل البضائع',
-        'subtitle': 'طريق ساري بجدة',
+        'subtitle':deliveryLocation
       },
       {
         'icon': AppImages.revenueIcon,
@@ -67,11 +71,11 @@ class DriverLocationDetails extends StatelessWidget {
               children: [
                 Text(
                   locationDetails[index]['title'],
-                  style: TextStyleHelper.caption12
+                  style: TextStyleHelper.caption11
                       .copyWith(color: const Color(0xff4F5E7B).withOpacity(.5)),
                 ),
                 Text(locationDetails[index]['subtitle'],
-                    style: TextStyleHelper.caption12
+                    style: TextStyleHelper.caption11
                         .copyWith(color: const Color(0xff4F5E7B))),
               ],
             )

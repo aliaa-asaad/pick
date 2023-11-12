@@ -45,7 +45,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             SizedBox(
               height: MediaQueryHelper.height * .4,
               child: PageView.builder(
-                physics: const BouncingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 controller: _controller1,
                 itemCount: onBoardingList.length,
                 onPageChanged: (int index) {
@@ -63,31 +63,31 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               width: MediaQueryHelper.width,
               height: MediaQueryHelper.height * .23,
               padding: EdgeInsets.only(top: 28.h),
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(36),
-                    topRight: Radius.circular(36),
+                    topLeft: Radius.circular(36.r),
+                    topRight: Radius.circular(36.r),
                   ),
                   color: Colors.white),
               child: Column(
                 children: [
                   Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          onBoardingList.length,
-                          (index) => CustomDot(
-                              color: currentIndex == index
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Colors.grey,
-                              currentIndex: currentIndex,
-                              index: index),
-                        ),
-                      ),
-                      SizedBox(height: MediaQueryHelper.height * .01),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      onBoardingList.length,
+                      (index) => CustomDot(
+                          color: currentIndex == index
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.grey,
+                          currentIndex: currentIndex,
+                          index: index),
+                    ),
+                  ),
+                  SizedBox(height: MediaQueryHelper.height * .01),
                   SizedBox(
-                    height: MediaQueryHelper.height * .15,
+                    height: MediaQueryHelper.height * .16,
                     child: PageView.builder(
-                      physics: const BouncingScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: _controller2,
                       itemCount: onBoardingList.length,
                       onPageChanged: (int index) {
@@ -96,16 +96,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         });
                       },
                       itemBuilder: (context, index) => Column(children: [
-                        
                         Text(onBoardingList[index]['title'],
                             textAlign: TextAlign.center,
-                            style: TextStyleHelper.title25),
+                            style: TextStyleHelper.title24),
                         SizedBox(height: MediaQueryHelper.height * .005),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding:  EdgeInsets.fromLTRB(12.0.r,0,12.0.r,12.0.r),
                           child: Text(onBoardingList[index]['description'],
                               textAlign: TextAlign.center,
-                              style: TextStyleHelper.body16
+                              style: TextStyleHelper.body15
                                   .copyWith(color: Colors.grey)),
                         ),
                         /* SizedBox(height: MediaQueryHelper.height * .01), */
@@ -126,7 +125,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       : Theme.of(context).colorScheme.secondary,
                   background: currentIndex == onBoardingList.length - 1
                       ? Theme.of(context).colorScheme.secondary
-                      : Theme.of(context).colorScheme.secondary.withOpacity(.16),
+                      : Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(.16),
                   onPressed: () {
                     if (currentIndex == onBoardingList.length - 1) {
                       AppRoutes.pushNamedNavigator(
@@ -140,7 +142,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       duration: const Duration(seconds: 1),
                       curve: Curves.easeInOut,
                     );
-                    
                   },
                   text: currentIndex == onBoardingList.length - 1
                       ? "لنبدأ الآن"

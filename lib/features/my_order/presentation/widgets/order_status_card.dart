@@ -48,8 +48,8 @@ class _OrderStatusCardState extends State<OrderStatusCard> {
                       children: [
                         Text(
                           'توصيل اغراضك',
-                          style: TextStyleHelper.subtitle18.copyWith(
-                            fontWeight: FontWeight.bold,
+                          style: TextStyleHelper.subtitle17.copyWith(
+                              fontWeight: FontWeight.bold,
                               color: type == 0
                                   ? Theme.of(context).colorScheme.secondary
                                   : Theme.of(context).colorScheme.primary),
@@ -114,13 +114,13 @@ class _OrderStatusCardState extends State<OrderStatusCard> {
                           children: [
                             Text(
                               widget.sendLocation,
-                              style: TextStyleHelper.body16.copyWith(
+                              style: TextStyleHelper.body15.copyWith(
                                 color: const Color(0xff4F5E7B),
                               ),
                             ),
                             Text(
                               widget.receiveLocation,
-                              style: TextStyleHelper.body16
+                              style: TextStyleHelper.body15
                                   .copyWith(color: const Color(0xff4F5E7B)),
                             )
                           ],
@@ -142,7 +142,7 @@ class _OrderStatusCardState extends State<OrderStatusCard> {
                               : Text.rich(
                                   TextSpan(
                                     text: '200',
-                                    style: TextStyleHelper.subtitle18.copyWith(
+                                    style: TextStyleHelper.subtitle17.copyWith(
                                         fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .colorScheme
@@ -150,7 +150,7 @@ class _OrderStatusCardState extends State<OrderStatusCard> {
                                     children: [
                                       TextSpan(
                                         text: ' ريال',
-                                        style: TextStyleHelper.button14
+                                        style: TextStyleHelper.button13
                                             .copyWith(
                                                 fontWeight: FontWeight.normal,
                                                 color: Theme.of(context)
@@ -165,20 +165,20 @@ class _OrderStatusCardState extends State<OrderStatusCard> {
                               : Text.rich(
                                   TextSpan(
                                     text: '5',
-                                    style: TextStyleHelper.subtitle18.copyWith(
+                                    style: TextStyleHelper.subtitle17.copyWith(
                                         fontWeight: FontWeight.bold,
                                         color: const Color(0xff4F5E7B)),
                                     children: [
                                       TextSpan(
                                         text: '   ك.م',
-                                        style: TextStyleHelper.button14
+                                        style: TextStyleHelper.button13
                                             .copyWith(
                                                 fontWeight: FontWeight.normal,
                                                 color: const Color(0xff4F5E7B)),
                                       ),
                                     ],
                                   ),
-                                ), 
+                                ),
                         ],
                       )
               ],
@@ -196,7 +196,7 @@ class _OrderStatusCardState extends State<OrderStatusCard> {
             ),
             child: Text(
               'التفاصيل',
-              style: TextStyleHelper.body16.copyWith(color: Colors.white),
+              style: TextStyleHelper.body15.copyWith(color: Colors.white),
             ),
           ),
         ],

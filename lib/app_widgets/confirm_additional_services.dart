@@ -31,7 +31,7 @@ class ConfirmAdditionalServices extends StatelessWidget {
           ),
           Text(
             title,
-            style: TextStyleHelper.body16.copyWith(
+            style: TextStyleHelper.body15.copyWith(
                 color: const Color(0xff001833), fontWeight: FontWeight.bold),
           ),
           const Spacer(),
@@ -45,7 +45,7 @@ class ConfirmAdditionalServices extends StatelessWidget {
           ),
           Text(
             type,
-            style: TextStyleHelper.body16
+            style: TextStyleHelper.body15
                 .copyWith(color: isAvailable == 0 ? Colors.green : Colors.red),
           ),
           isAvailable == 0

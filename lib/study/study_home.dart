@@ -1,53 +1,55 @@
-import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
+/* import 'package:flutter/material.dart';
+import 'package:pick_up/features/my_order/presentation/widgets/custom_tab_bar.dart';
+import 'package:pick_up/features/my_order/presentation/widgets/tab_bar_body.dart';
 
+class MyTab extends StatefulWidget {
+  const MyTab({super.key});
 
-class MyHomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyTab> createState() => _MyTabState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  String _location = 'القاهرة';
-  double? _latitude;
-  double? _longitude;
+class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
   @override
   void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+
     super.initState();
-    getLocationFromAddress();
   }
 
-  Future<void> getLocationFromAddress() async {
-    try {
-      List<Location> locations = await locationFromAddress(_location);
-      setState(() {
-        _latitude = locations[0].latitude;
-        _longitude = locations[0].longitude;
-      });
-    } catch (e) {
-      print(e);
-    }
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Geocoding Example'),
-      ),
-      body: Center(
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Address: $_location'),
-            SizedBox(height: 20),
-            Text('Latitude: ${_latitude ?? 'Unknown'}'),
-            SizedBox(height: 10),
-            Text('Longitude: ${_longitude ?? 'Unknown'}'),
+          children: [
+            MyTabBar(
+              tabController: _tabController,
+              viewsBody: const [TabBarBody(), TabBarBody(),TabBarBody()],
+              viewsTitle: const [
+                Tab(
+                  text: 'طلباتة جديدة',
+                ),
+                Tab(
+                  text: 'قيد الانتظار',
+                ),
+                 Tab(
+                  text: 'طللبات منتهية',
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 }
+ */

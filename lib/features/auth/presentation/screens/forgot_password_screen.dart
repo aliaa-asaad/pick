@@ -53,7 +53,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with Validations {
                     children: [
                       Text(
                         'نسيت كلمة المرور',
-                        style: TextStyleHelper.title25,
+                        style: TextStyleHelper.title24,
                       ),
                       SizedBox(
                         height: MediaQueryHelper.height * .02,
@@ -73,7 +73,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with Validations {
                             : MediaQueryHelper.width,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            log('valid');        
+                            log('valid');
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Sending code')),
                             );
@@ -90,7 +90,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with Validations {
                               )
                             : Text(
                                 'تفعيل رقم الجوال',
-                                style: TextStyleHelper.subtitle20.copyWith(
+                                style: TextStyleHelper.subtitle19.copyWith(
                                   color: Colors.white,
                                 ),
                               ), /*  textColor: textColor */
@@ -101,7 +101,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with Validations {
                       state is AuthError
                           ? Text(
                               'هناك خطا في البيانات',
-                              style: TextStyleHelper.subtitle20,
+                              style: TextStyleHelper.subtitle19,
                             )
                           : const SizedBox()
                     ],
