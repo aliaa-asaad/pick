@@ -29,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   static AuthBloc get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
   final AuthRepo _authRepo = AuthRepo();
-  late UserModel userModel;
+   UserModel userModel=UserModel();
  // late EmailVerifiactionModel _emailVerifiactionModel;
   late ForgetPasswordModel _forgetPasswordModel;
   int type = -1;

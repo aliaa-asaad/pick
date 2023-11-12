@@ -48,12 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       currentImage = 0;
     }
-
-    _pageController.animateToPage(
+if(mounted)
+   { _pageController.animateToPage(
       currentImage,
       duration: const Duration(milliseconds: 500),
       curve: Curves.ease,
-    );
+    );}
 
     Future.delayed(const Duration(seconds: 2), () {
       

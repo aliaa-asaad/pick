@@ -31,7 +31,7 @@ class OTPBloc extends Bloc<OTPEvent, OTPState> with Validations {
 /////////////////models////////////////
   late OTPModel _emailVerifiactionModel;
   final OTPRepo _otpRepo = OTPRepo();
-  late UserModel userModel;
+  UserModel userModel=LoginBloc.instance.userModel.authToken!.isNotEmpty? LoginBloc.instance.userModel:RegisterBloc.instance.userModel;
 ////////////////////variables/////////////
   TextEditingController codeController1 = TextEditingController();
   String codeError1 = '';
@@ -73,7 +73,7 @@ class OTPBloc extends Bloc<OTPEvent, OTPState> with Validations {
       log(data.toString());
       _emailVerifiactionModel = await _otpRepo.otpRequest(data);
       log('verified');
-      log('isForgetPassword : $AuthBloc.instance.isForgetPassword');
+      log('isForgetPassword : ${AuthBloc.instance.isForgetPassword}');
       if (AuthBloc.instance.isForgetPassword == false) {
         log('model: ${userModel.client!.toJson()}');
         await SharedHandler.instance!

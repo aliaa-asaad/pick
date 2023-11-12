@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,11 @@ import 'package:pusher_beams/pusher_beams.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if (Platform.isAndroid) {
+   await Firebase.initializeApp();
 
+  }
+  
   await PusherBeams.instance.start(ApiNames.instanceID);
   await PusherBeams.instance.setDeviceInterests(['driver']);
   //add or remove interests
