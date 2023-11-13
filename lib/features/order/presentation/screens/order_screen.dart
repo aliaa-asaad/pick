@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,7 @@ import 'package:pick_up/features/order/presentation/screens/order_image_screen.d
 import 'package:pick_up/features/order/presentation/screens/order_location_screen.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -20,7 +23,6 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
- 
   int currentStep = 0;
   @override
   Widget build(BuildContext context) {
@@ -59,19 +61,25 @@ class _OrderScreenState extends State<OrderScreen> {
               backgroundColor: Colors.white,
               iconTheme:
                   IconThemeData(color: Theme.of(context).colorScheme.primary),
-              actions: const [
+              actions: [
                 Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(Icons.notifications),
+                  padding: EdgeInsets.all(8.0.r),
+                  child: Icon(
+                    Icons.notifications,
+                    size: MediaQueryHelper.height * .025,
+                  ),
                 ),
               ],
               title: Text(
                 'إنشاء طلب جديد',
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                style: TextStyleHelper.subtitle17
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
               ),
+              toolbarHeight: MediaQueryHelper.height * .07,
               centerTitle: true,
               elevation: 0,
               leading: IconButton(
+                
                 onPressed: () async {
                   if (currentStep == 0) {
                     Navigator.pop(context);
@@ -81,11 +89,15 @@ class _OrderScreenState extends State<OrderScreen> {
                     OrderBloc.instance.currentStep--;
                   });
                 },
-                icon: const Icon(Icons.arrow_back),
+                icon: Platform.isIOS
+                    ? Icon(Icons.arrow_back_ios,size: MediaQueryHelper.height * .025 ,)
+                    :  Icon(Icons.arrow_back,size: MediaQueryHelper.height * .025),
               )),
           body: Column(children: [
             CustomOrderAppBar(
-                icons: icons, currentStep: currentStep, ),
+              icons: icons,
+              currentStep: currentStep,
+            ),
             Expanded(
                 child: currentStep < 0
                     ? const SizedBox()
@@ -96,4 +108,3 @@ class _OrderScreenState extends State<OrderScreen> {
     );
   }
 }
-

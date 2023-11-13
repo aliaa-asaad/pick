@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
 class CustomOrderAppBar extends StatelessWidget {
   const CustomOrderAppBar({
@@ -71,7 +72,7 @@ class CustomOrderAppBar extends StatelessWidget {
                                 ? const Icon(Icons.check_circle,
                                     color: Colors.white)
                                 : SvgPicture.asset(
-                                    icons[index]['icon'],
+                                    icons[index]['icon'],height: MediaQueryHelper.height * .025,
                                     color: currentStep == index
                                         ? isDriver
                                             ? Theme.of(context)
@@ -105,14 +106,14 @@ class CustomOrderAppBar extends StatelessWidget {
               ),
               Text(
                       icons[index]['title'],
-                      style: TextStyle(
-                          color: currentStep == index
+                      style: TextStyleHelper.body15.copyWith(color: currentStep == index
                               ? isDriver
                                   ? Colors.white
                                   : Theme.of(context).colorScheme.primary
                               : isDriver
                                   ? Colors.white.withOpacity(.4)
-                                  : Colors.grey),
+                                  : Colors.grey)
+                          ,
                     )
             ],
           ),

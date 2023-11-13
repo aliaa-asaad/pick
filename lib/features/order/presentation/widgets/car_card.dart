@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
 class CarCard extends StatefulWidget {
   const CarCard({super.key});
@@ -52,11 +53,12 @@ class _CarCardState extends State<CarCard> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 OrderBloc.instance.carCardData[index]['title'],
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style:  TextStyleHelper .button13.copyWith (fontWeight: FontWeight.bold),
               ),
               Image.asset(
                 OrderBloc.instance.carCardData[index]['image'],
                 height: MediaQueryHelper.height * .09,
+                fit: BoxFit.fitHeight,
                 width: MediaQueryHelper.width,
               ),
               Row(
@@ -67,19 +69,19 @@ class _CarCardState extends State<CarCard> {
                   ),
                   Text(
                     OrderBloc.instance.carCardData[index]['length'],
-                    style: const TextStyle(color: Colors.grey),
+                    style:  TextStyleHelper.caption11.copyWith(color: Colors.grey),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  SvgPicture.asset(AppImages.weight),
+                  SvgPicture.asset(AppImages.weight,height: MediaQueryHelper.height*.02,),
                   SizedBox(
                     width: MediaQueryHelper.width * .01,
                   ),
                   Text(
                     OrderBloc.instance.carCardData[index]['weight'],
-                    style: const TextStyle(color: Colors.grey),
+                    style:  TextStyleHelper.caption11.copyWith(color: Colors.grey),
                   ),
                   const Spacer(),
                   Icon(

@@ -74,7 +74,7 @@ class ClientNavigationBarState extends State<ClientNavigationBar> {
     return Scaffold(
         body: screens[currentIndex]['screen'],
         bottomNavigationBar: Container(
-          height: MediaQueryHelper.height * .075,
+          height: MediaQueryHelper.height * .083,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primaryContainer,
             boxShadow: [
@@ -148,6 +148,7 @@ class ClientNavigationBarState extends State<ClientNavigationBar> {
                             : Theme.of(context).colorScheme.secondaryContainer,
                       ),
                     ),
+                    SizedBox(height: MediaQueryHelper.height*.01,)
                   ],
                 ),
               ),

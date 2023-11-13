@@ -26,7 +26,7 @@ class _OTPScreenState extends State<OTPScreen> with Validations {
    // var bloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
+        iconTheme: IconTheme.of(context).copyWith(color: Colors.black,size: 17.r),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),

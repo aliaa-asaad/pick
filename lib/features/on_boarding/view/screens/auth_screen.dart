@@ -16,7 +16,7 @@ class AuthScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
+        iconTheme: IconTheme.of(context).copyWith(color: Colors.black,size: 17.r),
       ),
       body: SafeArea(
         child: Container(

@@ -31,7 +31,7 @@ class OTPBloc extends Bloc<OTPEvent, OTPState> with Validations {
 /////////////////models////////////////
   late OTPModel _emailVerifiactionModel;
   final OTPRepo _otpRepo = OTPRepo();
-  UserModel userModel=LoginBloc.instance.userModel.authToken!.isNotEmpty? LoginBloc.instance.userModel:RegisterBloc.instance.userModel;
+  UserModel userModel=LoginBloc.instance.userModel.authToken==null? LoginBloc.instance.userModel:RegisterBloc.instance.userModel;
 ////////////////////variables/////////////
   TextEditingController codeController1 = TextEditingController();
   String codeError1 = '';

@@ -170,7 +170,7 @@ class _OrderLocationScreenState extends State<OrderLocationScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('موقع الاستلام'),
+                        const Text('موقع الاستلام',),
                         SizedBox(
                           height: MediaQueryHelper.height * .01,
                         ),

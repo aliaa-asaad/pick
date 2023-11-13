@@ -10,7 +10,8 @@ class DefaultTabBar extends StatefulWidget {
   final TabController tabController;
   const DefaultTabBar({
     super.key,
-    required this.content, required this.tabController,
+    required this.content,
+    required this.tabController,
   });
 
   @override
@@ -27,16 +28,15 @@ class _DefaultTabBarState extends State<DefaultTabBar> {
         color: Colors.white,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.0.r)),
       ), // Background color of the tab bar
-      height:
-          MediaQueryHelper.height * .07, // Adjust the height of the tab bar
+      height: MediaQueryHelper.height * .07, // Adjust the height of the tab bar
       child: TabBar(
         padding: EdgeInsets.zero,
         labelPadding: EdgeInsets.zero,
         indicatorPadding: EdgeInsets.zero,
         controller: widget.tabController,
         tabs: List.generate(
-         widget. content.length,
-          (index) => Tab(
+          widget.content.length,
+          (index) => Tab(height: MediaQueryHelper.height*.04,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -58,7 +58,7 @@ class _DefaultTabBarState extends State<DefaultTabBar> {
           });
         },
         indicator: CustomTabIndicator(
-          indicatorSize: 5.0.r,
+          indicatorHeight: 5.0.r,
           indicatorColor: Theme.of(context).colorScheme.primary,
           tabBarIndicatorSize: 2.0.r,
           tabBarIndicatorRadius: 10.0.r,

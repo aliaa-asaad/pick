@@ -25,7 +25,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> with Validations {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   /////////////////models////////////////
   final RegisterRepo _registerRepo = RegisterRepo();
-  late UserModel userModel;
+   UserModel userModel=UserModel();
 
 ////////////////////variables/////////////
   TextEditingController fullNameController = TextEditingController();

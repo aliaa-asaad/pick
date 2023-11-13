@@ -31,11 +31,14 @@ class _EditProfileScreenState extends State<EditProfileScreen>
       appBar: AppBar(
         toolbarHeight: MediaQueryHelper.height * .1,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title:  Text('الحساب',style: TextStyleHelper.subtitle17,),
+        title: Text(
+          'الحساب',
+          style: TextStyleHelper.subtitle17,
+        ),
         centerTitle: true,
-        shape: const RoundedRectangleBorder(
+        shape:  RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
+            bottom: Radius.circular(20.r),
           ),
         ),
         elevation: .8,
@@ -61,124 +64,172 @@ class _EditProfileScreenState extends State<EditProfileScreen>
               focusColor: Colors.transparent,
               child: BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Stack(
-                        children: [
-                          CircleAvatar(
-                            radius: 60.r,
-                            backgroundColor: Colors.grey[300],
-                            child: state is ProfileLoading
-                                ? CircleAvatar(
-                                    radius: 55.r,
-                                    backgroundColor:
-                                        Theme.of(context).colorScheme.primary,
-                                    child: const CircularProgressIndicator())
-                                : CircleAvatar(
-                                    foregroundImage: NetworkImage(
-                                      SharedHandler.instance!.getData(
-                                          key: SharedKeys().user,
-                                          valueType: ValueType.map)['imageUrl'],
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Stack(
+                          children: [
+                            CircleAvatar(
+                              radius: 60.r,
+                              backgroundColor: Colors.grey[300],
+                              child: state is ProfileLoading
+                                  ? CircleAvatar(
+                                      radius: 55.r,
+                                      backgroundColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      child: const CircularProgressIndicator())
+                                  : CircleAvatar(
+                                      foregroundImage: NetworkImage(
+                                        SharedHandler.instance!.getData(
+                                            key: SharedKeys().user,
+                                            valueType: ValueType.map)['imageUrl'],
+                                      ),
+                                      radius: 55.r,
                                     ),
-                                    radius: 55.r,
-                                  ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: InkWell(
-                              onTap: () async {
-                                setState(() {
-                                  image = null;
-                                });
-                                image =
-                                    await ImagePickerHandler().getSingleImage();
-                                ProfileBloc.instance.image = image;
-                                ProfileBloc.instance.add(UploadImage());
-                              },
-                              child: CircleAvatar(
-                                radius: 20.r,
-                                backgroundColor: Colors.white,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.grey.shade300,
-                                  child: SvgPicture.asset(
-                                      AppImages.uploadImageIcon),
-                                ),
-                              ),
                             ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: MediaQueryHelper.height * .02,
-                      ),
-                      CustomFormField(
-                          validator: isValidName,
-                          hintText: 'الاسم الكامل',
-                          iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
-                          isAuth: false,
-                          keyboardType: TextInputType.name,
-                          controller: ProfileBloc.instance.fullNameController),
-                      SizedBox(
-                        height: MediaQueryHelper.height * .02,
-                      ),
-                      CustomFormField(
-                          validator: isValidPhone,
-                          iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
-                          isAuth: false,
-                          hintText: ProfileBloc.instance.client.phoneNumber!,
-                          keyboardType: TextInputType.number,
-                          controller:
-                              ProfileBloc.instance.phoneNumberController),
-                      SizedBox(
-                        height: MediaQueryHelper.height * .02,
-                      ),
-                      CustomFormField(
-                          validator: isValidEmail,
-                          iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
-                          isAuth: false,
-                          hintText: ProfileBloc.instance.client.email!,
-                          keyboardType: TextInputType.emailAddress,
-                          controller: ProfileBloc.instance.emailController),
-                      const Spacer(),
-                      state is ProfileError
-                          ? Text(
-                              'هناك خطا في البيانات',
-                              style: TextStyleHelper.subtitle19,
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: MediaQueryHelper.height * .02,
-                      ),
-                      CustomButton(
-                        width: state is ProfileLoading
-                            ? MediaQueryHelper.width * .13
-                            : MediaQueryHelper.width,
-                        onPressed: () {
-                          if (ProfileBloc.instance.formKey.currentState!
-                              .validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('تم حفظ البيانات')),
-                            );
-                            ProfileBloc.instance.add(EditProfile());
-                          } else {
-                            log('not valid');
-                          }
-                        },
-                        child: state is ProfileLoading
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : Text(
-                                'حفظ التعديلات',
-                                style: TextStyleHelper.subtitle19.copyWith(
-                                  color: Colors.white,
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: InkWell(
+                                onTap: () async {
+                                  setState(() {
+                                    image = null;
+                                  });
+                                  image =
+                                      await ImagePickerHandler().getSingleImage();
+                                  ProfileBloc.instance.image = image;
+                                  ProfileBloc.instance.add(UploadImage());
+                                },
+                                child: CircleAvatar(
+                                  radius: 20.r,
+                                  backgroundColor: Colors.white,
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey.shade300,
+                                    child: SvgPicture.asset(
+                                        AppImages.uploadImageIcon),
+                                  ),
                                 ),
                               ),
-                        /*  textColor: textColor */
-                      ),
-                    ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ),
+                        CustomFormField(
+                            validator: isValidName,
+                            hintText: 'رقم الهوية الوطنية',
+                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            isAuth: false,
+                            keyboardType: TextInputType.name,
+                            controller: ProfileBloc.instance.fullNameController),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ),
+                        CustomFormField(
+                            validator: isValidPhone,
+                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            isAuth: false,
+                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            keyboardType: TextInputType.number,
+                            controller:
+                                ProfileBloc.instance.phoneNumberController),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ),
+                        CustomFormField(
+                            validator: isValidEmail,
+                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            isAuth: false,
+                            hintText: ProfileBloc.instance.client.email!,
+                            keyboardType: TextInputType.emailAddress,
+                            controller: ProfileBloc.instance.emailController),
+                       // const Spacer(),
+                       Column(children: [
+                           CustomFormField(
+                            validator: isValidPhone,
+                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            isAuth: false,
+                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            keyboardType: TextInputType.number,
+                            controller:
+                                ProfileBloc.instance.phoneNumberController),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ), CustomFormField(
+                            validator: isValidPhone,
+                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            isAuth: false,
+                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            keyboardType: TextInputType.number,
+                            controller:
+                                ProfileBloc.instance.phoneNumberController),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ), CustomFormField(
+                            validator: isValidPhone,
+                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            isAuth: false,
+                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            keyboardType: TextInputType.number,
+                            controller:
+                                ProfileBloc.instance.phoneNumberController),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ), CustomFormField(
+                            validator: isValidPhone,
+                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            isAuth: false,
+                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            keyboardType: TextInputType.number,
+                            controller:
+                                ProfileBloc.instance.phoneNumberController),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ),
+                        ],),
+                       
+                        state is ProfileError
+                            ? Text(
+                                'هناك خطا في البيانات',
+                                style: TextStyleHelper.subtitle19,
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ),
+                         Align(alignment: Alignment.bottomCenter,
+                          child: CustomButton(
+                            width: state is ProfileLoading
+                                ? MediaQueryHelper.width * .13
+                                : MediaQueryHelper.width,
+                            onPressed: () {
+                              if (ProfileBloc.instance.formKey.currentState!
+                                  .validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('تم حفظ البيانات')),
+                                );
+                                ProfileBloc.instance.add(EditProfile());
+                              } else {
+                                log('not valid');
+                              }
+                            },
+                            child: state is ProfileLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text(
+                                    'حفظ التعديلات',
+                                    style: TextStyleHelper.subtitle19.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                            /*  textColor: textColor */
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),

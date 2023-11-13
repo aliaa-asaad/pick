@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
 class OrderType extends StatefulWidget {
   const OrderType({super.key});
@@ -50,7 +51,7 @@ class _OrderTypeState extends State<OrderType> {
             ),
             child: Row(
               children: [
-                Text(bloc.orderTypeData[index]),
+                Text(bloc.orderTypeData[index],style: TextStyleHelper.button13.copyWith(fontWeight: FontWeight.normal),),
                 const Spacer(),
                 Icon(
                   Icons.check_circle,

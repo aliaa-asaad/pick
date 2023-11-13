@@ -11,7 +11,7 @@ class SharedKeys {
   String lang = "LANG";
   String theme = "THEME";
   String isNotFirstTime = "Is_NOT_FIRST_TIME";
-
+String driver='DRIVER';
   String userType = "USER_TYPE";
 }
 

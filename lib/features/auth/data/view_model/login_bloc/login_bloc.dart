@@ -26,7 +26,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   /////////////////models////////////////
   final LoginRepo _loginRepo = LoginRepo();
-  late UserModel userModel;
+  UserModel userModel = UserModel();
+  Driver driver = Driver();
 
 ////////////////////variables/////////////
   TextEditingController phoneNumberController = TextEditingController();
@@ -52,7 +53,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
           "type": SharedHandler.instance!
               .getData(key: SharedKeys().userType, valueType: ValueType.int)
         };
-        userModel = await _loginRepo.loginRequest(data);
+        if (SharedHandler.instance!.getData(
+                key: SharedKeys().userType, valueType: ValueType.int) ==
+            0) {
+          userModel = await _loginRepo.loginRequest(data);
+          log('userModel: ${userModel.toString()}');
+        } else {
+          driver = await _loginRepo.loginRequest(data);
+          log('driver: ${driver.toString()}');
+        }
         SharedHandler.instance!
             .setData(SharedKeys().user, value: userModel.client!.toJson());
         SharedHandler.instance!

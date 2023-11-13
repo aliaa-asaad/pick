@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDot extends StatelessWidget {
   final int currentIndex;
@@ -13,11 +14,12 @@ class CustomDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 8,
-      width: 8,
-      margin: const EdgeInsets.only(right: 5),
+      height: 6.h,
+      width: 6.w,
+      margin:  EdgeInsets.only(right: 5.w),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+     //   borderRadius: BorderRadius.circular(20.r),
+        shape: BoxShape.circle,
         color: color,
       ),
     );

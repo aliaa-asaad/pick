@@ -29,7 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> with Validations {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
+        iconTheme: IconTheme.of(context).copyWith(color: Colors.black,size: 17.r),
         elevation: 0.0,
       ),
       body: SafeArea(
@@ -59,7 +59,9 @@ class _SignUpScreenState extends State<SignUpScreen> with Validations {
                       SizedBox(
                         height: MediaQueryHelper.height * .02,
                       ),
-                      const Text('ادخل البيانات لاستكمال التسجيل'),
+                       Text('ادخل البيانات لاستكمال التسجيل',textAlign: TextAlign.center,
+                      style: TextStyleHelper.button13
+                          .copyWith(fontWeight: FontWeight.normal),),
                       SizedBox(
                         height: MediaQueryHelper.height * .04,
                       ),

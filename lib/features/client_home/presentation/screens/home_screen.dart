@@ -48,15 +48,15 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       currentImage = 0;
     }
-if(mounted)
-   { _pageController.animateToPage(
-      currentImage,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.ease,
-    );}
+    if (mounted) {
+      _pageController.animateToPage(
+        currentImage,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    }
 
     Future.delayed(const Duration(seconds: 2), () {
-      
       _animateSlider();
     });
   }
@@ -145,7 +145,7 @@ if(mounted)
                                         child: SizedBox(
                                           height:
                                               Curves.easeOut.transform(value) *
-                                                  200,
+                                                  MediaQueryHelper.height*.15,
                                           width:
                                               Curves.easeOut.transform(value) *
                                                   MediaQueryHelper.width,
@@ -223,13 +223,14 @@ if(mounted)
                             BoxShadow(
                                 color:
                                     Colors.grey.shade300 /* spreadRadius: 5 */,
-                                blurRadius: 5)
+                                blurRadius: 5.r)
                           ]),
-                      child: Row(
+                      child: Row(crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(8.0.r),
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -250,10 +251,12 @@ if(mounted)
                             ),
                           ),
                           ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16.r),
                               clipBehavior: Clip.hardEdge,
-                              child:
-                                  SvgPicture.asset(cardContent[index]['icon']))
+                              child: SvgPicture.asset(
+                                cardContent[index]['icon'],
+                                height: MediaQueryHelper.height * .1,
+                              ))
                         ],
                       ),
                     ),

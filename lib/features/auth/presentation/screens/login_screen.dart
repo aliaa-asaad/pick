@@ -24,14 +24,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> with Validations {
   @override
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
+        iconTheme: IconTheme.of(context).copyWith(color: Colors.black,size: 17.r),
         elevation: 0.0,
       ),
       body: SafeArea(
@@ -61,8 +59,12 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
                     SizedBox(
                       height: MediaQueryHelper.height * .02,
                     ),
-                    const Text(
-                        'قم بادخال رقم الجوال وكلمة السر لاستكمال عملية التسجيل'),
+                    Text(
+                      'قم بادخال رقم الجوال وكلمة السر لاستكمال عملية التسجيل',
+                      textAlign: TextAlign.center,
+                      style: TextStyleHelper.button13
+                          .copyWith(fontWeight: FontWeight.normal),
+                    ),
                     SizedBox(
                       height: MediaQueryHelper.height * .04,
                     ),

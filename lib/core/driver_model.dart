@@ -1,54 +1,72 @@
-class UserModel {
+class DriverModel {
   bool? status;
-  String? authToken;
   String? message;
-  Client? client;
+  String? authToken;
+  Driver? driver;
 
-  UserModel({this.status, this.authToken, this.message, this.client});
+  DriverModel({this.status, this.message, this.authToken, this.driver});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  DriverModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    authToken = json['authToken'] ?? '';
     message = json['message'];
-    client = json['client'] != null ? Client.fromJson(json['client']) : null;
+    authToken = json['authToken'];
+    driver = json['driver'] != null ? Driver.fromJson(json['driver']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
-    data['authToken'] = authToken ?? '';
     data['message'] = message;
-    if (client != null) {
-      data['client'] = client!.toJson();
+    data['authToken'] = authToken;
+    if (driver != null) {
+      data['driver'] = driver!.toJson();
     }
     return data;
   }
 }
 
-class Client {
+class Driver {
   int? id;
   String? fullName;
   String? phoneNumber;
   String? email;
   String? imageUrl;
+  String? nationalId;
+  int? carType;
+  String? carBrand;
+  String? carModel;
+  String? carNumber;
+  int? isActive;
   int? type;
   bool? isValid;
 
-  Client(
+  Driver(
       {this.id,
       this.fullName,
       this.phoneNumber,
       this.email,
       this.imageUrl,
+      this.nationalId,
+      this.carType,
+      this.carBrand,
+      this.carModel,
+      this.carNumber,
+      this.isActive,
       this.type,
       this.isValid});
 
-  Client.fromJson(Map<String, dynamic> json) {
+  Driver.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     fullName = json['fullName'];
     phoneNumber = json['phoneNumber'];
     email = json['email'];
     imageUrl = json['imageUrl'];
+    nationalId = json['nationalId'];
+    carType = json['carType'];
+    carBrand = json['carBrand'];
+    carModel = json['carModel'];
+    carNumber = json['carNumber'];
+    isActive = json['isActive'];
     type = json['type'];
     isValid = json['isValid'];
   }
@@ -60,50 +78,14 @@ class Client {
     data['phoneNumber'] = phoneNumber;
     data['email'] = email;
     data['imageUrl'] = imageUrl;
-    data['type'] = type;
-    data['isValid'] = isValid;
-    return data;
-  }
-}
-
-class Driver extends UserModel {
-  String? nationalId;
-  int? carType;
- 
-  String? carBrand;
-  String? carModel;
-  String? carNumber;
-  int? isActive;
-  
-
-  Driver(
-      {this.nationalId,
-      this.carType,
-      this.carBrand,
-      this.carModel,
-      this.carNumber,
-      this.isActive,
-      });
-
-  Driver.fromJson(Map<String, dynamic> json) {
-    nationalId = json['nationalId'];
-    carType = json['carType'];
-    carBrand = json['carBrand'];
-    carModel = json['carModel'];
-    carNumber = json['carNumber'];
-    isActive = json['isActive'];
-   
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
     data['nationalId'] = nationalId;
     data['carType'] = carType;
     data['carBrand'] = carBrand;
     data['carModel'] = carModel;
     data['carNumber'] = carNumber;
     data['isActive'] = isActive;
-   
+    data['type'] = type;
+    data['isValid'] = isValid;
     return data;
   }
 }

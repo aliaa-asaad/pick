@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
 class OrderDetailsTypeCard extends StatefulWidget {
   final String type;
@@ -70,7 +71,7 @@ class _OrderDetailsTypeCardState extends State<OrderDetailsTypeCard> {
               ),
               child: Row(
                 children: [
-                  Text(widget.orderDetailsTypeData[index]),
+                  Text(widget.orderDetailsTypeData[index],style: TextStyleHelper.button13.copyWith(fontWeight: FontWeight.normal),),
                   const Spacer(),
                   Icon(
                     Icons.check_circle,

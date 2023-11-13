@@ -56,8 +56,8 @@ class _MyTabBarTestState extends State<MyTabBarTest>
             child: Column(
               children: [
                 Container(
-               //   padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-                padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                  //   padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius:
@@ -66,26 +66,24 @@ class _MyTabBarTestState extends State<MyTabBarTest>
                   height: MediaQueryHelper.height *
                       .075, // Adjust the height of the tab bar
                   child: TabBar(
-                    padding: EdgeInsets.zero,labelPadding: EdgeInsets.zero ,
-                  indicatorPadding:  EdgeInsets.zero,
+                    padding: EdgeInsets.zero,
+                    labelPadding: EdgeInsets.zero,
+                    indicatorPadding: EdgeInsets.zero,
                     controller: _tabController,
                     tabs: List.generate(
                       content.length,
                       (index) => Tab(
                         child: Column(
-                          
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(content[index],
                                 textAlign: TextAlign.center,
                                 style: TextStyleHelper.body15.copyWith(
-                                  fontWeight: FontWeight.normal,
-                                    color: MyOrderBloc.instance
-                                                .tabBarCurrentIndex ==
+                                    fontWeight: FontWeight.normal,
+                                    color: MyOrderBloc
+                                                .instance.tabBarCurrentIndex ==
                                             index
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .primary
+                                        ? Theme.of(context).colorScheme.primary
                                         : Colors.grey)),
                           ],
                         ),
@@ -98,7 +96,7 @@ class _MyTabBarTestState extends State<MyTabBarTest>
                       });
                     },
                     indicator: CustomTabIndicator(
-                      indicatorSize: 5.0.r,
+                      indicatorHeight: 5.0.r,
                       indicatorColor: Theme.of(context).colorScheme.primary,
                       tabBarIndicatorSize: 2.0.r,
                       tabBarIndicatorRadius: 10.0.r,
@@ -191,6 +189,4 @@ class _MyTabBarTestState extends State<MyTabBarTest>
       },
     );
   }
-
-  
 }

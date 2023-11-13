@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
@@ -38,7 +40,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: SafeArea( bottom: false,
+      body: SafeArea( bottom:Platform.isIOS? false:true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -61,7 +63,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             SizedBox(height: MediaQueryHelper.height * .1),
             Container(
               width: MediaQueryHelper.width,
-              height: MediaQueryHelper.height * .23,
+              height: MediaQueryHelper.height * .225,
               padding: EdgeInsets.only(top: 28.h),
               decoration:  BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -101,14 +103,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             style: TextStyleHelper.title24),
                         SizedBox(height: MediaQueryHelper.height * .005),
                         Padding(
-                          padding:  EdgeInsets.fromLTRB(12.0.r,0,12.0.r,12.0.r),
+                          padding:  EdgeInsets.fromLTRB(12.0.r,0,12.0.r,8.0.r),
                           child: Text(onBoardingList[index]['description'],
                               textAlign: TextAlign.center,
                               style: TextStyleHelper.body15
                                   .copyWith(color: Colors.grey)),
                         ),
                         /* SizedBox(height: MediaQueryHelper.height * .01), */
-                        const Spacer(),
+                      const Spacer(),
                       ]),
                     ),
                   ),
@@ -118,7 +120,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             Container(
               color: Colors.white,
               width: MediaQueryHelper.width,
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsets.fromLTRB(16.r, 0, 16.r, 16.r),
               child: CustomButton(
                   textColor: currentIndex == onBoardingList.length - 1
                       ? Colors.white

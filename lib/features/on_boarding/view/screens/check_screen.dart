@@ -77,7 +77,7 @@ class _CheckScreenState extends State<CheckScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: content.length,
-                              childAspectRatio: 1 / .87,
+                              childAspectRatio: 1 / .9,
                               crossAxisSpacing: MediaQueryHelper.width * .05,
                             ),
                             itemBuilder: (context, index) => CheckCard(
