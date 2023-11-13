@@ -75,6 +75,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       TextEditingController();
   TextEditingController orderSendLocationController = TextEditingController();
   List<File> imagesList = [];
+
+  ///////////////////////payment////////////////////
+TextEditingController cardNameController=TextEditingController();
+TextEditingController cardNumberController=TextEditingController();
+TextEditingController cardExpiredDateController=TextEditingController();
+TextEditingController cardCvvController=TextEditingController();
+TextEditingController promoCodeController=TextEditingController();
   
   bool isValidData() {
     log('carIndex:$carIndex');

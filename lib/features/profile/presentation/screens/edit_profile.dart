@@ -105,9 +105,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                   radius: 20.r,
                                   backgroundColor: Colors.white,
                                   child: CircleAvatar(
+                                    radius: 18.r,
                                     backgroundColor: Colors.grey.shade300,
                                     child: SvgPicture.asset(
-                                        AppImages.uploadImageIcon),
+                                        AppImages.uploadImageIcon,height: MediaQueryHelper.height*.03,),
                                   ),
                                 ),
                               ),
@@ -119,7 +120,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                         ),
                         CustomFormField(
                             validator: isValidName,
-                            hintText: 'رقم الهوية الوطنية',
+                            hintText: ProfileBloc.instance.fullNameController.text,
                             iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
                             keyboardType: TextInputType.name,
@@ -131,7 +132,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                             validator: isValidPhone,
                             iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
-                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            hintText: ProfileBloc.instance.phoneNumberController.text,
                             keyboardType: TextInputType.number,
                             controller:
                                 ProfileBloc.instance.phoneNumberController),
@@ -142,49 +143,52 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                             validator: isValidEmail,
                             iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
-                            hintText: ProfileBloc.instance.client.email!,
+                            hintText: ProfileBloc.instance.emailController.text,
                             keyboardType: TextInputType.emailAddress,
                             controller: ProfileBloc.instance.emailController),
+                            SizedBox(
+                          height: MediaQueryHelper.height * .02,
+                        ),
                        // const Spacer(),
                        Column(children: [
                            CustomFormField(
                             validator: isValidPhone,
                             iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
-                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            hintText: ProfileBloc.instance.nationalIdController.text,
                             keyboardType: TextInputType.number,
                             controller:
-                                ProfileBloc.instance.phoneNumberController),
+                                ProfileBloc.instance.nationalIdController),
                         SizedBox(
                           height: MediaQueryHelper.height * .02,
                         ), CustomFormField(
                             validator: isValidPhone,
                             iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
-                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            hintText: ProfileBloc.instance.carTypeController.text,
                             keyboardType: TextInputType.number,
                             controller:
-                                ProfileBloc.instance.phoneNumberController),
+                                ProfileBloc.instance.carTypeController),
                         SizedBox(
                           height: MediaQueryHelper.height * .02,
                         ), CustomFormField(
                             validator: isValidPhone,
                             iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
-                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            hintText: ProfileBloc.instance.carBrandController.text,
                             keyboardType: TextInputType.number,
                             controller:
-                                ProfileBloc.instance.phoneNumberController),
+                                ProfileBloc.instance.carBrandController),
                         SizedBox(
                           height: MediaQueryHelper.height * .02,
                         ), CustomFormField(
                             validator: isValidPhone,
                             iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
-                            hintText: ProfileBloc.instance.client.phoneNumber!,
+                            hintText: ProfileBloc.instance.carTypeController.text,
                             keyboardType: TextInputType.number,
                             controller:
-                                ProfileBloc.instance.phoneNumberController),
+                                ProfileBloc.instance.carTypeController),
                         SizedBox(
                           height: MediaQueryHelper.height * .02,
                         ),

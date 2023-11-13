@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class TextStyleHelper {
+  static TextStyle get title30 => TextStyle(
+        fontSize: 30.sp,
+        fontWeight: FontWeight.bold,
+      );
   static TextStyle get title24 => TextStyle(
         fontSize: 24.sp,
         fontWeight: FontWeight.bold,

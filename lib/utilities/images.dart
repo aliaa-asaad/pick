@@ -55,6 +55,11 @@ class AppImages {
   static const orderStatusIconBody5 = 'assets/images/order_status_icon_body5.png';
   static const paymentIcon = 'assets/svg/payment_icon.svg';
   static const costIcon = 'assets/svg/cost_icon.svg';
+  static const applePayIcon = 'assets/svg/apple_pay_icon.svg';
+  static const cachIcon = 'assets/svg/cach_icon.svg';
+  static const visaIcon = 'assets/svg/visa_icon.svg';
+  static const takeRevenueIcon = 'assets/svg/take_revenue_icon.svg';
+
 
   
 

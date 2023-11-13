@@ -61,11 +61,11 @@ class Driver {
     phoneNumber = json['phoneNumber'];
     email = json['email'];
     imageUrl = json['imageUrl'];
-    nationalId = json['nationalId'];
-    carType = json['carType'];
-    carBrand = json['carBrand'];
-    carModel = json['carModel'];
-    carNumber = json['carNumber'];
+    nationalId = json['nationalId']??'الهوية الوطنية';
+    carType = json['carType']??'نوع السيارة';
+    carBrand = json['carBrand'] ??'ماركة السيارة';
+    carModel = json['carModel'] ??'موديل السيارة';
+    carNumber = json['carNumber'] ??'رقم السيارة';
     isActive = json['isActive'];
     type = json['type'];
     isValid = json['isValid'];

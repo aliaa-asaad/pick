@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,7 @@ class _CheckScreenState extends State<CheckScreen> {
 
     return Scaffold(
       body: SafeArea(
+        bottom:Platform.isIOS? false:true,
         child: Column(
           children: [
             Image.asset(

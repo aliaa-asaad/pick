@@ -36,7 +36,24 @@ String? isValidContent(String? email) {
     }
     return null;
   }
-
+ String? isValidCardNumber(String? card) {
+    //RegExp(r"^(?:[+0]9)?[0-9]{9}$").hasMatch(phone) &&
+    if (card!.isEmpty) {
+      return "الرجاء ادخال رقم الكارت";
+    } else if (card.length < 11) {
+      return "رقم الكارت يجب ان يتكون من 16 رقم";
+    }
+    return null;
+  }
+   String? isValidCVV(String? card) {
+    //RegExp(r"^(?:[+0]9)?[0-9]{9}$").hasMatch(phone) &&
+    if (card!.isEmpty) {
+      return "الرجاء ادخال رقم الcvv";
+    } else if (card.length < 11) {
+      return "رقم الcvv يجب ان يتكون من 3 ارقام";
+    }
+    return null;
+  }
 ////////////////////////////////////////////////////////////////////////////////
   String isValidEmailBloc(String email) {
     if (email.isEmpty) {

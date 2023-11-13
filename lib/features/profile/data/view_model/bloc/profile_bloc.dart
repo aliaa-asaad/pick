@@ -20,10 +20,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       // TODO: implement event handler
     });
   }
+    ///////////instance//////////////
+ 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   static ProfileBloc get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
+
+        /////////////////models////////////////
+
   UserModel _userModel = UserModel();
   final ProfileRepo _profileRepo = ProfileRepo();
+
+  /////////////////variables////////////////
   Client client = Client.fromJson(SharedHandler.instance!
       .getData(key: SharedKeys().user, valueType: ValueType.map));
 
@@ -76,7 +84,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       text: SharedHandler.instance!
           .getData(key: SharedKeys().driver, valueType: ValueType.map)['isActive']);
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+
+  
   File? image;
 
   _editProfile(ProfileEvent events, Emitter emit) async {
