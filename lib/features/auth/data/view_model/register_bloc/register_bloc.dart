@@ -6,6 +6,7 @@ import 'package:pick_up/core/driver_model.dart';
 import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/model/register/register_repo.dart';
+import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
 
@@ -26,8 +27,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> with Validations {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   /////////////////models////////////////
   final RegisterRepo _registerRepo = RegisterRepo();
-  
-    UserModel userModel = UserModel();
+
+  UserModel userModel = UserModel();
   DriverModel driverModel = DriverModel();
 
 ////////////////////variables/////////////
@@ -68,8 +69,19 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> with Validations {
           'password': passwordController.text,
           'phoneNumber': phoneNumberController.text,
         };
-        userModel = await _registerRepo.registerRequest(data);
+        log( 'data: ${data.toString()}');
+        if (SharedHandler.instance!.getData(
+                key: SharedKeys().userType, valueType: ValueType.int) ==
+            0) {
+          userModel = await _registerRepo.registerRequest(data);
+           log('userModel register: ${userModel.toString()}');
+        }
+        else{
+          log( 'data to repo : ${data.toString()}');
+          driverModel = await _registerRepo.registerRequest(data);
+          log('driverModel register: ${driverModel.toString()}');}
         log('success');
+       
         /* SharedHandler.instance!
           .setData(SharedKeys().user, value: _userModel.client!.toJson());
       SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
@@ -87,12 +99,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> with Validations {
       emit(RegisterError());
     }
   }
+
   clearData() {
     fullNameController.clear();
     phoneNumberController.clear();
     passwordController.clear();
     confirmPasswordController.clear();
     emailController.clear();
-    
   }
 }

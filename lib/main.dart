@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: const [Locale("ar")],
         locale: const Locale("ar"),
-        home: const ChatScreen(),
+        home: const CheckScreen(),
       ),
     );        
   }

@@ -2,10 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pick_up/core/driver_model.dart';
 import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/core/validator.dart';
-import 'package:pick_up/features/auth/data/model/otp_model.dart';
 import 'package:pick_up/features/auth/data/model/otp/otp_repo.dart';
+import 'package:pick_up/features/auth/data/model/otp_model.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/login_bloc/login_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/register_bloc/register_bloc.dart';
@@ -31,7 +32,12 @@ class OTPBloc extends Bloc<OTPEvent, OTPState> with Validations {
 /////////////////models////////////////
   late OTPModel _emailVerifiactionModel;
   final OTPRepo _otpRepo = OTPRepo();
-  UserModel userModel=LoginBloc.instance.userModel.authToken==null? LoginBloc.instance.userModel:RegisterBloc.instance.userModel;
+  UserModel userModel = LoginBloc.instance.userModel.authToken == null
+      ? RegisterBloc.instance.userModel
+      : LoginBloc.instance.userModel;
+  DriverModel driverModel = LoginBloc.instance.driverModel.authToken == null
+      ? RegisterBloc.instance.driverModel
+      : LoginBloc.instance.driverModel;
 ////////////////////variables/////////////
   TextEditingController codeController1 = TextEditingController();
   String codeError1 = '';
@@ -75,14 +81,43 @@ class OTPBloc extends Bloc<OTPEvent, OTPState> with Validations {
       log('verified');
       log('isForgetPassword : ${AuthBloc.instance.isForgetPassword}');
       if (AuthBloc.instance.isForgetPassword == false) {
-        log('model: ${userModel.client!.toJson()}');
-        await SharedHandler.instance!
-            .setData(SharedKeys().user, value: userModel.client!.toJson());
+        if (SharedHandler.instance!.getData(
+                key: SharedKeys().userType, valueType: ValueType.int) ==
+            0) {
+          log('model: ${userModel.toJson()}');
+          if (LoginBloc.instance.driverModel.authToken == null) {
+            log('register userModel: ${RegisterBloc.instance.userModel.toString()}');
+            log('register client model: ${userModel.client!.toJson()}');
+          } else {
+            log('login userModel: ${LoginBloc.instance.userModel.toString()}');
+            log('login client model: ${userModel.client!.toJson()}');
+          }
+
+          await SharedHandler.instance!
+              .setData(SharedKeys().user, value: userModel.client!.toJson());
+          await SharedHandler.instance!
+              .setData(SharedKeys().token, value: userModel.authToken);
+        } else {
+          log('model: ${driverModel.toJson()}');
+          /* log('register userModel: ${RegisterBloc.instance.driverModel.toString()}');
+          log('client model: ${driverModel.driver!.toJson()}'); */
+          if (LoginBloc.instance.driverModel.authToken == null) {
+            log('register userModel: ${RegisterBloc.instance.userModel.toString()}');
+            log('register client model: ${userModel.client!.toJson()}');
+          } else {
+            log('login userModel: ${LoginBloc.instance.driverModel.toString()}');
+            log('login driver model: ${driverModel.client!.toJson()}');
+          }
+          await SharedHandler.instance!.setData(SharedKeys().driver,
+              value: driverModel.client!.toJson());
+          await SharedHandler.instance!
+              .setData(SharedKeys().token, value: driverModel.authToken);
+        }
+
         await SharedHandler.instance!
             .setData(SharedKeys().isLogin, value: true);
-        log('token: ${userModel.authToken}');
-        await SharedHandler.instance!
-            .setData(SharedKeys().token, value: userModel.authToken);
+        log('user model token: ${userModel.authToken}');
+        log('driver model token: ${driverModel.authToken}');
         await SharedHandler.instance!
             .setData(SharedKeys().isNotFirstTime, value: true);
       }

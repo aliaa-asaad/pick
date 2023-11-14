@@ -58,22 +58,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
                 key: SharedKeys().userType, valueType: ValueType.int) ==
             0) {
           userModel = await _loginRepo.loginRequest(data);
-               SharedHandler.instance!
-            .setData(SharedKeys().user, value: userModel.client!.toJson());
-        SharedHandler.instance!
-            .setData(SharedKeys().token, value: userModel.authToken);
-        log('client login token: ${userModel.authToken}');
+          SharedHandler.instance!
+              .setData(SharedKeys().user, value: userModel.client!.toJson());
+          SharedHandler.instance!
+              .setData(SharedKeys().token, value: userModel.authToken);
+          log('client login token: ${userModel.authToken}');
           log('userModel: ${userModel.toString()}');
         } else {
           driverModel = await _loginRepo.loginRequest(data);
-               SharedHandler.instance!
-            .setData(SharedKeys().user, value: driverModel.driver!.toJson());
-        SharedHandler.instance!
-            .setData(SharedKeys().token, value: driverModel.authToken);
-        log('driver login token: ${driverModel.authToken}');
+          SharedHandler.instance!
+              .setData(SharedKeys().user, value: driverModel.client!.toJson());
+          SharedHandler.instance!
+              .setData(SharedKeys().token, value: driverModel.authToken);
+          log('driver login token: ${driverModel.authToken}');
           log('driver: ${driverModel.toString()}');
         }
-   
+
         SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
         SharedHandler.instance!
             .setData(SharedKeys().isNotFirstTime, value: true);
