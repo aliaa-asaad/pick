@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pick_up/features/chat/presentation/screens/chat_screen.dart';
 import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';
 import 'package:pick_up/features/my_order/presentation/screens/client_order_screen.dart';
 import 'package:pick_up/features/profile/presentation/screens/profile_screen.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
+import 'package:pick_up/utilities/text_style.dart';
 
 /* class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});
@@ -72,6 +74,7 @@ class ClientNavigationBarState extends State<ClientNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
         body: screens[currentIndex]['screen'],
         bottomNavigationBar: Container(
           height: MediaQueryHelper.height * .083,
@@ -165,9 +168,15 @@ class ClientNavigationBarState extends State<ClientNavigationBar> {
       'screen': const ClientOrderScreen()
     },
     {
+      'title': 'الرسائل',
+      'icon': AppImages.chatIcon,
+      'screen': const ChatScreen()
+    },
+    {
       'title': 'الحساب',
       'icon': AppImages.profile,
       'screen': const ProfileScreen()
     },
+
   ];
 }

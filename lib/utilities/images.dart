@@ -59,6 +59,8 @@ class AppImages {
   static const cachIcon = 'assets/svg/cach_icon.svg';
   static const visaIcon = 'assets/svg/visa_icon.svg';
   static const takeRevenueIcon = 'assets/svg/take_revenue_icon.svg';
+  static const chatIcon = 'assets/svg/chat_icon.svg';
+  static const whatsappIcon = 'assets/svg/whatsapp_icon.svg';
 
 
   

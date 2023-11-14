@@ -57,16 +57,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
                 key: SharedKeys().userType, valueType: ValueType.int) ==
             0) {
           userModel = await _loginRepo.loginRequest(data);
-          log('userModel: ${userModel.toString()}');
-        } else {
-          driver = await _loginRepo.loginRequest(data);
-          log('driver: ${driver.toString()}');
-        }
-        SharedHandler.instance!
+               SharedHandler.instance!
             .setData(SharedKeys().user, value: userModel.client!.toJson());
         SharedHandler.instance!
             .setData(SharedKeys().token, value: userModel.authToken);
-        log('login token: ${userModel.authToken}');
+        log('client login token: ${userModel.authToken}');
+          log('userModel: ${userModel.toString()}');
+        } else {
+          driver = await _loginRepo.loginRequest(data);
+               SharedHandler.instance!
+            .setData(SharedKeys().user, value: driver.client!.toJson());
+        SharedHandler.instance!
+            .setData(SharedKeys().token, value: driver.authToken);
+        log('driver login token: ${driver.authToken}');
+          log('driver: ${driver.toString()}');
+        }
+   
         SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
         SharedHandler.instance!
             .setData(SharedKeys().isNotFirstTime, value: true);

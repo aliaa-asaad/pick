@@ -1,5 +1,5 @@
 class ApiNames {
-  static const String baseUrl = 'https://pickupksa.com/api/public/';
+  static const String baseUrl = 'https://pickupksa.com/Api/public/';
   static const String loginEndPoint = 'api/login';
   static const String clientRegisterEndPoint = 'api/auth/client/register';
   static const String driverRegisterEndPoint = 'api/auth/driver/register';

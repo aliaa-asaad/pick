@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pick_up/features/chat/presentation/screens/chat_screen.dart';
 import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';
 import 'package:pick_up/features/driver_revenue/presentation/screens/driver_revenue_screen.dart';
 import 'package:pick_up/features/my_order/presentation/screens/client_order_screen.dart';
@@ -112,7 +113,16 @@ class DriverNavigationBarState extends State<DriverNavigationBar> {
       'icon': AppImages.orders,
       'screen': const DriverOrderScreen()
     },
-    {'title': 'ارباحي', 'icon': AppImages.revenueIcon, 'screen': const DriverRevenueScreen()},
+    {
+      'title': 'ارباحي',
+      'icon': AppImages.revenueIcon,
+      'screen': const DriverRevenueScreen()
+    },
+    {
+      'title': 'الرسائل',
+      'icon': AppImages.chatIcon,
+      'screen': const ChatScreen()
+    },
     {
       'title': 'الحساب',
       'icon': AppImages.profile,

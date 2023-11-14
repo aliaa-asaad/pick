@@ -14,6 +14,7 @@ import 'package:pick_up/features/auth/data/view_model/register_bloc/register_blo
 import 'package:pick_up/features/client_home/data/view_model/cubit/home_cubit.dart';
 import 'package:pick_up/features/driver_revenue/presentation/screens/driver_revenue_screen.dart';
 import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
+import 'package:pick_up/features/nav_bar/client_nav_bar.dart';
 import 'package:pick_up/features/notification/data/view_model/cubit/notification_cubit.dart';
 import 'package:pick_up/features/on_boarding/view/screens/on_boarding.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
@@ -107,7 +108,7 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: const [Locale("ar")],
         locale: const Locale("ar"),
-        home: const DriverRevenueScreen(),
+        home: ClientNavigationBar(),
       ),
     );
   }
