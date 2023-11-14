@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pick_up/core/driver_model.dart';
 import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/model/login/login_repo.dart';
@@ -27,7 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
   /////////////////models////////////////
   final LoginRepo _loginRepo = LoginRepo();
   UserModel userModel = UserModel();
-  Driver driver = Driver();
+  DriverModel driverModel = DriverModel();
 
 ////////////////////variables/////////////
   TextEditingController phoneNumberController = TextEditingController();
@@ -64,13 +65,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
         log('client login token: ${userModel.authToken}');
           log('userModel: ${userModel.toString()}');
         } else {
-          driver = await _loginRepo.loginRequest(data);
+          driverModel = await _loginRepo.loginRequest(data);
                SharedHandler.instance!
-            .setData(SharedKeys().user, value: driver.client!.toJson());
+            .setData(SharedKeys().user, value: driverModel.driver!.toJson());
         SharedHandler.instance!
-            .setData(SharedKeys().token, value: driver.authToken);
-        log('driver login token: ${driver.authToken}');
-          log('driver: ${driver.toString()}');
+            .setData(SharedKeys().token, value: driverModel.authToken);
+        log('driver login token: ${driverModel.authToken}');
+          log('driver: ${driverModel.toString()}');
         }
    
         SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);

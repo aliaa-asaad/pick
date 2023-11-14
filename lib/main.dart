@@ -11,16 +11,15 @@ import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/login_bloc/login_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/otp_bloc/otp_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/register_bloc/register_bloc.dart';
+import 'package:pick_up/features/chat/presentation/screens/chat_screen.dart';
 import 'package:pick_up/features/client_home/data/view_model/cubit/home_cubit.dart';
-import 'package:pick_up/features/driver_revenue/presentation/screens/driver_revenue_screen.dart';
 import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
-import 'package:pick_up/features/nav_bar/client_nav_bar.dart';
 import 'package:pick_up/features/notification/data/view_model/cubit/notification_cubit.dart';
-import 'package:pick_up/features/on_boarding/view/screens/on_boarding.dart';
+import 'package:pick_up/features/notification/presentation/screens/notifications_screen.dart';
+import 'package:pick_up/features/on_boarding/view/screens/auth_screen.dart';
+import 'package:pick_up/features/on_boarding/view/screens/check_screen.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
-import 'package:pick_up/features/payment/presentation/screens/payment_screen.dart';
 import 'package:pick_up/features/profile/data/view_model/bloc/profile_bloc.dart';
-import 'package:pick_up/features/splash/view/splash_screen.dart';
 import 'package:pick_up/handlers/localization.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
@@ -31,10 +30,9 @@ import 'package:pusher_beams/pusher_beams.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isAndroid) {
-   await Firebase.initializeApp();
-
+    await Firebase.initializeApp();
   }
-  
+
   await PusherBeams.instance.start(ApiNames.instanceID);
   await PusherBeams.instance.setDeviceInterests(['driver']);
   //add or remove interests
@@ -108,8 +106,8 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: const [Locale("ar")],
         locale: const Locale("ar"),
-        home: ClientNavigationBar(),
+        home: const ChatScreen(),
       ),
-    );
+    );        
   }
 }

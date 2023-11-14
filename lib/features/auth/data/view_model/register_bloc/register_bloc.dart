@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pick_up/core/driver_model.dart';
 import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/model/register/register_repo.dart';
@@ -27,7 +28,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> with Validations {
   final RegisterRepo _registerRepo = RegisterRepo();
   
     UserModel userModel = UserModel();
-  Driver driver = Driver();
+  DriverModel driverModel = DriverModel();
 
 ////////////////////variables/////////////
   TextEditingController fullNameController = TextEditingController();
