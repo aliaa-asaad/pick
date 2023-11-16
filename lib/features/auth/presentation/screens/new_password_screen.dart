@@ -98,7 +98,7 @@ class _NewPasswordState extends State<NewPassword> with Validations {
                             // _formKey.currentState!.save();
                             //log(name);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
+                              const SnackBar(content: Text('تم حفظ البيانات')),
                             );
                             bloc.add(NewPasswordClick());
                           } else {

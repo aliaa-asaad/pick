@@ -123,12 +123,12 @@ class _MyTabBarTestState extends State<MyTabBarTest>
                                             2) {
                                           // Navigator.pop(context);
                                           setState(() {
-                                            MyOrderBloc.instance.currentStep =
+                                           /*  MyOrderBloc.instance.currentStep =
                                                 MyOrderBloc
                                                         .instance
                                                         .allOrdersModel[index]
                                                         .status! -
-                                                    3;
+                                                    3; */
                                           });
                                           log('currentStep:${MyOrderBloc.instance.currentStep}');
                                           AppRoutes.pushNamedNavigator(

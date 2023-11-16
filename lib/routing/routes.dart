@@ -14,6 +14,7 @@ abstract class Routes {
    static const String driverNavBar = "/driver_nav_bar";
   static const String profile = "/profile";
   static const String order = "/order";
+  static const String notification = "/notification";
   static const String orderImage = "/order_image";
   static const String orderData = "/order_data";
   static const String orderLocation = "/order_location";

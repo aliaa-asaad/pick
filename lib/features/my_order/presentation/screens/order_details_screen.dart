@@ -168,9 +168,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 valueType: ValueType.int) ==
                             1) {
                           if (MyOrderBloc.instance.tabBarCurrentIndex == 0) {
-                            /* setState(() {
-                              MyOrderBloc.instance.orderId = widget.orderModel.id!;
-                            }); */
+                            setState(() {
+                              MyOrderBloc.instance.orderId = widget.orderId;
+                            });
 
                             MyOrderBloc.instance.add(OrderStatusClick());
                             Navigator.pop(context);

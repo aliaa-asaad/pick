@@ -7,7 +7,6 @@ import 'package:pick_up/features/my_order/presentation/screens/client_order_scre
 import 'package:pick_up/features/profile/presentation/screens/profile_screen.dart';
 import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
-import 'package:pick_up/utilities/text_style.dart';
 
 /* class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});
@@ -74,90 +73,92 @@ class ClientNavigationBarState extends State<ClientNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-        body: screens[currentIndex]['screen'],
-        bottomNavigationBar: Container(
-          height: MediaQueryHelper.height * .083,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryContainer,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade300,
-                blurRadius: 12.r,
-                offset: const Offset(0, 0),
-              ),
-            ],
-            /*borderRadius: BorderRadius.circular(25), */
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(
-              screens.length,
-              (index) => InkWell(
-                onTap: () {
-                  setState(
-                    () {
-                      currentIndex = index;
-                    },
-                  );
-                },
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 1500),
-                      curve: Curves.fastLinearToSlowEaseIn,
-                      margin: EdgeInsets.only(
-                        bottom: index == currentIndex
-                            ? MediaQueryHelper.width * .015
-                            : 0,
-                        right: MediaQueryHelper.width * .02,
-                        left: MediaQueryHelper.width * .02,
-                      ),
-                      width: MediaQueryHelper.width * .11,
-                      height: index == currentIndex
-                          ? MediaQueryHelper.height * .005
-                          : 0,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                          )),
+      body: screens[currentIndex]['screen'],
+      bottomNavigationBar: Container(
+        height: MediaQueryHelper.height * .1,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 12.r,
+              offset: const Offset(0, 0),
+            ),
+          ],
+          /*borderRadius: BorderRadius.circular(25), */
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(
+            screens.length,
+            (index) => InkWell(
+              onTap: () {
+                setState(
+                  () {
+                    currentIndex = index;
+                  },
+                );
+              },
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              child: Column(
+                //   mainAxisAlignment: MainAxisAlignment.spaceB,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 1500),
+                    curve: Curves.fastLinearToSlowEaseIn,
+                    margin: EdgeInsets.only(
+                      /* bottom: index == currentIndex
+                          ? MediaQueryHelper.width * .01
+                          : 0, */
+                      right: MediaQueryHelper.width * .02,
+                      left: MediaQueryHelper.width * .02,
                     ),
+                    width: MediaQueryHelper.width * .11,
+                    height: index == currentIndex
+                        ? MediaQueryHelper.height * .005
+                        : 0,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        )),
+                  ),
 
-                    // SizedBox(height: MediaQueryHelper.width * .01),
-                    SvgPicture.asset(
-                      screens[index]['icon'],
-                      height: MediaQueryHelper.height * .033,
-                      width: MediaQueryHelper.width * .036,
-                      colorFilter: index == currentIndex
-                          ? ColorFilter.mode(
-                              Theme.of(context).colorScheme.primary,
-                              BlendMode.srcIn)
-                          : ColorFilter.mode(
-                              Theme.of(context).colorScheme.secondaryContainer,
-                              BlendMode.srcIn),
+                  SizedBox(height: MediaQueryHelper.width * .02),
+                  SvgPicture.asset(
+                    screens[index]['icon'],
+                    height: MediaQueryHelper.height * .033,
+                    width: MediaQueryHelper.width * .036,
+                    colorFilter: index == currentIndex
+                        ? ColorFilter.mode(
+                            Theme.of(context).colorScheme.primary,
+                            BlendMode.srcIn)
+                        : ColorFilter.mode(
+                            Theme.of(context).colorScheme.secondaryContainer,
+                            BlendMode.srcIn),
+                  ),
+                  //  SizedBox(height: MediaQueryHelper.width * .01),
+                  Text(
+                    screens[index]['title'],
+                    style: TextStyle(
+                      fontSize: MediaQueryHelper.width * .03,
+                      color: index == currentIndex
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondaryContainer,
                     ),
-                    //  SizedBox(height: MediaQueryHelper.width * .01),
-                    Text(
-                      screens[index]['title'],
-                      style: TextStyle(
-                        fontSize: MediaQueryHelper.width * .03,
-                        color: index == currentIndex
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).colorScheme.secondaryContainer,
-                      ),
-                    ),
-                    SizedBox(height: MediaQueryHelper.height*.01,)
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: MediaQueryHelper.height * .02,
+                  )
+                ],
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   List<Map<String, dynamic>> screens = [
@@ -177,6 +178,5 @@ class ClientNavigationBarState extends State<ClientNavigationBar> {
       'icon': AppImages.profile,
       'screen': const ProfileScreen()
     },
-
   ];
 }

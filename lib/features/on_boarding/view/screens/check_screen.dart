@@ -109,7 +109,7 @@ class _CheckScreenState extends State<CheckScreen> {
                       state is AuthError /* && bloc.type == -1 */
                           ? Text(
                               'بالرجاء اختيار نوع الحساب',
-                              style: TextStyleHelper.subtitle19,
+                              style: TextStyleHelper.subtitle17.copyWith(fontWeight: FontWeight.bold),
                             )
                           : const SizedBox(),
                       Padding(

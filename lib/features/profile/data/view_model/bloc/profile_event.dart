@@ -8,3 +8,4 @@ class UploadImage extends ProfileEvent {}
 class Logout extends ProfileEvent {}
 class ChangeLanguage extends ProfileEvent {}
 class ChangePassword extends ProfileEvent {}
+class DeleteAccount extends ProfileEvent {}

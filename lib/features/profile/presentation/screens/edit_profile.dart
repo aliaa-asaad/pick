@@ -25,6 +25,7 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen>
     with Validations {
   File? image;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,14 +37,14 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           style: TextStyleHelper.subtitle17,
         ),
         centerTitle: true,
-        shape:  RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20.r),
           ),
         ),
         elevation: .8,
       ),
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
@@ -82,8 +83,17 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                   : CircleAvatar(
                                       foregroundImage: NetworkImage(
                                         SharedHandler.instance!.getData(
-                                            key: SharedKeys().user,
-                                            valueType: ValueType.map)['imageUrl'],
+                                                    key: SharedKeys().userType,
+                                                    valueType: ValueType.int) ==
+                                                0
+                                            ? SharedHandler.instance!.getData(
+                                                key: SharedKeys().user,
+                                                valueType:
+                                                    ValueType.map)['imageUrl']
+                                            : SharedHandler.instance!.getData(
+                                                key: SharedKeys().driver,
+                                                valueType:
+                                                    ValueType.map)['imageUrl'],
                                       ),
                                       radius: 55.r,
                                     ),
@@ -96,8 +106,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                   setState(() {
                                     image = null;
                                   });
-                                  image =
-                                      await ImagePickerHandler().getSingleImage();
+                                  image = await ImagePickerHandler()
+                                      .getSingleImage();
                                   ProfileBloc.instance.image = image;
                                   ProfileBloc.instance.add(UploadImage());
                                 },
@@ -108,7 +118,9 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                     radius: 18.r,
                                     backgroundColor: Colors.grey.shade300,
                                     child: SvgPicture.asset(
-                                        AppImages.uploadImageIcon,height: MediaQueryHelper.height*.03,),
+                                      AppImages.uploadImageIcon,
+                                      height: MediaQueryHelper.height * .03,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -120,19 +132,24 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                         ),
                         CustomFormField(
                             validator: isValidName,
-                            hintText: ProfileBloc.instance.fullNameController.text,
-                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            hintText:
+                                ProfileBloc.instance.fullNameController.text,
+                            iconWidget:
+                                SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
                             keyboardType: TextInputType.name,
-                            controller: ProfileBloc.instance.fullNameController),
+                            controller:
+                                ProfileBloc.instance.fullNameController),
                         SizedBox(
                           height: MediaQueryHelper.height * .02,
                         ),
                         CustomFormField(
                             validator: isValidPhone,
-                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            iconWidget:
+                                SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
-                            hintText: ProfileBloc.instance.phoneNumberController.text,
+                            hintText:
+                                ProfileBloc.instance.phoneNumberController.text,
                             keyboardType: TextInputType.number,
                             controller:
                                 ProfileBloc.instance.phoneNumberController),
@@ -141,59 +158,90 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                         ),
                         CustomFormField(
                             validator: isValidEmail,
-                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
+                            iconWidget:
+                                SvgPicture.asset(AppImages.editFieldIcon),
                             isAuth: false,
                             hintText: ProfileBloc.instance.emailController.text,
                             keyboardType: TextInputType.emailAddress,
                             controller: ProfileBloc.instance.emailController),
-                            SizedBox(
-                          height: MediaQueryHelper.height * .02,
-                        ),
-                       // const Spacer(),
-                       Column(children: [
-                           CustomFormField(
-                            validator: isValidPhone,
-                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
-                            isAuth: false,
-                            hintText: ProfileBloc.instance.nationalIdController.text,
-                            keyboardType: TextInputType.number,
-                            controller:
-                                ProfileBloc.instance.nationalIdController),
-                        SizedBox(
-                          height: MediaQueryHelper.height * .02,
-                        ), CustomFormField(
-                            validator: isValidPhone,
-                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
-                            isAuth: false,
-                            hintText: ProfileBloc.instance.carTypeController.text,
-                            keyboardType: TextInputType.number,
-                            controller:
-                                ProfileBloc.instance.carTypeController),
-                        SizedBox(
-                          height: MediaQueryHelper.height * .02,
-                        ), CustomFormField(
-                            validator: isValidPhone,
-                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
-                            isAuth: false,
-                            hintText: ProfileBloc.instance.carBrandController.text,
-                            keyboardType: TextInputType.number,
-                            controller:
-                                ProfileBloc.instance.carBrandController),
-                        SizedBox(
-                          height: MediaQueryHelper.height * .02,
-                        ), CustomFormField(
-                            validator: isValidPhone,
-                            iconWidget: SvgPicture.asset(AppImages.editFieldIcon),
-                            isAuth: false,
-                            hintText: ProfileBloc.instance.carTypeController.text,
-                            keyboardType: TextInputType.number,
-                            controller:
-                                ProfileBloc.instance.carTypeController),
                         SizedBox(
                           height: MediaQueryHelper.height * .02,
                         ),
-                        ],),
-                       
+                        // const Spacer(),
+                        SharedHandler.instance!.getData(
+                                    key: SharedKeys().userType,
+                                    valueType: ValueType.int) ==
+                                1
+                            ? Column(
+                                children: [
+                                  CustomFormField(
+                                      validator: isValidId,
+                                      iconWidget: SvgPicture.asset(
+                                          AppImages.editFieldIcon),
+                                      isAuth: false,
+                                      hintText: ProfileBloc
+                                          .instance.nationalIdController.text,
+                                      keyboardType: TextInputType.number,
+                                      controller: ProfileBloc
+                                          .instance.nationalIdController),
+                                  SizedBox(
+                                    height: MediaQueryHelper.height * .02,
+                                  ),
+                                  CustomFormField(
+                                      validator: isValidContent,
+                                      iconWidget: SvgPicture.asset(
+                                          AppImages.editFieldIcon),
+                                      isAuth: false,
+                                      hintText: ProfileBloc
+                                          .instance.carTypeController.text,
+                                      keyboardType: TextInputType.number,
+                                      controller: ProfileBloc
+                                          .instance.carTypeController),
+                                  SizedBox(
+                                    height: MediaQueryHelper.height * .02,
+                                  ),
+                                   CustomFormField(
+                                      validator: isValidContent,
+                                      iconWidget: SvgPicture.asset(
+                                          AppImages.editFieldIcon),
+                                      isAuth: false,
+                                      hintText: ProfileBloc
+                                          .instance.carBrandController.text,
+                                      keyboardType: TextInputType.number,
+                                      controller: ProfileBloc
+                                          .instance.carBrandController),
+                                  SizedBox(
+                                    height: MediaQueryHelper.height * .02,
+                                  ),
+                                  CustomFormField(
+                                      validator: isValidContent,
+                                      iconWidget: SvgPicture.asset(
+                                          AppImages.editFieldIcon),
+                                      isAuth: false,
+                                      hintText: ProfileBloc
+                                          .instance.carModelController.text,
+                                      keyboardType: TextInputType.number,
+                                      controller: ProfileBloc
+                                          .instance.carModelController),
+                                  SizedBox(
+                                    height: MediaQueryHelper.height * .02,
+                                  ),
+                                  CustomFormField(
+                                      validator:isValidContent,
+                                      iconWidget: SvgPicture.asset(
+                                          AppImages.editFieldIcon),
+                                      isAuth: false,
+                                      hintText: ProfileBloc
+                                          .instance.carNumberController.text,
+                                      keyboardType: TextInputType.number,
+                                      controller: ProfileBloc
+                                          .instance.carNumberController),
+                                  SizedBox(
+                                    height: MediaQueryHelper.height * .02,
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                         state is ProfileError
                             ? Text(
                                 'هناك خطا في البيانات',
@@ -203,7 +251,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                         SizedBox(
                           height: MediaQueryHelper.height * .02,
                         ),
-                         Align(alignment: Alignment.bottomCenter,
+                        Align(
+                          alignment: Alignment.bottomCenter,
                           child: CustomButton(
                             width: state is ProfileLoading
                                 ? MediaQueryHelper.width * .13
@@ -212,7 +261,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                               if (ProfileBloc.instance.formKey.currentState!
                                   .validate()) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('تم حفظ البيانات')),
+                                  const SnackBar(
+                                      content: Text('تم حفظ البيانات')),
                                 );
                                 ProfileBloc.instance.add(EditProfile());
                               } else {

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
+import 'package:pick_up/features/profile/data/view_model/bloc/profile_bloc.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
@@ -18,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> content = [
-     /*  {
+      /*  {
         'icon': AppImages.orderIcon4,
         'title': 'سجل الفواتير',
         'route': Routes.bills
@@ -45,29 +46,99 @@ class ProfileScreen extends StatelessWidget {
         'route': Routes.policy
       },
       {
+        'icon': AppImages.deleteIcon,
+        'title': 'الغاء الحساب',
+        //'route': Routes.check
+      },
+      {
         'icon': AppImages.logoutIcon,
         'title': 'تسجيل الخروج',
         'route': Routes.check
       },
     ];
+    Future<void> _showMyDialog(BuildContext context) async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('الغاء الحساب'),
+            content: Container(
+              decoration: BoxDecoration(
+                  // border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(16.r)),
+              height: MediaQueryHelper.height * .1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //  Divider(),
+                  const Text('هل تريد الغاء الحساب؟'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(MediaQueryHelper.width * .25,
+                                MediaQueryHelper.height * .04),
+                            backgroundColor: Colors.red),
+                        onPressed: () {
+                          ProfileBloc.instance.add(DeleteAccount());
+                         
+                        },
+                        child: const Text('نعم'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'لا',
+                          style:
+                              TextStyle(decoration: TextDecoration.underline),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+          // barrierDismissible: false,
+        },
+      );
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
         child: Column(children: [
           SizedBox(
-            height: MediaQueryHelper.height * .06,
+            height: MediaQueryHelper.height * .059,
           ),
           CircleAvatar(
             radius: 55.r,
             backgroundImage: NetworkImage(SharedHandler.instance!.getData(
-                key: SharedKeys().user, valueType: ValueType.map)['imageUrl']),
+                        key: SharedKeys().userType, valueType: ValueType.int) ==
+                    0
+                ? SharedHandler.instance!.getData(
+                    key: SharedKeys().user,
+                    valueType: ValueType.map)['imageUrl']
+                : SharedHandler.instance!.getData(
+                    key: SharedKeys().driver,
+                    valueType: ValueType.map)['imageUrl']),
           ),
           SizedBox(
             height: MediaQueryHelper.height * .01,
           ),
           Text(
             SharedHandler.instance!.getData(
-                key: SharedKeys().user, valueType: ValueType.map)['fullName'],
+                        key: SharedKeys().userType, valueType: ValueType.int) ==
+                    0
+                ? SharedHandler.instance!.getData(
+                    key: SharedKeys().user,
+                    valueType: ValueType.map)['fullName']
+                : SharedHandler.instance!.getData(
+                    key: SharedKeys().driver,
+                    valueType: ValueType.map)['fullName'],
             style: TextStyleHelper.subtitle17.copyWith(color: Colors.white),
           ),
           SizedBox(
@@ -75,13 +146,19 @@ class ProfileScreen extends StatelessWidget {
           ),
           Text(
             SharedHandler.instance!.getData(
-                key: SharedKeys().user,
-                valueType: ValueType.map)['phoneNumber'],
+                        key: SharedKeys().userType, valueType: ValueType.int) ==
+                    0
+                ? SharedHandler.instance!.getData(
+                    key: SharedKeys().user,
+                    valueType: ValueType.map)['phoneNumber']
+                : SharedHandler.instance!.getData(
+                    key: SharedKeys().driver,
+                    valueType: ValueType.map)['phoneNumber'],
             style: TextStyleHelper.subtitle17.copyWith(color: Colors.white),
           ),
           const Spacer(),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 24.h),
+            padding: EdgeInsets.symmetric(vertical: 16.h),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(
@@ -89,22 +166,28 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             width: MediaQueryHelper.width,
-            height: MediaQueryHelper.height*.5,
+            height: MediaQueryHelper.height * .53,
             child: Column(
               children: List.generate(
                 content.length,
                 (index) => InkWell(
                   onTap: () {
-                    AppRoutes.pushNamedNavigator(
-                        routeName: content[index]['route']);
                     if (index == content.length - 1) {
                       AuthBloc.instance.add(LogoutClick());
+                    } else if (index == content.length - 2) {
+                      _showMyDialog(context);
+                    } else {
+                      AppRoutes.pushNamedNavigator(
+                          routeName: content[index]['route']);
                     }
                   },
                   child: ListTile(
-                    minLeadingWidth: 20.w,minVerticalPadding: MediaQueryHelper.height * .008,
+                    minLeadingWidth: 20.w,
+                    minVerticalPadding: MediaQueryHelper.height * .008,
                     trailing: Icon(
-                     Platform.isIOS?Icons.arrow_back_ios: Icons.arrow_forward,
+                      Platform.isIOS
+                          ? Icons.arrow_back_ios
+                          : Icons.arrow_forward,
                       size: MediaQueryHelper.height * .025,
                       color: index == content.length - 1
                           ? Colors.red
@@ -120,7 +203,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     leading: SvgPicture.asset(
-                      content[index]['icon'],height: MediaQueryHelper.height * .025,
+                      content[index]['icon'],
+                      height: MediaQueryHelper.height * .025,
                       color: index == content.length - 1
                           ? Colors.red
                           : Theme.of(context).colorScheme.primary,

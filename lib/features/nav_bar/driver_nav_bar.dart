@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/chat/presentation/screens/chat_screen.dart';
 import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';
@@ -24,13 +25,13 @@ class DriverNavigationBarState extends State<DriverNavigationBar> {
     return Scaffold(
       body: screens[currentIndex]['screen'],
       bottomNavigationBar: Container(
-        height: MediaQueryHelper.height * .075,
+        height: MediaQueryHelper.height * .1,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryContainer,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade400,
-              blurRadius: 16,
+              color: Colors.grey.shade300,
+              blurRadius: 12.r,
               offset: const Offset(0, 0),
             ),
           ],
@@ -51,15 +52,15 @@ class DriverNavigationBarState extends State<DriverNavigationBar> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   mainAxisAlignment: MainAxisAlignment.spaceB,
                 children: [
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 1500),
                     curve: Curves.fastLinearToSlowEaseIn,
                     margin: EdgeInsets.only(
-                      bottom: index == currentIndex
-                          ? MediaQueryHelper.width * .015
-                          : 0,
+                      /* bottom: index == currentIndex
+                          ? MediaQueryHelper.width * .01
+                          : 0, */
                       right: MediaQueryHelper.width * .02,
                       left: MediaQueryHelper.width * .02,
                     ),
@@ -75,7 +76,7 @@ class DriverNavigationBarState extends State<DriverNavigationBar> {
                         )),
                   ),
 
-                  // SizedBox(height: MediaQueryHelper.width * .01),
+                  SizedBox(height: MediaQueryHelper.width * .02),
                   SvgPicture.asset(
                     screens[index]['icon'],
                     height: MediaQueryHelper.height * .033,
@@ -98,6 +99,9 @@ class DriverNavigationBarState extends State<DriverNavigationBar> {
                           : Theme.of(context).colorScheme.secondaryContainer,
                     ),
                   ),
+                  SizedBox(
+                    height: MediaQueryHelper.height * .02,
+                  )
                 ],
               ),
             ),

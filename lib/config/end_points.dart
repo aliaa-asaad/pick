@@ -13,6 +13,8 @@ class ApiNames {
   static const String orderImagesEndPoint = 'api/orderImages';
   static const String orderSubmitEndPoint = 'api/submitOrder';
   static const String editProfileEndPoint = 'api/auth/client/editeProfile';
+  static const String editDriverProfileEndPoint =
+      'api/auth/driver/editeProfile';
   static const String orderClientPendingEndPoint = 'api/order/submit/client';
   static const String orderClientAcceptedEndPoint = 'api/order/Accept/client';
   static const String orderClientCompletedEndPoint = 'api/order/completed/client';
@@ -23,7 +25,12 @@ class ApiNames {
   static const String orderDriverCompletedEndPoint =
       'api/order/completed/driver';
   static const String pusherBeamsAuthEndPoint = 'api/pusher/beams-auth';
-
+  static const String notificationDriverEndPoint = 'api/driver/notification';
+  static const String notificationClientEndPoint = 'api/client/notification';
+  static const String chatDriverEndPoint = 'api/driver/chat';
+  static const String chatClientEndPoint = 'api/client/chat';
+  static const String deleteAccountDriverEndPoint = 'api/auth/driver/deleteAccount';
+  static const String deleteAccountClientEndPoint = 'api/auth/client/deleteAccount';
   static const String mapApiKey = 'AIzaSyChp0nLB3HQYzXyCqmHSK3-N2c316gdzD8';
   static const String instanceID = '01aef67e-5a58-4f21-931f-65f3485464cc';
 }

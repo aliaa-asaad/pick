@@ -16,8 +16,8 @@ part 'notification_state.dart';
 
 class NotificationCubit extends Cubit<NotificationState> {
   NotificationCubit() : super(NotificationInitial());
-  late UserModel _userModel;
-  late NotificationModel notificationModel;
+  
+  late NotificationModel notificationModel=NotificationModel();
   NotificationRepo notificationRepo = NotificationRepo();
   static NotificationCubit get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
@@ -36,7 +36,7 @@ class NotificationCubit extends Cubit<NotificationState> {
           'user_id': SharedHandler.instance!
               .getData(key: SharedKeys().user, valueType: ValueType.map)['id']
               .toString(),
-              'type':AuthBloc.instance.type.toString()
+          'type': AuthBloc.instance.type.toString()
         }
         ..credentials = 'omit';
       log('pusher user id:${SharedHandler.instance!.getData(key: SharedKeys().user, valueType: ValueType.map)['id']}');
@@ -55,6 +55,18 @@ class NotificationCubit extends Cubit<NotificationState> {
       emit(NotificationLoaded(/* imageSlider */));
     } catch (e) {
       log('notification cubit error:$e');
+      emit(NotificationError());
+    }
+  }
+
+  getNotifications() async {
+    try {
+      emit(NotificationLoading());
+      notificationModel = await notificationRepo.getNotifications();
+      log('notificationModel: ${notificationModel.toString()}');
+      emit(NotificationLoaded());
+    } catch (e) {
+      log('get notification cubit error:$e');
       emit(NotificationError());
     }
   }

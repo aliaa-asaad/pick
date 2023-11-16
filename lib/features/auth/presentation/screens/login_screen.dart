@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
                           // _formKey.currentState!.save();
                           //log(name);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
+                            const SnackBar(content: Text('تم حفظ البيانات')),
                           );
                           LoginBloc.instance.add(LoginPost());
                           //BlocProvider.of<NotificationCubit>(context).getPusherBeams();

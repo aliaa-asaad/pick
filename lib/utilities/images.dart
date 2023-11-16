@@ -61,6 +61,7 @@ class AppImages {
   static const takeRevenueIcon = 'assets/svg/take_revenue_icon.svg';
   static const chatIcon = 'assets/svg/chat_icon.svg';
   static const whatsappIcon = 'assets/svg/whatsapp_icon.svg';
+  static const notificationIcon = 'assets/svg/notification_icon.svg';
 
 
   

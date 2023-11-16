@@ -29,8 +29,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   static AuthBloc get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
   final AuthRepo _authRepo = AuthRepo();
-   UserModel userModel=UserModel();
- // late EmailVerifiactionModel _emailVerifiactionModel;
+  UserModel userModel = UserModel();
+  // late EmailVerifiactionModel _emailVerifiactionModel;
   late ForgetPasswordModel _forgetPasswordModel;
   int type = -1;
   bool isForgetPassword = false;
@@ -110,7 +110,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   _chooseType(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
-      SharedHandler.instance!.setData(SharedKeys().userType, value: type);
+     await SharedHandler.instance!.setData(SharedKeys().userType, value: type);
+      log('bloc shared :${SharedHandler.instance!.setData(SharedKeys().userType, value: type)}');
+      log('bloc shared :${SharedHandler.instance!.getData(key:SharedKeys().userType, valueType: ValueType.int)}');
+      log('bloc type :$type');
       emit(AuthLoaded());
     } catch (e) {
       log('choose type error :${e.toString()}');
@@ -118,7 +121,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     }
   }
 
-    _forgetPassword(AuthEvent events, Emitter emit) async {
+  _forgetPassword(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
       Map<String, dynamic> data = {
@@ -204,6 +207,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     emit(AuthLoading());
     try {
       SharedHandler.instance!.clear(keys: [
+        SharedKeys().driver,
         SharedKeys().user,
         SharedKeys().isLogin,
         SharedKeys().token,

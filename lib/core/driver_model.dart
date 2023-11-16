@@ -32,7 +32,7 @@ class Driver {
   String? email;
   String? imageUrl;
   String? nationalId;
-  int? carType;
+  String? carType;
   String? carBrand;
   String? carModel;
   String? carNumber;
@@ -62,7 +62,7 @@ class Driver {
     email = json['email'];
     imageUrl = json['imageUrl'];
     nationalId = json['nationalId'] ?? 'الهوية الوطنية';
-    carType = json['carType'] ?? 0;
+    carType = json['carType'] ?? 'نوع السيارة';
     carBrand = json['carBrand'] ?? 'ماركة السيارة';
     carModel = json['carModel'] ?? 'موديل السيارة';
     carNumber = json['carNumber'] ?? 'رقم السيارة';

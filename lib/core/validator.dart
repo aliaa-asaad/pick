@@ -26,7 +26,15 @@ String? isValidContent(String? email) {
     }
     return null;
   }
-
+ String? isValidId(String? id) {
+    //RegExp(r"^(?:[+0]9)?[0-9]{9}$").hasMatch(phone) &&
+    if (id!.isEmpty) {
+      return "الرجاء ادخال رقم الهوية";
+    } else if (id.length < 11) {
+      return "رقم الهوية يجب ان يتكون من 14 رقم";
+    }
+    return null;
+  }
   String? isValidPhone(String? phone) {
     //RegExp(r"^(?:[+0]9)?[0-9]{9}$").hasMatch(phone) &&
     if (phone!.isEmpty) {

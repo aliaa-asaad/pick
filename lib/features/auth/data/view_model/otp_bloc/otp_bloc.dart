@@ -84,8 +84,8 @@ class OTPBloc extends Bloc<OTPEvent, OTPState> with Validations {
         if (SharedHandler.instance!.getData(
                 key: SharedKeys().userType, valueType: ValueType.int) ==
             0) {
-          log('model: ${userModel.toJson()}');
-          if (LoginBloc.instance.driverModel.authToken == null) {
+          log('client model: ${userModel.toJson()}');
+          if (LoginBloc.instance.userModel.authToken == null) {
             log('register userModel: ${RegisterBloc.instance.userModel.toString()}');
             log('register client model: ${userModel.client!.toJson()}');
           } else {
@@ -98,12 +98,12 @@ class OTPBloc extends Bloc<OTPEvent, OTPState> with Validations {
           await SharedHandler.instance!
               .setData(SharedKeys().token, value: userModel.authToken);
         } else {
-          log('model: ${driverModel.toJson()}');
+          log('driver model: ${driverModel.toJson()}');
           /* log('register userModel: ${RegisterBloc.instance.driverModel.toString()}');
           log('client model: ${driverModel.driver!.toJson()}'); */
           if (LoginBloc.instance.driverModel.authToken == null) {
-            log('register userModel: ${RegisterBloc.instance.userModel.toString()}');
-            log('register client model: ${userModel.client!.toJson()}');
+            log('register userModel: ${RegisterBloc.instance.driverModel.toString()}');
+            log('register client model: ${driverModel.client!.toJson()}');
           } else {
             log('login userModel: ${LoginBloc.instance.driverModel.toString()}');
             log('login driver model: ${driverModel.client!.toJson()}');

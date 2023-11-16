@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
 import 'package:pick_up/features/my_order/presentation/widgets/custom_indicator.dart';
 import 'package:pick_up/features/my_order/presentation/widgets/default_tab_bar.dart';
 import 'package:pick_up/features/my_order/presentation/widgets/order_status_card.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
+import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
@@ -47,6 +49,18 @@ class _DriverOrderScreenState extends State<DriverOrderScreen>
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            iconTheme:
+                IconThemeData(color: Theme.of(context).colorScheme.primary),
+            leading: IconButton(iconSize: MediaQueryHelper.height*.024,
+              onPressed: () {
+                AppRoutes.pushNamedNavigator(routeName: Routes.notification);
+              },
+              icon: SvgPicture.asset(
+                AppImages.notificationIcon,
+                color: Theme.of(context).colorScheme.primary,
+                
+              ),
+            ),
             backgroundColor: Colors.white,
             elevation: 0,
             centerTitle: true,
@@ -59,17 +73,17 @@ class _DriverOrderScreenState extends State<DriverOrderScreen>
           body: SafeArea(
             child: Column(
               children: [
-                 DefaultTabBar(
-                tabController: _tabController,
-                content: content,
-              ),
-                 Expanded(
+                DefaultTabBar(
+                  tabController: _tabController,
+                  content: content,
+                ),
+                Expanded(
                   child: state is MyOrderLoading
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
                       : state is MyOrderError
-                          ? const Center(child: Text('Error'))
+                          ? const Center(child: Text('حدث خطأ ما'))
                           : MyOrderBloc.instance.allOrdersModel.isNotEmpty
                               ? ListView.builder(
                                   padding: EdgeInsets.all(24.r),
@@ -83,12 +97,12 @@ class _DriverOrderScreenState extends State<DriverOrderScreen>
                                             2) {
                                           // Navigator.pop(context);
                                           setState(() {
-                                            MyOrderBloc.instance.currentStep =
+                                            /*  MyOrderBloc.instance.currentStep =
                                                 MyOrderBloc
                                                         .instance
                                                         .allOrdersModel[index]
                                                         .status! -
-                                                    3;
+                                                    3; */
                                           });
                                           log('currentStep:${MyOrderBloc.instance.currentStep}');
                                           AppRoutes.pushNamedNavigator(

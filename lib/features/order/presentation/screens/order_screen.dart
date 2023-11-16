@@ -61,7 +61,7 @@ class _OrderScreenState extends State<OrderScreen> {
               backgroundColor: Colors.white,
               iconTheme:
                   IconThemeData(color: Theme.of(context).colorScheme.primary),
-              actions: [
+             /*  actions: [
                 Padding(
                   padding: EdgeInsets.all(8.0.r),
                   child: Icon(
@@ -69,7 +69,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     size: MediaQueryHelper.height * .025,
                   ),
                 ),
-              ],
+              ], */
               title: Text(
                 'إنشاء طلب جديد',
                 style: TextStyleHelper.subtitle17

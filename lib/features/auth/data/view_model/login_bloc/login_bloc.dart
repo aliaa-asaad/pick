@@ -54,6 +54,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
           "type": SharedHandler.instance!
               .getData(key: SharedKeys().userType, valueType: ValueType.int)
         };
+        log('login data: ${data.toString()}');
         if (SharedHandler.instance!.getData(
                 key: SharedKeys().userType, valueType: ValueType.int) ==
             0) {
@@ -67,10 +68,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
         } else {
           driverModel = await _loginRepo.loginRequest(data);
           SharedHandler.instance!
-              .setData(SharedKeys().user, value: driverModel.client!.toJson());
+              .setData(SharedKeys().driver, value: driverModel.client!.toJson());
           SharedHandler.instance!
               .setData(SharedKeys().token, value: driverModel.authToken);
           log('driver login token: ${driverModel.authToken}');
+          log('driver login name: ${driverModel.client!.fullName}');
           log('driver: ${driverModel.toString()}');
         }
 
@@ -83,21 +85,27 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with Validations {
         log('before pusher');
         NotificationCubit.instance.getPusherBeams();
         log('after pusher');
-        if (userModel.client!.isValid!) {
-          if (SharedHandler.instance!.getData(
-                  key: SharedKeys().userType, valueType: ValueType.int) ==
-              0) {
+
+        if (SharedHandler.instance!.getData(
+                key: SharedKeys().userType, valueType: ValueType.int) ==
+            0) {
+          if (userModel.client!.isValid!) {
             AppRoutes.pushNamedNavigator(
                 routeName: Routes.clientNavBar, replacementAll: true);
             clearData();
           } else {
             AppRoutes.pushNamedNavigator(
-                routeName: Routes.driverNavBar, replacementAll: true);
-            clearData();
+                routeName: Routes.emailVerification, replacement: true);
           }
         } else {
-          AppRoutes.pushNamedNavigator(
-              routeName: Routes.emailVerification, replacement: true);
+          if (driverModel.client!.isValid!) {
+            AppRoutes.pushNamedNavigator(
+                routeName: Routes.driverNavBar, replacementAll: true);
+            clearData();
+          } else {
+            AppRoutes.pushNamedNavigator(
+                routeName: Routes.emailVerification, replacement: true);
+          }
         }
         emit(LoginLoaded());
       }

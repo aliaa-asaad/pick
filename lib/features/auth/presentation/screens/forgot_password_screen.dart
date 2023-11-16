@@ -75,7 +75,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with Validations {
                           if (_formKey.currentState!.validate()) {
                             log('valid');
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Sending code')),
+                              const SnackBar(content: Text('تم ارسال الكود')),
                             );
                             bloc.add(ForgetPasswordClick());
                           } else {

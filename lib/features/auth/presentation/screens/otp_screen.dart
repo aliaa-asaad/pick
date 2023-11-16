@@ -107,7 +107,7 @@ class _OTPScreenState extends State<OTPScreen> with Validations {
                             // _formKey.currentState!.save();
                             //log(name);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Sending code')),
+                              const SnackBar(content: Text('تم حفظ البيانات')),
                             );
                             OTPBloc.instance.add(OTPPost());
                           } else {
