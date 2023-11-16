@@ -186,7 +186,7 @@ class ProfileScreen extends StatelessWidget {
                     minVerticalPadding: MediaQueryHelper.height * .008,
                     trailing: Icon(
                       Platform.isIOS
-                          ? Icons.arrow_back_ios
+                          ? Icons.arrow_forward_ios
                           : Icons.arrow_forward,
                       size: MediaQueryHelper.height * .025,
                       color: index == content.length - 1
