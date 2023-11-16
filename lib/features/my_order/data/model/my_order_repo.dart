@@ -47,7 +47,8 @@ class MyOrderRepo {
     log('order details repo datatype: ${res.data.runtimeType}');
     if (res.statusCode! >= 200 && res.statusCode! < 300) {
       log('repo status code:${res.statusCode}');
-      if (res.data.isNotEmpty) {
+      if (res.data.isNotEmpty
+      ) {
         return OrderDetailsModel.fromJson(res.data).orderDetails!;
       } else {
         log('order details is empty');
