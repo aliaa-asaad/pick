@@ -176,6 +176,7 @@ class ClientNavigationBarState extends State<ClientNavigationBar> {
       'icon': AppImages.chatIcon,
       'screen': const ChatScreen()
     },
+    ////////////test
     {
       'title': 'الحساب',
       'icon': AppImages.profile,
