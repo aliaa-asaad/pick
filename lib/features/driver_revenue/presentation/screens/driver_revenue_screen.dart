@@ -25,10 +25,11 @@ class DriverRevenueScreen extends StatelessWidget {
             child: Column(
               children: [
                 const TotalPrice(),
+                const TotalPrice(),
                 SizedBox(
                   height: MediaQueryHelper.height * .01,
                 ),
-                Column(
+                /* Column(
                   children: List.generate(
                     4,
                     (index) => Container(
@@ -71,7 +72,7 @@ class DriverRevenueScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
+                 */Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(

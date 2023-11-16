@@ -7,6 +7,7 @@ import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
 import 'package:pick_up/features/profile/data/view_model/bloc/profile_bloc.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
+import 'package:pick_up/handlers/url_launcher_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
 import 'package:pick_up/utilities/images.dart';
@@ -30,11 +31,11 @@ class ProfileScreen extends StatelessWidget {
         'route': Routes.editProfile
       },
       {'icon': AppImages.infoIcon, 'title': 'عن بيك أب', 'route': Routes.about},
-      {
+      /* {
         'icon': AppImages.localizationIcon,
         'title': 'اللغة',
         'route': Routes.localization
-      },
+      }, */
       {
         'icon': AppImages.callCenterIcon,
         'title': 'خدمة العملاء',
@@ -110,7 +111,7 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
         child: SingleChildScrollView(
-          physics:ClampingScrollPhysics() ,
+          physics: const ClampingScrollPhysics(),
           child: Column(children: [
             SizedBox(
               height: MediaQueryHelper.height * .059,
@@ -144,7 +145,7 @@ class ProfileScreen extends StatelessWidget {
                       valueType: ValueType.map)['fullName'],
               style: TextStyleHelper.subtitle17.copyWith(color: Colors.white),
             ),
-           /*  SizedBox(
+            /*  SizedBox(
               height: MediaQueryHelper.height * .01,
             ), */
             Text(
@@ -162,7 +163,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             //  const Spacer(),
             SizedBox(
-              height: MediaQueryHelper.height * .02,
+              height: MediaQueryHelper.height * .06,
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -173,7 +174,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               width: MediaQueryHelper.width,
-              height: MediaQueryHelper.height * .57,
+              height: MediaQueryHelper.height * .52,
               child: Column(
                 children: List.generate(
                   content.length,
@@ -183,7 +184,13 @@ class ProfileScreen extends StatelessWidget {
                         AuthBloc.instance.add(LogoutClick());
                       } else if (index == content.length - 2) {
                         _showMyDialog(context);
-                      } else {
+                      } else if (index == 1) {
+                        UrlLauncherHandler.openURL(
+                            url: 'https://pickupksa.com/About');
+                      } else if (index == 2) {
+                        UrlLauncherHandler.openURL(
+                            url: 'https://pickupksa.com/ConnectUs');
+                      }else {
                         AppRoutes.pushNamedNavigator(
                             routeName: content[index]['route']);
                       }

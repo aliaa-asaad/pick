@@ -12,17 +12,14 @@ class TotalPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        gradient: LinearGradient(colors: [
-          Colors.white,
-          // Colors.deepPurple.withOpacity(0),
-          Colors.white.withOpacity(0),
-        ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+       color: Colors.white,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
             children: [
@@ -54,7 +51,7 @@ class TotalPrice extends StatelessWidget {
               ),
             ],
           ),
-          Column(
+          /* Column(
             children: [
               CircleAvatar(
                   radius: 20.r,
@@ -75,7 +72,7 @@ class TotalPrice extends StatelessWidget {
                   ))
             ],
           )
-        ],
+        */ ],
       ),
     );
   }
