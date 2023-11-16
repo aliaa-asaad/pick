@@ -16,17 +16,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    FirebaseMessaging firebaseMessaging =
-        FirebaseMessaging.instance; // Change here
-    firebaseMessaging.getToken().then((token) {
-      log("token is $token");
-      //NotificationCubit.instance.getPusherBeams();
-    });
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
