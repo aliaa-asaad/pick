@@ -18,9 +18,15 @@ class ChatRepo{
             : ApiNames.chatDriverEndPoint,
       );
     if (res.statusCode! >= 200 && res.statusCode! < 300) {
-      log('status 200');
+      if (res.data.isNotEmpty
+      ) 
+      {log('status 200');
       log('chat data: ${res.data.toString()}');
-      return ChatModel.fromJson(res.data);
+      return ChatModel.fromJson(res.data);}
+      else{
+        log('chat is empty');
+        return ChatModel();
+      }
     } else {
       log('get chat repo error:${res.data}');
       throw Exception('Failed to load data!');

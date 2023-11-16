@@ -10,6 +10,7 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
@@ -33,98 +34,112 @@ class NotificationScreen extends StatelessWidget {
         padding: EdgeInsets.all(24.r),
         child: BlocBuilder<NotificationCubit, NotificationState>(
           builder: (context, state) {
-            if(state is NotificationLoading){
-              return const Center(child: CircularProgressIndicator(),);
+            if (state is NotificationLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is NotificationError) {
+              return const Center(
+                child: Text('حدث خطأ ما'),
+              );
             }
-            else if(state is NotificationError){
-              return const Center(child: Text('حدث خطأ ما'),);
-            }
-            return Column(
-              children: List.generate(
-                  NotificationCubit
-                      .instance.notificationModel.notifications!.length,
-                  (index) => Container(
-                        padding: EdgeInsets.fromLTRB(8.r, 4.r, 8.r, 12.r),
-                        margin: EdgeInsets.only(bottom: 12.h),
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () {},
-                                icon: const Icon(Icons.close)),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+            return NotificationCubit
+                    .instance.notificationModel.notifications!.isEmpty
+                ? const Center(
+                    child: Text('لا يوجد اشعارات'),
+                  )
+                : Column(
+                    children: List.generate(
+                        NotificationCubit
+                            .instance.notificationModel.notifications!.length,
+                        (index) => Container(
+                              padding: EdgeInsets.fromLTRB(8.r, 4.r, 8.r, 12.r),
+                              margin: EdgeInsets.only(bottom: 12.h),
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQueryHelper.width * .02,
-                                        ),
-                                        Expanded(
-                                          child: Column(
+                                  IconButton(
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.close)),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQueryHelper.width *
+                                                .02,
+                                          ),
+                                          Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Expanded(
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      NotificationCubit
-                                                          .instance
-                                                          .notificationModel
-                                                          .notifications![index]
-                                                          .title!,
-                                                      style: TextStyleHelper.body15
-                                                          .copyWith(
-                                                              color: const Color(
-                                                                  0xff20384B)),
-                                                    ),
-                                                  ],
-                                                ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    NotificationCubit
+                                                        .instance
+                                                        .notificationModel
+                                                        .notifications![
+                                                            index]
+                                                        .title!,
+                                                    style: TextStyleHelper
+                                                        .body15
+                                                        .copyWith(
+                                                            color: const Color(
+                                                                0xff20384B)),
+                                                  ),
+                                                ],
                                               ),
-                                              Expanded(
-                                                child: Text(
-                                                  NotificationCubit
-                                                      .instance
-                                                      .notificationModel
-                                                      .notifications![index]
-                                                      .body!,
-                                                  style: TextStyleHelper.caption11
-                                                      .copyWith(
-                                                          fontWeight: FontWeight.normal,
-                                                          color:
-                                                              const Color(0xff334D64)),
-                                                ),
+                                              Text(
+                                                NotificationCubit
+                                                    .instance
+                                                    .notificationModel
+                                                    .notifications![
+                                                        index]
+                                                    .body!,
+                                                style: TextStyleHelper
+                                                    .caption11
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight
+                                                                .normal,
+                                                        color: const Color(
+                                                            0xff334D64)),
                                               )
                                             ],
                                           ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.0.r),
+                                        child: Text(
+                                          NotificationCubit
+                                              .instance
+                                              .notificationModel
+                                              .notifications![index]
+                                              .createdAt!,
+                                          style: TextStyleHelper.caption11
+                                              .copyWith(
+                                                  fontWeight:
+                                                      FontWeight.normal,
+                                                  color: const Color(
+                                                      0xff334D64)),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.0.r),
-                                    child: Text(
-                                      NotificationCubit.instance.notificationModel
-                                          .notifications![index].createdAt!,
-                                      style: TextStyleHelper.caption11.copyWith(
-                                          fontWeight: FontWeight.normal,
-                                          color: const Color(0xff334D64)),
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                      )),
-            );
+                            )),
+                  );
           },
         ),
       )),

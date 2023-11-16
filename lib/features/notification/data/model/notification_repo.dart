@@ -18,9 +18,15 @@ class NotificationRepo {
             : ApiNames.notificationDriverEndPoint,
       );
     if (res.statusCode! >= 200 && res.statusCode! < 300) {
-      log('status 200');
+      if (res.data.isNotEmpty
+      ) 
+     { log('status 200');
       log('notification data: ${res.data.toString()}');
-      return NotificationModel.fromJson(res.data);
+      return NotificationModel.fromJson(res.data);}
+      else{
+        log('notification is empty');
+        return NotificationModel();
+      }
     } else {
       log('get notification repo error:${res.data}');
       throw Exception('Failed to load data!');
