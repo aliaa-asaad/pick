@@ -82,7 +82,6 @@ class ProfileScreen extends StatelessWidget {
                             backgroundColor: Colors.red),
                         onPressed: () {
                           ProfileBloc.instance.add(DeleteAccount());
-                         
                         },
                         child: const Text('نعم'),
                       ),
@@ -111,6 +110,7 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
         child: SingleChildScrollView(
+          physics:ClampingScrollPhysics() ,
           child: Column(children: [
             SizedBox(
               height: MediaQueryHelper.height * .059,
@@ -118,7 +118,8 @@ class ProfileScreen extends StatelessWidget {
             CircleAvatar(
               radius: 55.r,
               backgroundImage: NetworkImage(SharedHandler.instance!.getData(
-                          key: SharedKeys().userType, valueType: ValueType.int) ==
+                          key: SharedKeys().userType,
+                          valueType: ValueType.int) ==
                       0
                   ? SharedHandler.instance!.getData(
                       key: SharedKeys().user,
@@ -132,7 +133,8 @@ class ProfileScreen extends StatelessWidget {
             ),
             Text(
               SharedHandler.instance!.getData(
-                          key: SharedKeys().userType, valueType: ValueType.int) ==
+                          key: SharedKeys().userType,
+                          valueType: ValueType.int) ==
                       0
                   ? SharedHandler.instance!.getData(
                       key: SharedKeys().user,
@@ -142,12 +144,13 @@ class ProfileScreen extends StatelessWidget {
                       valueType: ValueType.map)['fullName'],
               style: TextStyleHelper.subtitle17.copyWith(color: Colors.white),
             ),
-            SizedBox(
+           /*  SizedBox(
               height: MediaQueryHelper.height * .01,
-            ),
+            ), */
             Text(
               SharedHandler.instance!.getData(
-                          key: SharedKeys().userType, valueType: ValueType.int) ==
+                          key: SharedKeys().userType,
+                          valueType: ValueType.int) ==
                       0
                   ? SharedHandler.instance!.getData(
                       key: SharedKeys().user,
@@ -157,9 +160,9 @@ class ProfileScreen extends StatelessWidget {
                       valueType: ValueType.map)['phoneNumber'],
               style: TextStyleHelper.subtitle17.copyWith(color: Colors.white),
             ),
-          //  const Spacer(),
-          SizedBox(
-              height: MediaQueryHelper.height * .04,
+            //  const Spacer(),
+            SizedBox(
+              height: MediaQueryHelper.height * .02,
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -170,7 +173,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               width: MediaQueryHelper.width,
-              height: MediaQueryHelper.height * .53,
+              height: MediaQueryHelper.height * .57,
               child: Column(
                 children: List.generate(
                   content.length,
