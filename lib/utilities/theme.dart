@@ -18,6 +18,7 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: Color(0xffF4F4F5),
     colorScheme: ColorScheme.light(
+      
       primary: const Color(0xff5BD881),
       secondary: const Color(0xffFF7E3D),
       // background: const Color(0xff2F80ED).withOpacity(.3),
