@@ -121,11 +121,11 @@ class DriverNavigationBarState extends State<DriverNavigationBar> {
       'icon': AppImages.orders,
       'screen': const DriverOrderScreen()
     },
-    {
+   /*  {
       'title': 'ارباحي',
       'icon': AppImages.revenueIcon,
       'screen': const DriverRevenueScreen()
-    },
+    }, */
     {
       'title': 'الرسائل',
       'icon': AppImages.chatIcon,

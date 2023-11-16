@@ -158,40 +158,46 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 : 'غير متوفر'),
                       ),
                     ),
-                    /* MyOrderBloc.instance.tabBarCurrentIndex == 1
+                    MyOrderBloc.instance.tabBarCurrentIndex == 1 ||
+                            SharedHandler.instance!.getData(
+                                    key: SharedKeys().userType,
+                                    valueType: ValueType.int) ==
+                                0
                         ? const SizedBox()
-                        : */
-                    CustomButton(
-                      onPressed: () {
-                        if (SharedHandler.instance!.getData(
-                                key: SharedKeys().userType,
-                                valueType: ValueType.int) ==
-                            1) {
-                          if (MyOrderBloc.instance.tabBarCurrentIndex == 0) {
-                            setState(() {
-                              MyOrderBloc.instance.orderId = widget.orderId;
-                            });
+                        : CustomButton(
+                            onPressed: () {
+                              if (SharedHandler.instance!.getData(
+                                      key: SharedKeys().userType,
+                                      valueType: ValueType.int) ==
+                                  1) {
+                                if (MyOrderBloc.instance.tabBarCurrentIndex ==
+                                    0) {
+                                  setState(() {
+                                    MyOrderBloc.instance.orderId =
+                                        widget.orderId;
+                                  });
 
-                            MyOrderBloc.instance.add(OrderStatusClick());
-                            Navigator.pop(context);
-                          } else if (MyOrderBloc.instance.tabBarCurrentIndex ==
-                              2) {
-                            AppRoutes.pushNamedNavigator(
-                                routeName: Routes.driverOrderStatus);
+                                  MyOrderBloc.instance.add(OrderStatusClick());
+                                  Navigator.pop(context);
+                                } else if (MyOrderBloc
+                                        .instance.tabBarCurrentIndex ==
+                                    2) {
+                                  AppRoutes.pushNamedNavigator(
+                                      routeName: Routes.driverOrderStatus);
 
-                            MyOrderBloc.instance.add(OrderStatusClick());
-                          }
+                                  MyOrderBloc.instance.add(OrderStatusClick());
+                                }
 
-                          /* AppRoutes.pushNamedNa
+                                /* AppRoutes.pushNamedNa
                                 vigator(
                               routeName: Routes.driverOrderStatus);
 
                           MyOrderBloc.instance.add(OrderStatusClick()); */
-                          MyOrderBloc.instance.add(OrderStatusClick());
-                        }
-                      },
-                      text: 'تقديم',
-                    )
+                                MyOrderBloc.instance.add(OrderStatusClick());
+                              }
+                            },
+                            text: 'تقديم',
+                          )
                   ],
                 ),
               );

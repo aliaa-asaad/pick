@@ -57,12 +57,15 @@ class ProfileScreen extends StatelessWidget {
         'route': Routes.check
       },
     ];
-    Future<void> _showMyDialog(BuildContext context) async {
+    Future<void> showMyDialog(BuildContext context,
+        {required String title,
+        required String question,
+        required void Function() yesOnPressed}) async {
       return showDialog<void>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('الغاء الحساب'),
+            title: Text(title),
             content: Container(
               decoration: BoxDecoration(
                   // border: Border.all(color: Colors.grey),
@@ -72,7 +75,7 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //  Divider(),
-                  const Text('هل تريد الغاء الحساب؟'),
+                  Text(question),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -81,9 +84,7 @@ class ProfileScreen extends StatelessWidget {
                             minimumSize: Size(MediaQueryHelper.width * .25,
                                 MediaQueryHelper.height * .04),
                             backgroundColor: Colors.red),
-                        onPressed: () {
-                          ProfileBloc.instance.add(DeleteAccount());
-                        },
+                        onPressed: yesOnPressed,
                         child: const Text('نعم'),
                       ),
                       TextButton(
@@ -183,14 +184,23 @@ class ProfileScreen extends StatelessWidget {
                       if (index == content.length - 1) {
                         AuthBloc.instance.add(LogoutClick());
                       } else if (index == content.length - 2) {
-                        _showMyDialog(context);
+                        showMyDialog(context,
+                            title: 'الغاء الحساب',
+                            question: 'هل تريد الغاء الحساب؟',
+                            yesOnPressed: () {
+                          ProfileBloc.instance.add(DeleteAccount());
+                        });
                       } else if (index == 1) {
                         UrlLauncherHandler.openURL(
                             url: 'https://pickupksa.com/About');
                       } else if (index == 2) {
                         UrlLauncherHandler.openURL(
                             url: 'https://pickupksa.com/ConnectUs');
-                      }else {
+                      } else if (index == 3) {
+                        UrlLauncherHandler.openURL(
+                            url: 'https://pickupksa.com/PrivacyPolicy.html');
+                      }
+                      else {
                         AppRoutes.pushNamedNavigator(
                             routeName: content[index]['route']);
                       }

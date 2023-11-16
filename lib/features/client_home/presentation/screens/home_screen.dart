@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
-                          cardContent.length,
+                          HomeCubit.instance.imageSlider.length,
                           (index) => CustomDot(
                             currentIndex: currentImage,
                             index: index,
