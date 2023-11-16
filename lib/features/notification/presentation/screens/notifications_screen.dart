@@ -10,7 +10,6 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
@@ -50,95 +49,62 @@ class NotificationScreen extends StatelessWidget {
                   )
                 : Column(
                     children: List.generate(
-                        NotificationCubit
-                            .instance.notificationModel.notifications!.length,
-                        (index) => Container(
-                              padding: EdgeInsets.fromLTRB(8.r, 4.r, 8.r, 12.r),
-                              margin: EdgeInsets.only(bottom: 12.h),
-                              decoration:
-                                  const BoxDecoration(color: Colors.white),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {},
-                                      icon: const Icon(Icons.close)),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                            width: MediaQueryHelper.width *
-                                                .02,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    NotificationCubit
-                                                        .instance
-                                                        .notificationModel
-                                                        .notifications![
-                                                            index]
-                                                        .title!,
-                                                    style: TextStyleHelper
-                                                        .body15
-                                                        .copyWith(
-                                                            color: const Color(
-                                                                0xff20384B)),
-                                                  ),
-                                                ],
-                                              ),
-                                              Text(
-                                                NotificationCubit
-                                                    .instance
-                                                    .notificationModel
-                                                    .notifications![
-                                                        index]
-                                                    .body!,
-                                                style: TextStyleHelper
-                                                    .caption11
-                                                    .copyWith(
-                                                        fontWeight:
-                                                            FontWeight
-                                                                .normal,
-                                                        color: const Color(
-                                                            0xff334D64)),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8.0.r),
-                                        child: Text(
-                                          NotificationCubit
-                                              .instance
-                                              .notificationModel
-                                              .notifications![index]
-                                              .createdAt!,
-                                          style: TextStyleHelper.caption11
-                                              .copyWith(
-                                                  fontWeight:
-                                                      FontWeight.normal,
-                                                  color: const Color(
-                                                      0xff334D64)),
-                                        ),
-                                      ),
-                                    ],
+                        NotificationCubit.instance.notificationModel
+                            .notifications!.length, (index) {
+                      DateTime date = DateTime.parse(NotificationCubit.instance
+                          .notificationModel.notifications![index].createdAt!);
+                      return Container(
+                        padding: EdgeInsets.fromLTRB(8.r, 4.r, 8.r, 12.r),
+                        margin: EdgeInsets.only(bottom: 12.h),
+                        decoration: const BoxDecoration(color: Colors.white),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.close)),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                /*  SizedBox(
+                                  width: MediaQueryHelper.width * .02,
+                                ), */
+                                Text(
+                                  NotificationCubit.instance.notificationModel
+                                      .notifications![index].title!,
+                                  style: TextStyleHelper.body15
+                                      .copyWith(color: const Color(0xff20384B)),
+                                ),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.0.r),
+                                  child: Text(
+                                    '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}',
+                                    style: TextStyleHelper.caption11.copyWith(
+                                        fontWeight: FontWeight.normal,
+                                        color: const Color(0xff334D64)),
                                   ),
-                                ],
-                              ),
-                            )),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              NotificationCubit.instance.notificationModel
+                                  .notifications![index].body!,
+                              style: TextStyleHelper.caption11.copyWith(
+                                 /*  overflow: TextOverflow.ellipsis, */
+                                  fontWeight: FontWeight.normal,
+                                  color: const Color(0xff334D64)),
+                              /* overflow: TextOverflow.ellipsis, */
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                   );
           },
         ),

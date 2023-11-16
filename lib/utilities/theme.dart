@@ -4,7 +4,7 @@ class AppTheme {
   ThemeData lightTheme = ThemeData(
     iconTheme: const IconThemeData(color: Colors.black),
     fontFamily: 'Cairo',
-    appBarTheme: AppBarTheme(titleTextStyle: TextStyle(fontFamily: 'Cairo')),
+    appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontFamily: 'Cairo')),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xffFF7E3D),
@@ -16,11 +16,11 @@ class AppTheme {
     buttonTheme: const ButtonThemeData(
       buttonColor: Color(0xffFF7E3D),
     ),
-    scaffoldBackgroundColor: Color(0xffF4F4F5),
-    colorScheme: ColorScheme.light(
+    scaffoldBackgroundColor: const Color(0xffF4F4F5),
+    colorScheme: const ColorScheme.light(
       
-      primary: const Color(0xff5BD881),
-      secondary: const Color(0xffFF7E3D),
+      primary: Color(0xff5BD881),
+      secondary: Color(0xffFF7E3D),
       // background: const Color(0xff2F80ED).withOpacity(.3),
       brightness: Brightness.light,
       primaryContainer: Colors.white,

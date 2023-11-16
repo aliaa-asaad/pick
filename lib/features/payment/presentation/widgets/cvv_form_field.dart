@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
-import 'package:pick_up/features/profile/data/view_model/bloc/profile_bloc.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 

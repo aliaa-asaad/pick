@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:pick_up/config/end_points.dart';
 import 'package:pick_up/features/client_home/data/model/home_slider_model.dart';
-import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
 
 class HomeRepo {

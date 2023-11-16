@@ -27,10 +27,12 @@ class OrderDetails {
   int? deleviryFloor;
   bool? elevatorAvilabel;
   bool? extramanAvilabel;
+  int? status;
   String? pickupLocation;
   String? deliveryLocation;
-  int? orderStatus;
   String? date;
+  bool? uploadaAndDownloadServices;
+  int? price;
 
   OrderDetails(
       {this.id,
@@ -41,10 +43,12 @@ class OrderDetails {
       this.deleviryFloor,
       this.elevatorAvilabel,
       this.extramanAvilabel,
+      this.status,
       this.pickupLocation,
       this.deliveryLocation,
-      this.orderStatus,
-      this.date});
+      this.date,
+      this.uploadaAndDownloadServices,
+      this.price});
 
   OrderDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -55,10 +59,12 @@ class OrderDetails {
     deleviryFloor = json['deleviryFloor'];
     elevatorAvilabel = json['elevatorAvilabel'];
     extramanAvilabel = json['extramanAvilabel'];
+    status = json['status'];
     pickupLocation = json['pickupLocation'];
     deliveryLocation = json['deleviryLocation'];
-    orderStatus = json['orderStatus'];
     date = json['date'];
+    uploadaAndDownloadServices = json['uploadaAndDownloadServices'];
+    price = json['price'];
   }
 
   Map<String, dynamic> toJson() {
@@ -71,10 +77,12 @@ class OrderDetails {
     data['deleviryFloor'] = deleviryFloor;
     data['elevatorAvilabel'] = elevatorAvilabel;
     data['extramanAvilabel'] = extramanAvilabel;
+    data['status'] = status;
     data['pickupLocation'] = pickupLocation;
     data['deleviryLocation'] = deliveryLocation;
-    data['orderStatus'] = orderStatus;
     data['date'] = date;
+    data['uploadaAndDownloadServices'] = uploadaAndDownloadServices;
+    data['price'] = price;
     return data;
   }
 }

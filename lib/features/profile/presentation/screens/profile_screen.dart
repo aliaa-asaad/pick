@@ -14,9 +14,23 @@ import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SharedHandler.instance!.getData(key: SharedKeys().userType, valueType: ValueType.int)==0? SharedHandler.instance!
+        .getData(key: SharedKeys().user, valueType: ValueType.map):
+    SharedHandler.instance!
+        .getData(key: SharedKeys().driver, valueType: ValueType.map);
+  }
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> content = [
@@ -182,7 +196,13 @@ class ProfileScreen extends StatelessWidget {
                   (index) => InkWell(
                     onTap: () {
                       if (index == content.length - 1) {
-                        AuthBloc.instance.add(LogoutClick());
+                         showMyDialog(context,
+                            title: 'تسجيل الخروج',
+                            question: 'هل تريد تسجيل الخروج؟',
+                            yesOnPressed: () {
+                          AuthBloc.instance.add(LogoutClick());
+                        });
+                        
                       } else if (index == content.length - 2) {
                         showMyDialog(context,
                             title: 'الغاء الحساب',

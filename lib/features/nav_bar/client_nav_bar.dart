@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/chat/presentation/screens/chat_screen.dart';
 import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';

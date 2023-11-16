@@ -129,7 +129,7 @@ class _OrderStatusCardState extends State<OrderStatusCard> {
                     )
                   ],
                 ),
-                type == 0
+               /*  type == 1
                     ? const SizedBox()
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -181,7 +181,7 @@ class _OrderStatusCardState extends State<OrderStatusCard> {
                                 ),
                         ],
                       )
-              ],
+           */    ],
             ),
           ),
           Container(

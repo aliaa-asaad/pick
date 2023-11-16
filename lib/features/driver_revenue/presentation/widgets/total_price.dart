@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
 class TotalPrice extends StatelessWidget {
@@ -26,7 +24,7 @@ class TotalPrice extends StatelessWidget {
               Text(
                 'الرصيد الاجمالي',
                 style: TextStyleHelper.button13.copyWith(
-                    color: Color(
+                    color: const Color(
                       0xff4F5E7B,
                     ),
                     fontWeight: FontWeight.normal),

@@ -76,7 +76,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           key: SharedKeys().driver, valueType: ValueType.map)['nationalId']);
   TextEditingController carTypeController = TextEditingController(
       text: SharedHandler.instance!.getData(
-          key: SharedKeys().driver, valueType: ValueType.map)['carType']);
+          key: SharedKeys().driver, valueType: ValueType.map)['carType']=='0'?'بيك أب':SharedHandler.instance!.getData(
+          key: SharedKeys().driver, valueType: ValueType.map)['carType']=='1'?'دينة شبك':'دينة');
   TextEditingController carBrandController = TextEditingController(
       text: SharedHandler.instance!.getData(
           key: SharedKeys().driver, valueType: ValueType.map)['carBrand']);
@@ -191,7 +192,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         SharedKeys().token,
         SharedKeys().userType,
       ]);
- AppRoutes.pushNamedNavigator(routeName: Routes.check);
+      AppRoutes.pushNamedNavigator(
+          routeName: Routes.check, replacementAll: true);
       //  log('login token: ${_userModel.authToken}');
       //SharedHandler.saveLoginData(_authModel);
       //SharedHandler.setData(_authModel);

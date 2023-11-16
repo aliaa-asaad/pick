@@ -12,6 +12,8 @@ import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
 class MyTabBarTest extends StatefulWidget {
+  const MyTabBarTest({super.key});
+
   @override
   _MyTabBarTestState createState() => _MyTabBarTestState();
 }

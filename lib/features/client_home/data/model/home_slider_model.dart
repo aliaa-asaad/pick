@@ -7,15 +7,15 @@ class HomeSliderModel {
     if (json['slider'] != null) {
       slider = <Slider>[];
       json['slider'].forEach((v) {
-        slider!.add(new Slider.fromJson(v));
+        slider!.add(Slider.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.slider != null) {
-      data['slider'] = this.slider!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (slider != null) {
+      data['slider'] = slider!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -31,8 +31,8 @@ class Slider {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['imageUrl'] = this.imageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['imageUrl'] = imageUrl;
     return data;
   }
 }

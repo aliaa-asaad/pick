@@ -43,7 +43,7 @@ class AppRoutes {
       case Routes.auth:
         return AppRoutes.aniamtedNavigation(screen: const AuthScreen());
       case Routes.check:
-        return AppRoutes.aniamtedNavigation(screen: CheckScreen());
+        return AppRoutes.aniamtedNavigation(screen: const CheckScreen());
       case Routes.login:
         return AppRoutes.aniamtedNavigation(screen: const LoginScreen());
       case Routes.forgetPassword:

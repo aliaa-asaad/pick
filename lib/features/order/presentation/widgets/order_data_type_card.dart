@@ -7,7 +7,7 @@ class OrderDetailsTypeCard extends StatefulWidget {
   final String type;
   final List<String> orderDetailsTypeData;
 
-  OrderDetailsTypeCard({
+  const OrderDetailsTypeCard({
     super.key,
     /*  required this.orderDetailsTypeIndex, */
     required this.orderDetailsTypeData,

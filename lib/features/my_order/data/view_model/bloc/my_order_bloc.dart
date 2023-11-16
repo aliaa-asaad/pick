@@ -86,7 +86,7 @@ class MyOrderBloc extends Bloc<MyOrderEvent, MyOrderState> {
       log('order status cubit${orderStatus.toString()}');
       log('order status ${orderStatus.status.toString()}');
       if (tabBarCurrentIndex == 0) {
-        Navigator.pop(AppRoutes.navigatorState.currentContext!);
+        //Navigator.pop(AppRoutes.navigatorState.currentContext!);
       } else if (tabBarCurrentIndex == 2) {
         currentStep = orderStatus.status! - 3;
       }

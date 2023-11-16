@@ -7,7 +7,6 @@ import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/app_widgets/custom_form_field.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
-import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
 import 'package:pick_up/features/auth/data/view_model/login_bloc/login_bloc.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';

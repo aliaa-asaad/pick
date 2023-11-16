@@ -8,12 +8,12 @@ import 'package:pick_up/app_widgets/confirm_content.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
 import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_event.dart';
+import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/features/order/presentation/widgets/confirm_car_card.dart';
 import 'package:pick_up/features/order/presentation/widgets/order_location.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
-import 'package:pick_up/utilities/images.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
@@ -134,11 +134,26 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             content: content[index]['content'],
                             card: index == 0
                                 ? ConfirmCarCard(
-                                    image: AppImages.car1,
-                                    title: MyOrderBloc
-                                        .instance.orderDetailsModel.carType!,
-                                    length: 'طول الشاحنة',
-                                    weight: 'وزن الشاحنة',
+                                    image: OrderBloc.instance.carCardData[
+                                        int.parse(MyOrderBloc
+                                            .instance
+                                            .orderDetailsModel
+                                            .carType!)]['image'],
+                                    title: OrderBloc.instance.carCardData[
+                                        int.parse(MyOrderBloc
+                                            .instance
+                                            .orderDetailsModel
+                                            .carType!)]['title'],
+                                    length: OrderBloc.instance.carCardData[
+                                        int.parse(MyOrderBloc
+                                            .instance
+                                            .orderDetailsModel
+                                            .carType!)]['length'],
+                                    weight: OrderBloc.instance.carCardData[
+                                        int.parse(MyOrderBloc
+                                            .instance
+                                            .orderDetailsModel
+                                            .carType!)]['weight'],
                                   )
                                 : null),
                       ),
@@ -158,52 +173,90 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 : 'غير متوفر'),
                       ),
                     ),
-                    MyOrderBloc.instance.tabBarCurrentIndex == 1 ||
-                            SharedHandler.instance!.getData(
-                                    key: SharedKeys().userType,
-                                    valueType: ValueType.int) ==
-                                0
-                        ? const SizedBox()
-                        : CustomButton(
-                            onPressed: () {
-                              if (SharedHandler.instance!.getData(
-                                      key: SharedKeys().userType,
-                                      valueType: ValueType.int) ==
-                                  1) {
-                                if (MyOrderBloc.instance.tabBarCurrentIndex ==
-                                    0) {
-                                  setState(() {
-                                    MyOrderBloc.instance.orderId =
-                                        widget.orderId;
-                                  });
+                    SharedHandler.instance!.getData(
+                                key: SharedKeys().userType,
+                                valueType: ValueType.int) ==
+                            0
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'السعر: ',
+                                style: TextStyleHelper.subtitle17.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color(0xff001833)),
+                              ),
+                              Text.rich(
+                                TextSpan(
+                                  text:
+                                      '${MyOrderBloc.instance.orderDetailsModel.price} ',
+                                  style: TextStyleHelper.subtitle17.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color(0xff001833)),
+                                  children: [
+                                    TextSpan(
+                                      text: ' ريال',
+                                      style: TextStyleHelper.button13.copyWith(
+                                          fontWeight: FontWeight.normal,
+                                          color: const Color(0xff001833)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
+                    SharedHandler.instance!.getData(
+                                key: SharedKeys().userType,
+                                valueType: ValueType.int) ==
+                            1
+                        ? MyOrderBloc.instance.tabBarCurrentIndex == 1
+                            ? const SizedBox()
+                            : CustomButton(
+                                onPressed: () {
+                                  if (SharedHandler.instance!.getData(
+                                          key: SharedKeys().userType,
+                                          valueType: ValueType.int) ==
+                                      1) {
+                                    if (MyOrderBloc
+                                            .instance.tabBarCurrentIndex ==
+                                        0) {
+                                      setState(() {
+                                        MyOrderBloc.instance.orderId =
+                                            widget.orderId;
+                                      });
 
-                                  MyOrderBloc.instance.add(OrderStatusClick());
-                                  Navigator.pop(context);
-                                } else if (MyOrderBloc
-                                        .instance.tabBarCurrentIndex ==
-                                    2) {
-                                  AppRoutes.pushNamedNavigator(
-                                      routeName: Routes.driverOrderStatus);
+                                      MyOrderBloc.instance
+                                          .add(OrderStatusClick());
+                                      Navigator.pop(context);
+                                    } else if (MyOrderBloc
+                                            .instance.tabBarCurrentIndex ==
+                                        2) {
+                                      AppRoutes.pushNamedNavigator(
+                                          routeName: Routes.driverOrderStatus);
 
-                                  MyOrderBloc.instance.add(OrderStatusClick());
-                                }
+                                      MyOrderBloc.instance
+                                          .add(OrderStatusClick());
+                                    }
 
-                                /* AppRoutes.pushNamedNa
+                                    /* AppRoutes.pushNamedNa
                                 vigator(
                               routeName: Routes.driverOrderStatus);
 
                           MyOrderBloc.instance.add(OrderStatusClick()); */
-                                MyOrderBloc.instance.add(OrderStatusClick());
-                              }
-                            },
-                            text: 'تقديم',
-                          )
+                                    /* MyOrderBloc.instance
+                                        .add(OrderStatusClick()); */
+                                  }
+                                },
+                                text: 'تقديم',
+                              )
+                        : const SizedBox()
                   ],
                 ),
               );
             } else {
               return const Center(
-                child: Text('null'),
+                child: Text('هناك خطا ما'),
               );
             }
           },

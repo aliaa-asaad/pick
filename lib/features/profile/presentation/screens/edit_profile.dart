@@ -27,6 +27,16 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   File? image;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    SharedHandler.instance!.getData(key: SharedKeys().userType, valueType: ValueType.int)==0? SharedHandler.instance!
+        .getData(key: SharedKeys().user, valueType: ValueType.map):
+    SharedHandler.instance!
+        .getData(key: SharedKeys().driver, valueType: ValueType.map);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -200,7 +210,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                   SizedBox(
                                     height: MediaQueryHelper.height * .02,
                                   ),
-                                   CustomFormField(
+                                  CustomFormField(
                                       validator: isValidContent,
                                       iconWidget: SvgPicture.asset(
                                           AppImages.editFieldIcon),
@@ -227,7 +237,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                     height: MediaQueryHelper.height * .02,
                                   ),
                                   CustomFormField(
-                                      validator:isValidContent,
+                                      validator: isValidContent,
                                       iconWidget: SvgPicture.asset(
                                           AppImages.editFieldIcon),
                                       isAuth: false,
@@ -241,7 +251,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                   ),
                                 ],
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         state is ProfileError
                             ? Text(
                                 'هناك خطا في البيانات',

@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
-import 'package:pick_up/features/my_order/presentation/widgets/custom_indicator.dart';
 import 'package:pick_up/features/my_order/presentation/widgets/default_tab_bar.dart';
 import 'package:pick_up/features/my_order/presentation/widgets/order_status_card.dart';
+import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
 import 'package:pick_up/utilities/images.dart';
@@ -45,20 +45,21 @@ class _DriverOrderScreenState extends State<DriverOrderScreen>
       'قيد الانتظار',
       'جاري تنفيذها',
     ];
+
     return BlocBuilder<MyOrderBloc, MyOrderState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             iconTheme:
                 IconThemeData(color: Theme.of(context).colorScheme.primary),
-            leading: IconButton(iconSize: MediaQueryHelper.height*.024,
+            leading: IconButton(
+              iconSize: MediaQueryHelper.height * .024,
               onPressed: () {
                 AppRoutes.pushNamedNavigator(routeName: Routes.notification);
               },
               icon: SvgPicture.asset(
                 AppImages.notificationIcon,
                 color: Theme.of(context).colorScheme.primary,
-                
               ),
             ),
             backgroundColor: Colors.white,
@@ -84,65 +85,81 @@ class _DriverOrderScreenState extends State<DriverOrderScreen>
                         )
                       : state is MyOrderError
                           ? const Center(child: Text('حدث خطأ ما'))
-                          : MyOrderBloc.instance.allOrdersModel.isNotEmpty
-                              ? ListView.builder(
-                                  padding: EdgeInsets.all(24.r),
-                                  itemCount: MyOrderBloc
-                                      .instance.allOrdersModel.length,
-                                  itemBuilder: (context, index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        if (MyOrderBloc
-                                                .instance.tabBarCurrentIndex ==
-                                            2) {
-                                          // Navigator.pop(context);
-                                          setState(() {
-                                            /*  MyOrderBloc.instance.currentStep =
-                                                MyOrderBloc
+                          : SharedHandler.instance!.getData(
+                                      key: SharedKeys().driver,
+                                      valueType: ValueType.map)['isActive'] ==
+                                  '0'
+                              ? Center(
+                                  child: Padding(
+                                    padding:  EdgeInsets.all(8.0.r),
+                                    child: Text(
+                                        'بالرجاء الذهاب الي الحساب الشخصي واضافة بالبيانات المطلوبة',
+                                        style: TextStyleHelper.subtitle17,textAlign: TextAlign.center,),
+                                  ),
+                                )
+                              : MyOrderBloc.instance.allOrdersModel.isNotEmpty
+                                  ? ListView.builder(
+                                      padding: EdgeInsets.all(24.r),
+                                      itemCount: MyOrderBloc
+                                          .instance.allOrdersModel.length,
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            if (MyOrderBloc.instance
+                                                    .tabBarCurrentIndex ==
+                                                2) {
+                                              // Navigator.pop(context);
+                                              setState(() {
+                                                MyOrderBloc.instance
+                                                    .currentStep = MyOrderBloc
                                                         .instance
                                                         .allOrdersModel[index]
                                                         .status! -
-                                                    3; */
-                                          });
-                                          log('currentStep:${MyOrderBloc.instance.currentStep}');
-                                          AppRoutes.pushNamedNavigator(
-                                              routeName:
-                                                  Routes.driverOrderStatus,
-                                              arguments: MyOrderBloc.instance
-                                                  .allOrdersModel[index]);
-                                          /* MyOrderBloc.instance.getOrderDetails(
+                                                    3;
+                                              });
+                                              log('currentStep:${MyOrderBloc.instance.currentStep}');
+                                              AppRoutes.pushNamedNavigator(
+                                                  routeName:
+                                                      Routes.driverOrderStatus,
+                                                  arguments: MyOrderBloc
+                                                      .instance
+                                                      .allOrdersModel[index]);
+                                              /* MyOrderBloc.instance.getOrderDetails(
                                                 orderId: MyOrderBloc.instance
                                                     .orderStatusModel[index].id!); */
-                                          /* MyOrderBloc.instance
+                                              /* MyOrderBloc.instance
                                                 .add(OrderStatusClick()); */
-                                        } else {
-                                          /*  MyOrderBloc.instance.orderId = MyOrderBloc.instance
+                                            } else {
+                                              /*  MyOrderBloc.instance.orderId = MyOrderBloc.instance
                                                     .orderStatusModel[index].id!; */
-                                          AppRoutes.pushNamedNavigator(
-                                              routeName: Routes.orderDetails,
-                                              arguments: MyOrderBloc.instance
-                                                  .allOrdersModel[index].id!);
-                                        }
+                                              AppRoutes.pushNamedNavigator(
+                                                  routeName:
+                                                      Routes.orderDetails,
+                                                  arguments: MyOrderBloc
+                                                      .instance
+                                                      .allOrdersModel[index]
+                                                      .id!);
+                                            }
+                                          },
+                                          child: OrderStatusCard(
+                                            date: MyOrderBloc.instance
+                                                .allOrdersModel[index].date!,
+                                            sendLocation: MyOrderBloc
+                                                .instance
+                                                .allOrdersModel[index]
+                                                .deleviryLocation!,
+                                            receiveLocation: MyOrderBloc
+                                                .instance
+                                                .allOrdersModel[index]
+                                                .pickupLocation!,
+                                          ),
+                                        );
                                       },
-                                      child: OrderStatusCard(
-                                        date: MyOrderBloc.instance
-                                            .allOrdersModel[index].date!,
-                                        sendLocation: MyOrderBloc
-                                            .instance
-                                            .allOrdersModel[index]
-                                            .deleviryLocation!,
-                                        receiveLocation: MyOrderBloc
-                                            .instance
-                                            .allOrdersModel[index]
-                                            .pickupLocation!,
-                                      ),
-                                    );
-                                  },
-                                )
-                              : Center(
-                                  child: Text('لا يوجد طلبات',
-                                      style: TextStyleHelper.subtitle17),
-                                ),
+                                    )
+                                  : Center(
+                                      child: Text('لا يوجد طلبات',
+                                          style: TextStyleHelper.subtitle17),
+                                    ),
                 )
               ],
             ),

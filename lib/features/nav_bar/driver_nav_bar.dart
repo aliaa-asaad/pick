@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/chat/presentation/screens/chat_screen.dart';
-import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';
-import 'package:pick_up/features/driver_revenue/presentation/screens/driver_revenue_screen.dart';
-import 'package:pick_up/features/my_order/presentation/screens/client_order_screen.dart';
 import 'package:pick_up/features/my_order/presentation/screens/driver_order_screen.dart';
 import 'package:pick_up/features/profile/presentation/screens/profile_screen.dart';
 import 'package:pick_up/utilities/images.dart';

@@ -1,15 +1,12 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/notification/data/model/notification_model.dart';
 import 'package:pick_up/features/notification/data/model/notification_repo.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
-import 'package:pick_up/routing/routes.dart';
 import 'package:pusher_beams/pusher_beams.dart';
 
 part 'notification_state.dart';

@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
 import 'package:pick_up/core/validator.dart';
-import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
-import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
 import 'package:pick_up/features/auth/data/view_model/otp_bloc/otp_bloc.dart';
 import 'package:pick_up/features/on_boarding/view/widgets/code_verification_field.dart';
 import 'package:pick_up/utilities/media_quary.dart';

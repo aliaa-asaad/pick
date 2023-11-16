@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/model/auth_repo.dart';
-import 'package:pick_up/features/auth/data/model/otp_model.dart';
 import 'package:pick_up/features/auth/data/model/forget_password_model.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_event.dart';
 import 'package:pick_up/features/auth/data/view_model/otp_bloc/otp_bloc.dart';
