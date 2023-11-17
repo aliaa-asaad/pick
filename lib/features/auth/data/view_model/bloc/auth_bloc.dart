@@ -39,7 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   String confirmPasswordError = '';
   /* TextEditingController phoneNumberController = TextEditingController();
   String phoneNumberError = ''; */
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   String emailError = '';
   TextEditingController passwordController = TextEditingController();
   String passwordError = '';
@@ -124,7 +124,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     emit(AuthLoading());
     try {
       Map<String, dynamic> data = {
-        'email': emailController.text,
+        'email': phoneController.text,
         'type': type,
       };
       log(data.toString());
@@ -151,7 +151,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     try {
       /* if (_resetPasswordValidation()) { */
       Map<String, dynamic> data = {
-        'email': emailController.text,
+        'email': phoneController.text,
         'otp': [
           OTPBloc.instance.codeController1.text,
           OTPBloc.instance.codeController2.text,
@@ -195,7 +195,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     phoneNumberController.clear(); */
     passwordController.clear();
     confirmPasswordController.clear();
-    emailController.clear();
+    phoneController.clear();
     codeController1.clear();
     codeController2.clear();
     codeController3.clear();
@@ -216,7 +216,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       phoneNumberController.clear(); */
       passwordController.clear();
       confirmPasswordController.clear();
-      emailController.clear();
+      phoneController.clear();
       OTPBloc.instance.codeController1.clear();
       OTPBloc.instance.codeController2.clear();
       OTPBloc.instance.codeController3.clear();

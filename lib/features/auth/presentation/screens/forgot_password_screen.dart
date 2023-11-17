@@ -59,11 +59,11 @@ class _ForgotPasswordState extends State<ForgotPassword> with Validations {
                         height: MediaQueryHelper.height * .02,
                       ),
                       CustomFormField(
-                          validator: isValidEmail,
-                          icon: AppImages.email,
-                          hintText: 'قم بادخال البريد الالكتروني',
-                          keyboardType: TextInputType.emailAddress,
-                          controller: bloc.emailController),
+                          validator: isValidPhone,
+                          icon: AppImages.phone,
+                          hintText: 'قم بادخال رقم الجوال',
+                          keyboardType: TextInputType.phone,
+                          controller: bloc.phoneController),
                       SizedBox(
                         height: MediaQueryHelper.height * .02,
                       ),
