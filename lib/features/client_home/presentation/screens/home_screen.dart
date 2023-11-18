@@ -211,8 +211,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       AppRoutes.pushNamedNavigator(routeName: Routes.order);
                     },
                     child: Container(
+                      height: MediaQueryHelper.height*.16,
                       width: MediaQueryHelper.width,
-                      padding: EdgeInsets.only(bottom: 8.r),
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(bottom: 8.r,right:  8.r),
                       margin: EdgeInsets.symmetric(
                         vertical: 8.r,
                       ),
@@ -226,6 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 blurRadius: 5.r)
                           ]),
                       child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
                           Expanded(
@@ -233,6 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: EdgeInsets.all(8.0.r),
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       cardContent[index]['title'],
@@ -255,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               clipBehavior: Clip.hardEdge,
                               child: SvgPicture.asset(
                                 cardContent[index]['icon'],
-                                height: MediaQueryHelper.height * .1,
+                                height: MediaQueryHelper.height * .13,
                               ))
                         ],
                       ),

@@ -30,8 +30,10 @@ class NotificationCubit extends Cubit<NotificationState> {
               'Bearer ${SharedHandler.instance!.getData(key: SharedKeys().token, valueType: ValueType.string)}'
         }
         ..queryParams = {
-          'user_id': SharedHandler.instance!
+          'user_id':  SharedHandler.instance!.getData(key: SharedKeys().userType, valueType: ValueType.int)==0? SharedHandler.instance!
               .getData(key: SharedKeys().user, valueType: ValueType.map)['id']
+              .toString():SharedHandler.instance!
+              .getData(key: SharedKeys().driver, valueType: ValueType.map)['id']
               .toString(),
           'type': AuthBloc.instance.type.toString()
         }
@@ -39,8 +41,10 @@ class NotificationCubit extends Cubit<NotificationState> {
       log('pusher user id:${SharedHandler.instance!.getData(key: SharedKeys().user, valueType: ValueType.map)['id']}');
 
       await PusherBeams.instance.setUserId(
-          SharedHandler.instance!
+         SharedHandler.instance!.getData(key: SharedKeys().userType, valueType: ValueType.int)==0? SharedHandler.instance!
               .getData(key: SharedKeys().user, valueType: ValueType.map)['id']
+              .toString():SharedHandler.instance!
+              .getData(key: SharedKeys().driver, valueType: ValueType.map)['id']
               .toString(),
           provider,
           (error) => {
