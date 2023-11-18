@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     //   on<RegisterClick>(_register);
     // on<CodeVerificationClick>(_verifyCode);
     on<ChooseTypeClick>(_chooseType);
+    on<ChooseCountryTypeClick>(_chooseCountryType);
     on<ForgetPasswordClick>(_forgetPassword);
     on<NewPasswordClick>(_newPassword);
     on<LogoutClick>(_logout);
@@ -32,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   // late EmailVerifiactionModel _emailVerifiactionModel;
   late ForgetPasswordModel _forgetPasswordModel;
   int type = -1;
+  int countryType = -1;
   bool isForgetPassword = false;
   /* TextEditingController fullNameController = TextEditingController();
   String fullNameError = ''; */
@@ -105,13 +107,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       emit(AuthError());
     }
   }
+ checkCountryValidation() {
+    emit(AuthLoading());
 
+    if (countryType != -1) {
+      AppRoutes.pushNamedNavigator(routeName: Routes.check);
+      emit(AuthLoaded());
+    } else {
+      log('check else error');
+      emit(AuthError());
+    }
+  }
   _chooseType(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
-     await SharedHandler.instance!.setData(SharedKeys().userType, value: type);
+      await SharedHandler.instance!.setData(SharedKeys().userType, value: type);
       log('bloc shared :${SharedHandler.instance!.setData(SharedKeys().userType, value: type)}');
-      log('bloc shared :${SharedHandler.instance!.getData(key:SharedKeys().userType, valueType: ValueType.int)}');
+      log('bloc shared :${SharedHandler.instance!.getData(key: SharedKeys().userType, valueType: ValueType.int)}');
       log('bloc type :$type');
       emit(AuthLoaded());
     } catch (e) {
@@ -119,7 +131,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       emit(AuthError());
     }
   }
-
+ _chooseCountryType(AuthEvent events, Emitter emit) async {
+    emit(AuthLoading());
+    try {
+      await SharedHandler.instance!.setData(SharedKeys().countryType, value: countryType);
+      log('bloc shared :${SharedHandler.instance!.setData(SharedKeys().countryType, value: countryType)}');
+      log('bloc shared :${SharedHandler.instance!.getData(key: SharedKeys().countryType, valueType: ValueType.int)}');
+      log('bloc country type :$countryType');
+      emit(AuthLoaded());
+    } catch (e) {
+      log('choose country type error :${e.toString()}');
+      emit(AuthError());
+    }
+  }
   _forgetPassword(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {

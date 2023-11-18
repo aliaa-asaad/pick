@@ -5,6 +5,7 @@ abstract class Routes {
   static const String onboarding = "/onboarding";
   static const String auth = "/auth";
   static const String check = "/check";
+  static const String checkCountry = "/check_country";
   static const String login = "/login";
   static const String signUp = "/sign_up";
   static const String forgetPassword = "/forget_password";

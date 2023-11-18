@@ -13,6 +13,7 @@ class SharedKeys {
   String isNotFirstTime = "Is_NOT_FIRST_TIME";
 String driver='DRIVER';
   String userType = "USER_TYPE";
+  String countryType = "COUNTRY_TYPE";
 }
 
 enum ValueType { int, string, bool, double, map }

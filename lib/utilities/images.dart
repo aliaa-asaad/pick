@@ -62,6 +62,8 @@ class AppImages {
   static const chatIcon = 'assets/svg/chat_icon.svg';
   static const whatsappIcon = 'assets/svg/whatsapp_icon.svg';
   static const notificationIcon = 'assets/svg/notification_icon.svg';
+  static const saudiFlag = 'assets/svg/saudi_flag.svg';
+  static const egyptFlag = 'assets/svg/egypt_flag.svg';
 
 
   

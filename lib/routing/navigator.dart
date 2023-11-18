@@ -12,6 +12,7 @@ import 'package:pick_up/features/nav_bar/client_nav_bar.dart';
 import 'package:pick_up/features/nav_bar/driver_nav_bar.dart';
 import 'package:pick_up/features/notification/presentation/screens/notifications_screen.dart';
 import 'package:pick_up/features/on_boarding/view/screens/auth_screen.dart';
+import 'package:pick_up/features/on_boarding/view/screens/check_country_screen.dart';
 import 'package:pick_up/features/on_boarding/view/screens/check_screen.dart';
 import 'package:pick_up/features/on_boarding/view/screens/on_boarding.dart';
 import 'package:pick_up/features/order/presentation/screens/order_screen.dart';
@@ -44,6 +45,8 @@ class AppRoutes {
         return AppRoutes.aniamtedNavigation(screen: const AuthScreen());
       case Routes.check:
         return AppRoutes.aniamtedNavigation(screen: const CheckScreen());
+        case Routes.checkCountry:
+        return AppRoutes.aniamtedNavigation(screen: const CheckCountryScreen());
       case Routes.login:
         return AppRoutes.aniamtedNavigation(screen: const LoginScreen());
       case Routes.forgetPassword:

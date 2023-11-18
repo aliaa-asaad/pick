@@ -1,3 +1,5 @@
+import 'package:pick_up/handlers/shared_handler.dart';
+
 mixin Validations {
   String? isValidEmail(String? email) {
     if (email!.isEmpty) {
@@ -8,12 +10,14 @@ mixin Validations {
     }
     return null;
   }
-String? isValidContent(String? email) {
+
+  String? isValidContent(String? email) {
     if (email!.isEmpty) {
       return "الرجاء ادخال البيانات بشكل صحيح";
-    } 
+    }
     return null;
   }
+
   String? isValidPassword(String? password) {
     if (password!.isEmpty) {
       return "الرجاء ادخال كلمة المرور";
@@ -26,7 +30,8 @@ String? isValidContent(String? email) {
     }
     return null;
   }
- String? isValidId(String? id) {
+
+  String? isValidId(String? id) {
     //RegExp(r"^(?:[+0]9)?[0-9]{9}$").hasMatch(phone) &&
     if (id!.isEmpty) {
       return "الرجاء ادخال رقم الهوية";
@@ -35,16 +40,27 @@ String? isValidContent(String? email) {
     }
     return null;
   }
+
   String? isValidPhone(String? phone) {
     //RegExp(r"^(?:[+0]9)?[0-9]{9}$").hasMatch(phone) &&
     if (phone!.isEmpty) {
       return "الرجاء ادخال رقم الجوال";
-    } else if (phone.length < 11) {
+    } else if (SharedHandler.instance!.getData(
+                key: SharedKeys().countryType, valueType: ValueType.int) ==
+            0 &&
+        phone.length < 11) {
       return "رقم الجوال يجب ان يتكون من 11 رقم";
+    }
+    else if (SharedHandler.instance!.getData(
+                key: SharedKeys().countryType, valueType: ValueType.int) ==
+            1 &&
+        phone.length < 11){
+      return "رقم الجوال يجب ان يتكون من 14 ارقام";
     }
     return null;
   }
- String? isValidCardNumber(String? card) {
+
+  String? isValidCardNumber(String? card) {
     //RegExp(r"^(?:[+0]9)?[0-9]{9}$").hasMatch(phone) &&
     if (card!.isEmpty) {
       return "الرجاء ادخال رقم الكارت";
@@ -53,7 +69,8 @@ String? isValidContent(String? email) {
     }
     return null;
   }
-   String? isValidCVV(String? card) {
+
+  String? isValidCVV(String? card) {
     //RegExp(r"^(?:[+0]9)?[0-9]{9}$").hasMatch(phone) &&
     if (card!.isEmpty) {
       return "الرجاء ادخال رقم الcvv";
@@ -62,6 +79,7 @@ String? isValidContent(String? email) {
     }
     return null;
   }
+
 ////////////////////////////////////////////////////////////////////////////////
   String isValidEmailBloc(String email) {
     if (email.isEmpty) {

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
-class CheckCard extends StatelessWidget {
+class CheckCountryCard extends StatelessWidget {
   final String title;
-  final String image;
-
+  
+  final String svgImage;
   final Color color;
 
   final Function() onTap;
-  const CheckCard(
+  const CheckCountryCard(
       {super.key,
       this.title = '',
-      required this.image,
+      this.svgImage = '',
+     
       required this.onTap,
       required this.color});
 
@@ -34,16 +36,9 @@ class CheckCard extends StatelessWidget {
                   blurRadius: 8,
                   offset: const Offset(0, 0))
             ]),
-        child: Column(
-          children: [
-            Image.asset(
-              image,
+        child: SvgPicture.asset(svgImage,
               height: MediaQueryHelper.height * .1,
             ),
-            const Spacer(),
-            Text(title, style: TextStyleHelper.body15)
-          ],
-        ),
       ),
     );
   }

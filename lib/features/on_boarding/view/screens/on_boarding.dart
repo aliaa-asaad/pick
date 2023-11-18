@@ -134,7 +134,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   onPressed: () {
                     if (currentIndex == onBoardingList.length - 1) {
                       AppRoutes.pushNamedNavigator(
-                          routeName: Routes.check, replacement: true);
+                          routeName: Routes.checkCountry, replacement: true);
                     }
                     _controller1.nextPage(
                       duration: const Duration(seconds: 1),

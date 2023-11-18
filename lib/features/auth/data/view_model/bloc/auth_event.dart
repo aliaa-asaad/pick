@@ -6,6 +6,8 @@ class AuthEvent {}
 
 final class ChooseTypeClick extends AuthEvent {}
 
+final class ChooseCountryTypeClick extends AuthEvent {}
+
 final class LoginClick extends AuthEvent {}
 
 final class RegisterClick extends AuthEvent {}
