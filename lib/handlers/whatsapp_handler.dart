@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class WhatsappHandlers{
     static Future<void> openWhatsApp({required String phoneNumber}) async {
     String url = Platform.isAndroid
-        ? "https://wa.me/$phoneNumber/}"
+        ? "whatsapp://send?phone=$phoneNumber}"
         : "https://api.whatsapp.com/send?phone=$phoneNumber";
     //Uri.parse("https://wa.me/$phoneNumber");
     try {

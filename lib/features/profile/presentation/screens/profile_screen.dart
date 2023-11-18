@@ -26,11 +26,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SharedHandler.instance!.getData(key: SharedKeys().userType, valueType: ValueType.int)==0? SharedHandler.instance!
-        .getData(key: SharedKeys().user, valueType: ValueType.map):
-    SharedHandler.instance!
-        .getData(key: SharedKeys().driver, valueType: ValueType.map);
+    SharedHandler.instance!.getData(
+                key: SharedKeys().userType, valueType: ValueType.int) ==
+            0
+        ? SharedHandler.instance!
+            .getData(key: SharedKeys().user, valueType: ValueType.map)
+        : SharedHandler.instance!
+            .getData(key: SharedKeys().driver, valueType: ValueType.map);
   }
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> content = [
@@ -75,48 +79,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
         {required String title,
         required String question,
         required void Function() yesOnPressed}) async {
-      return showDialog<void>(
+      return showDialog<void>(barrierColor: Colors.grey.shade400.withOpacity(.2),
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(title),
-            content: Container(
-              decoration: BoxDecoration(
-                  // border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(16.r)),
-              height: MediaQueryHelper.height * .1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //  Divider(),
-                  Text(question),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return  AlertDialog(shadowColor: Colors.grey.shade300,
+               // title: Text(title),titlePadding: ,
+                alignment: const FractionalOffset(0.37, 0.35),
+                content: Container(
+                  decoration: BoxDecoration(
+                      // border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(16.r)),
+                  height: MediaQueryHelper.height * .14,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            minimumSize: Size(MediaQueryHelper.width * .25,
-                                MediaQueryHelper.height * .04),
-                            backgroundColor: Colors.red),
-                        onPressed: yesOnPressed,
-                        child: const Text('نعم'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text(
-                          'لا',
-                          style:
-                              TextStyle(decoration: TextDecoration.underline),
-                        ),
-                      ),
+                      //  Divider(),
+                      Text( title,style: TextStyleHelper.subtitle17.copyWith(fontWeight: FontWeight.bold),),
+                      Text(question,style: TextStyleHelper.body15,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: Size(MediaQueryHelper.width * .25,
+                                    MediaQueryHelper.height * .04),
+                                backgroundColor: Colors.red),
+                            onPressed: yesOnPressed,
+                            child: const Text('نعم'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'لا',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-            ),
-          );
+                  ),
+                ),
+              
+              )
+            ;
+          
           // barrierDismissible: false,
         },
       );
@@ -196,13 +205,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   (index) => InkWell(
                     onTap: () {
                       if (index == content.length - 1) {
-                         showMyDialog(context,
+                        showMyDialog(context,
                             title: 'تسجيل الخروج',
                             question: 'هل تريد تسجيل الخروج؟',
                             yesOnPressed: () {
                           AuthBloc.instance.add(LogoutClick());
                         });
-                        
                       } else if (index == content.length - 2) {
                         showMyDialog(context,
                             title: 'الغاء الحساب',
@@ -219,8 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       } else if (index == 3) {
                         UrlLauncherHandler.openURL(
                             url: 'https://pickupksa.com/PrivacyPolicy.html');
-                      }
-                      else {
+                      } else {
                         AppRoutes.pushNamedNavigator(
                             routeName: content[index]['route']);
                       }
