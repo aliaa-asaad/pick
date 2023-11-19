@@ -79,61 +79,77 @@ class _ProfileScreenState extends State<ProfileScreen> {
         {required String title,
         required String question,
         required void Function() yesOnPressed}) async {
-      return showDialog<void>(barrierColor: Colors.grey.shade400.withOpacity(.2),
+      return showDialog<void>(
+        barrierColor: Colors.grey.shade400.withOpacity(.2),
         context: context,
         builder: (BuildContext context) {
-          return  AlertDialog(shadowColor: Colors.grey.shade300,
-               // title: Text(title),titlePadding: ,
-                alignment: const FractionalOffset(0.37, 0.35),
-                content: Container(
-                  decoration: BoxDecoration(
-                      // border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(16.r)),
-                  height: MediaQueryHelper.height * .14,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //  Divider(),
-                      Text( title,style: TextStyleHelper.subtitle17.copyWith(fontWeight: FontWeight.bold),),
-                      Text(question,style: TextStyleHelper.body15,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                minimumSize: Size(MediaQueryHelper.width * .25,
-                                    MediaQueryHelper.height * .04),
-                                backgroundColor: Colors.red),
-                            onPressed: yesOnPressed,
-                            child: const Text('نعم'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text(
-                              'لا',
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+          return AlertDialog(
+            shadowColor: Colors.grey.shade300,
+            // title: Text(title),titlePadding: ,
+            alignment: const FractionalOffset(0.37, 0.35),
+            content: Container(
+              decoration: BoxDecoration(
+                  // border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(16.r)),
+              height: MediaQueryHelper.height * .14,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //  Divider(),
+                  Text(
+                    title,
+                    style: TextStyleHelper.subtitle17
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
-                ),
-              
-              )
-            ;
-          
+                  Text(
+                    question,
+                    style: TextStyleHelper.body15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(MediaQueryHelper.width * .25,
+                                MediaQueryHelper.height * .04),
+                            backgroundColor: Colors.red),
+                        onPressed: yesOnPressed,
+                        child: const Text('نعم'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'لا',
+                          style:
+                              TextStyle(decoration: TextDecoration.underline),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+
           // barrierDismissible: false,
         },
       );
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      //backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
+          child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Theme.of(context)
+                .colorScheme
+                .primary ,Theme.of(context).colorScheme.primary,Theme.of(context).colorScheme.primary,
+            Colors.white,Colors.white,Colors.white
+          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+        ),
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           child: Column(children: [
@@ -267,7 +283,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ]),
         ),
-      ),
+      
+      ) 
+          ),
     );
   }
 }
