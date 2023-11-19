@@ -124,7 +124,7 @@ class _OTPScreenState extends State<OTPScreen> with Validations {
                                 color: Colors.white,
                               )
                             : Text(
-                                'تفعيل البريد الالكتروني',
+                               'تفعيل رقم الجوال',
                                 style: TextStyleHelper.subtitle19.copyWith(
                                   color: Colors.white,
                                 ),
