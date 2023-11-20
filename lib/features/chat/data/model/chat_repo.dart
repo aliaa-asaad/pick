@@ -7,7 +7,7 @@ import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
 
 class ChatRepo{
-  Future<ChatModel> getNotifications(
+  Future<List<Chat>> getNotifications(
       ) async {
     /* try { */
     final Response res = await Network.instance!.get(
@@ -22,10 +22,10 @@ class ChatRepo{
       ) 
       {log('status 200');
       log('chat data: ${res.data.toString()}');
-      return ChatModel.fromJson(res.data);}
+      return ChatModel.fromJson(res.data).chat!;}
       else{
         log('chat is empty');
-        return ChatModel();
+        return [];
       }
     } else {
       log('get chat repo error:${res.data}');

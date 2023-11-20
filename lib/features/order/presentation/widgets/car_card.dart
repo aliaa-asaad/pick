@@ -30,7 +30,7 @@ class _CarCardState extends State<CarCard> {
           },
           child: Container(
             padding: EdgeInsets.all(12.r),
-            width: MediaQueryHelper.width * .53,
+            width: 210,
             margin: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),

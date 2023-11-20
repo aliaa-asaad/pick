@@ -43,16 +43,16 @@ class NotificationScreen extends StatelessWidget {
               );
             }
             return NotificationCubit
-                    .instance.notificationModel.notifications!.isEmpty
+                    .instance.notificationModel.isEmpty
                 ? const Center(
                     child: Text('لا يوجد اشعارات'),
                   )
                 : Column(
                     children: List.generate(
                         NotificationCubit.instance.notificationModel
-                            .notifications!.length, (index) {
+                            .length, (index) {
                       DateTime date = DateTime.parse(NotificationCubit.instance
-                          .notificationModel.notifications![index].createdAt!);
+                          .notificationModel[index].createdAt!);
                       return Container(
                         padding: EdgeInsets.fromLTRB(8.r, 4.r, 8.r, 12.r),
                         margin: EdgeInsets.only(bottom: 12.h),
@@ -76,7 +76,7 @@ class NotificationScreen extends StatelessWidget {
                                 ), */
                                 Text(
                                   NotificationCubit.instance.notificationModel
-                                      .notifications![index].title!,
+                                      [index].title!,
                                   style: TextStyleHelper.body15
                                       .copyWith(color: const Color(0xff20384B)),
                                 ),
@@ -94,7 +94,7 @@ class NotificationScreen extends StatelessWidget {
                             ),
                             Text(
                               NotificationCubit.instance.notificationModel
-                                  .notifications![index].body!,
+                                  [index].body!,
                               style: TextStyleHelper.caption11.copyWith(
                                  /*  overflow: TextOverflow.ellipsis, */
                                   fontWeight: FontWeight.normal,

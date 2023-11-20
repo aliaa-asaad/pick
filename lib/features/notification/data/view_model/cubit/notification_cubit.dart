@@ -14,7 +14,7 @@ part 'notification_state.dart';
 class NotificationCubit extends Cubit<NotificationState> {
   NotificationCubit() : super(NotificationInitial());
   
-  late NotificationModel notificationModel=NotificationModel();
+  late List<NotificationsBody> notificationModel=[];
   NotificationRepo notificationRepo = NotificationRepo();
   static NotificationCubit get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);

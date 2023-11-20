@@ -10,7 +10,7 @@ part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit() : super(ChatInitial());
-  late ChatModel chatModel = ChatModel();
+  late List<Chat> chatModel = [];
   ChatRepo chatRepo = ChatRepo();
   static ChatCubit get instance =>
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);

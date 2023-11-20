@@ -7,7 +7,7 @@ import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
 
 class NotificationRepo {
-  Future<NotificationModel> getNotifications(
+  Future<List<NotificationsBody>> getNotifications(
       ) async {
     /* try { */
     final Response res = await Network.instance!.get(
@@ -22,10 +22,10 @@ class NotificationRepo {
       ) 
      { log('status 200');
       log('notification data: ${res.data.toString()}');
-      return NotificationModel.fromJson(res.data);}
+      return NotificationModel.fromJson(res.data).notifications!;}
       else{
         log('notification is empty');
-        return NotificationModel();
+        return [];
       }
     } else {
       log('get notification repo error:${res.data}');
