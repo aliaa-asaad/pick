@@ -42,9 +42,9 @@ class CustomPainter extends BoxPainter {
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    final rect = Offset(offset.dx + MediaQueryHelper.height * .02,
+    final rect = Offset(offset.dx + MediaQueryHelper.height * .01,
             offset.dy + configuration.size!.height - indicatorHeight) &
-        Size(configuration.size!.width * .75, indicatorHeight);
+        Size(configuration.size!.width * .8, 5);
     final Paint paint = Paint()
       ..color = indicatorColor
       ..style = PaintingStyle.fill;

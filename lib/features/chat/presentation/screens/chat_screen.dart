@@ -87,8 +87,12 @@ class ChatScreen extends StatelessWidget {
                                                     1
                                                 ? ChatCubit.instance.chatModel
                                                     .chat![index].clientName!
-                                                : ChatCubit.instance.chatModel
-                                                    .chat![index].driverName!,
+                                                : ChatCubit
+                                                        .instance
+                                                        .chatModel
+                                                        .chat![index]
+                                                        .driverName ??
+                                                    'Abdalazem saleh',
                                             style: TextStyleHelper.subtitle17
                                                 .copyWith(
                                                     color: const Color(

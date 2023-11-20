@@ -36,7 +36,8 @@ class _DefaultTabBarState extends State<DefaultTabBar> {
         controller: widget.tabController,
         tabs: List.generate(
           widget.content.length,
-          (index) => Tab(height: MediaQueryHelper.height*.04,
+          (index) => Tab(
+            height: MediaQueryHelper.height * .04,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -58,7 +59,8 @@ class _DefaultTabBarState extends State<DefaultTabBar> {
           });
         },
         indicator: CustomTabIndicator(
-          indicatorHeight: 5.0.r,
+          //indicatorWidth: 20,
+          indicatorHeight: 5.0,
           indicatorColor: Theme.of(context).colorScheme.primary,
           tabBarIndicatorSize: 2.0.r,
           tabBarIndicatorRadius: 10.0.r,

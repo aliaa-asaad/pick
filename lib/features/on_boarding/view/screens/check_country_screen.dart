@@ -44,11 +44,12 @@ class _CheckCountryScreenState extends State<CheckCountryScreen> {
             Image.asset(
               AppImages.onBoarding4,
               // fit: BoxFit.cover,
+              height: MediaQueryHelper.height * .45,
             ),
             const Spacer(),
             Container(
               width: MediaQueryHelper.width,
-              height: MediaQueryHelper.height * .4,
+              // height: 600, // MediaQueryHelper.height * .5,
               //padding: EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 0),
               decoration: BoxDecoration(
                   boxShadow: [
@@ -87,11 +88,13 @@ class _CheckCountryScreenState extends State<CheckCountryScreen> {
                               onTap: () {
                                 setState(() {
                                   _selectedIndex = index;
-                                  AuthBloc.instance.countryType = _selectedIndex;
+                                  AuthBloc.instance.countryType =
+                                      _selectedIndex;
                                   /* SharedHandler.instance!.setData(
                                       SharedKeys().userType,
                                       value: AuthBloc.instance.type); */
-                                  AuthBloc.instance.add(ChooseCountryTypeClick());
+                                  AuthBloc.instance
+                                      .add(ChooseCountryTypeClick());
                                   log('country type= ${AuthBloc.instance.countryType}');
                                   log('country shared= ${SharedHandler.instance!.getData(key: SharedKeys().countryType, valueType: ValueType.int)}');
                                 });
@@ -106,7 +109,9 @@ class _CheckCountryScreenState extends State<CheckCountryScreen> {
                               style: TextStyleHelper.subtitle17
                                   .copyWith(fontWeight: FontWeight.bold),
                             )
-                          : const SizedBox(height: 20,),
+                          : const SizedBox(
+                              height: 20,
+                            ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: CustomButton(

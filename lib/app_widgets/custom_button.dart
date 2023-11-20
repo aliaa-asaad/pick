@@ -29,7 +29,7 @@ class CustomButton extends StatelessWidget {
           // padding: EdgeInsets.symmetric(horizontal: 16.w),
           width: width ?? MediaQueryHelper.width,
           margin: EdgeInsets.symmetric(
-            vertical: 12.r, /* horizontal: 16.r */
+            vertical: 8.r, /* horizontal: 16.r */
           ),
           height: 50,
           curve: Curves.easeInOut,

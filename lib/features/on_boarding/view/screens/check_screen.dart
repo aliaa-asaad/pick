@@ -41,17 +41,18 @@ class _CheckScreenState extends State<CheckScreen> {
 
     return Scaffold(
       body: SafeArea(
-        bottom:Platform.isIOS? false:true,
+        bottom: Platform.isIOS ? false : true,
         child: Column(
           children: [
             Image.asset(
               AppImages.onBoarding4,
+              height: MediaQueryHelper.height * .45,
               // fit: BoxFit.cover,
             ),
             const Spacer(),
             Container(
               width: MediaQueryHelper.width,
-              height: MediaQueryHelper.height * .4,
+              // height: MediaQueryHelper.height * .4,
               //padding: EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 0),
               decoration: BoxDecoration(
                   boxShadow: [
@@ -99,7 +100,7 @@ class _CheckScreenState extends State<CheckScreen> {
                                       value: AuthBloc.instance.type); */
                                   AuthBloc.instance.add(ChooseTypeClick());
                                   log('type= ${AuthBloc.instance.type}');
-                                  log('shared= ${SharedHandler.instance!.getData(key:SharedKeys().userType, valueType: ValueType.int)}');
+                                  log('shared= ${SharedHandler.instance!.getData(key: SharedKeys().userType, valueType: ValueType.int)}');
                                 });
                               },
                             ),
@@ -109,9 +110,12 @@ class _CheckScreenState extends State<CheckScreen> {
                       state is AuthError /* && bloc.type == -1 */
                           ? Text(
                               'بالرجاء اختيار نوع الحساب',
-                              style: TextStyleHelper.subtitle17.copyWith(fontWeight: FontWeight.bold),
+                              style: TextStyleHelper.subtitle17
+                                  .copyWith(fontWeight: FontWeight.bold),
                             )
-                          : const SizedBox(height: 20,),
+                          : const SizedBox(
+                              height: 20,
+                            ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: CustomButton(
