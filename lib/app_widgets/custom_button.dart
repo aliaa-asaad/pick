@@ -31,14 +31,14 @@ class CustomButton extends StatelessWidget {
           margin: EdgeInsets.symmetric(
             vertical: 12.r, /* horizontal: 16.r */
           ),
-          height: MediaQueryHelper.height * .06,
+          height: 50,
           curve: Curves.easeInOut,
           alignment: Alignment.center,
           /* padding: EdgeInsets.symmetric(
                             vertical: 8.r, horizontal: 32.r), */
           decoration: BoxDecoration(
               color: background ?? Theme.of(context).colorScheme.secondary,
-              borderRadius: BorderRadius.circular(32.r)
+              borderRadius: BorderRadius.circular(24.r)
 
               /* shape: state is RegisterLoading
                               ? BoxShape.circle

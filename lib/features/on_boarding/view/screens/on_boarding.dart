@@ -63,7 +63,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             SizedBox(height: MediaQueryHelper.height * .1),
             Container(
               width: MediaQueryHelper.width,
-              height: MediaQueryHelper.height * .225,
+              height: MediaQueryHelper.height * .25,
               padding: EdgeInsets.only(top: 28.h),
               decoration:  BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -72,6 +72,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                   color: Colors.white),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +88,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                   SizedBox(height: MediaQueryHelper.height * .01),
                   SizedBox(
-                    height: MediaQueryHelper.height * .16,
+                    height: MediaQueryHelper.height * .17,
                     child: PageView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: _controller2,
@@ -97,13 +98,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           currentIndex = index;
                         });
                       },
-                      itemBuilder: (context, index) => Column(children: [
+                      itemBuilder: (context, index) => Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Text(onBoardingList[index]['title'],
                             textAlign: TextAlign.center,
                             style: TextStyleHelper.title24),
                         SizedBox(height: MediaQueryHelper.height * .005),
                         Padding(
-                          padding:  EdgeInsets.fromLTRB(12.0.r,0,12.0.r,8.0.r),
+                          padding:  EdgeInsets.fromLTRB(12.0.r,0,12.0.r,0),
                           child: Text(onBoardingList[index]['description'],
                               textAlign: TextAlign.center,
                               style: TextStyleHelper.body15

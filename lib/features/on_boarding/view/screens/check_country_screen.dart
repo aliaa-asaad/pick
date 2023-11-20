@@ -69,7 +69,7 @@ class _CheckCountryScreenState extends State<CheckCountryScreen> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 0),
                         child: SizedBox(
-                          height: MediaQueryHelper.height * .2,
+                          height: 160,
                           child: GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: content.length,
@@ -106,7 +106,7 @@ class _CheckCountryScreenState extends State<CheckCountryScreen> {
                               style: TextStyleHelper.subtitle17
                                   .copyWith(fontWeight: FontWeight.bold),
                             )
-                          : const SizedBox(),
+                          : const SizedBox(height: 20,),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: CustomButton(

@@ -91,9 +91,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: BoxDecoration(
                   // border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(16.r)),
-              height: MediaQueryHelper.height * .14,
+              height: 140,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   //  Divider(),
                   Text(
@@ -140,17 +141,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return Scaffold(
       //backgroundColor: Theme.of(context).colorScheme.primary,
-      body: SafeArea(
-          child: Container(
+      body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Theme.of(context)
-                .colorScheme
-                .primary ,Theme.of(context).colorScheme.primary,Theme.of(context).colorScheme.primary,
-            Colors.white,Colors.white,Colors.white
-          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-        ),
-        child: SingleChildScrollView(
+        gradient: LinearGradient(colors: [
+          Theme.of(context)
+              .colorScheme
+              .primary ,Theme.of(context).colorScheme.primary,Theme.of(context).colorScheme.primary,
+          /* Colors.white,Colors.white,Colors.white */
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+      ),
+        child: SafeArea(
+          child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           child: Column(children: [
             SizedBox(
@@ -214,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               width: MediaQueryHelper.width,
-              height: MediaQueryHelper.height * .52,
+              height: 450,
               child: Column(
                 children: List.generate(
                   content.length,
@@ -283,9 +284,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ]),
         ),
-      
-      ) 
-          ),
+        ),
+      ),
     );
   }
 }

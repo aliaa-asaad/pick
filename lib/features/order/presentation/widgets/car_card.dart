@@ -17,10 +17,10 @@ class _CarCardState extends State<CarCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQueryHelper.height * .25,
+      height: 210,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal:16.r),
+        padding: EdgeInsets.symmetric(horizontal: 16.r),
         itemCount: OrderBloc.instance.carCardData.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
@@ -53,7 +53,8 @@ class _CarCardState extends State<CarCard> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 OrderBloc.instance.carCardData[index]['title'],
-                style:  TextStyleHelper .button13.copyWith (fontWeight: FontWeight.bold),
+                style: TextStyleHelper.button13
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
               Image.asset(
                 OrderBloc.instance.carCardData[index]['image'],
@@ -69,19 +70,24 @@ class _CarCardState extends State<CarCard> {
                   ),
                   Text(
                     OrderBloc.instance.carCardData[index]['length'],
-                    style:  TextStyleHelper.caption11.copyWith(color: Colors.grey),
+                    style:
+                        TextStyleHelper.caption11.copyWith(color: Colors.grey),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  SvgPicture.asset(AppImages.weight,height: MediaQueryHelper.height*.02,),
+                  SvgPicture.asset(
+                    AppImages.weight,
+                    height: MediaQueryHelper.height * .02,
+                  ),
                   SizedBox(
                     width: MediaQueryHelper.width * .01,
                   ),
                   Text(
                     OrderBloc.instance.carCardData[index]['weight'],
-                    style:  TextStyleHelper.caption11.copyWith(color: Colors.grey),
+                    style:
+                        TextStyleHelper.caption11.copyWith(color: Colors.grey),
                   ),
                   const Spacer(),
                   Icon(
