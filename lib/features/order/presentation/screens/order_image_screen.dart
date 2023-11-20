@@ -66,7 +66,7 @@ class _OrderImageScreenState extends State<OrderImageScreen> {
                       strokeWidth: 1,
                       child: Container(
                         //alignment: Alignment.center,
-                        height: MediaQueryHelper.height * 0.23,
+                        height: 200,
                         padding: EdgeInsets.all(8.r),
                         width: MediaQueryHelper.width,
                         decoration: BoxDecoration(

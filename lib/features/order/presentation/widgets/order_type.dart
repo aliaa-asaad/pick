@@ -17,7 +17,7 @@ class _OrderTypeState extends State<OrderType> {
   Widget build(BuildContext context) {
     var bloc = BlocProvider.of<OrderBloc>(context);
     return SizedBox(
-      height: MediaQueryHelper.height * .18,
+      height: 150,
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(
@@ -51,7 +51,11 @@ class _OrderTypeState extends State<OrderType> {
             ),
             child: Row(
               children: [
-                Text(bloc.orderTypeData[index],style: TextStyleHelper.button13.copyWith(fontWeight: FontWeight.normal),),
+                Text(
+                  bloc.orderTypeData[index],
+                  style: TextStyleHelper.button13
+                      .copyWith(fontWeight: FontWeight.normal),
+                ),
                 const Spacer(),
                 Icon(
                   Icons.check_circle,

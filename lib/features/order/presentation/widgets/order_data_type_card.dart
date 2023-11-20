@@ -22,7 +22,7 @@ class _OrderDetailsTypeCardState extends State<OrderDetailsTypeCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQueryHelper.height * .1,
+      height: 80,
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.symmetric(
