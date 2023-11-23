@@ -34,14 +34,14 @@ void main() async {
     await Firebase.initializeApp();
   }
 
-  await PusherBeams.instance.start(ApiNames.instanceID);
-  await PusherBeams.instance.setDeviceInterests(['driver']);
-  //add or remove interests
-  PusherBeams.instance
-      .onInterestChanges((interests) => log('interests :$interests'));
-  //push notification is received while the app is in the foreground
-  PusherBeams.instance.onMessageReceivedInTheForeground(
-      (notification) => log('notifications: $notification'));
+  // await PusherBeams.instance.start(ApiNames.instanceID);
+  // await PusherBeams.instance.setDeviceInterests(['driver']);
+  // //add or remove interests
+  // PusherBeams.instance
+  //     .onInterestChanges((interests) => log('interests :$interests'));
+  // //push notification is received while the app is in the foreground
+  // PusherBeams.instance.onMessageReceivedInTheForeground(
+  //     (notification) => log('notifications: $notification'));
 
   await SharedHandler.init();
   Network.init();
