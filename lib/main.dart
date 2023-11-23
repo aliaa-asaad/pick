@@ -21,6 +21,7 @@ import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
 import 'package:pick_up/features/payment/data/view_model/bloc/payment_bloc.dart';
 import 'package:pick_up/features/payment/presentation/screens/eg_payment_methods_screen.dart';
 import 'package:pick_up/features/profile/data/view_model/bloc/profile_bloc.dart';
+import 'package:pick_up/features/splash/view/splash_screen.dart';
 import 'package:pick_up/handlers/localization.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
@@ -113,7 +114,7 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: const [Locale("ar")],
         locale: const Locale("ar"),
-        home: const CheckCountryScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
