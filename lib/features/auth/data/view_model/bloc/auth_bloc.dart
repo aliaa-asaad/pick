@@ -145,8 +145,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       if (SharedHandler.instance!.getData(
               key: SharedKeys().countryType, valueType: ValueType.int) ==
           0) {
-         ApiNames.baseUrl = 'https://pickupksa.com/Api/public/';
-              log(ApiNames.baseUrl);
+        ApiNames.baseUrl = 'https://pickupksa.com/Api/public/';
+        log(ApiNames.baseUrl);
       } else {
         log('country type is 1');
         ApiNames.baseUrl = 'https://pickupksa.com/apiEg/public/';
@@ -244,7 +244,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   _logout(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
-         await PusherBeams.instance.clearAllState();
+      await PusherBeams.instance.clearAllState();
       SharedHandler.instance!.clear(keys: [
         SharedKeys().driver,
         SharedKeys().user,
