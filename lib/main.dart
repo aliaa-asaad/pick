@@ -42,7 +42,6 @@ void main() async {
   // //push notification is received while the app is in the foreground
   // PusherBeams.instance.onMessageReceivedInTheForeground(
   //     (notification) => log('notifications: $notification'));
-  // self.pushNotifications.start(instanceId: "01aef67e-5a58-4f21-931f-65f3485464cc")
 
   await SharedHandler.init();
   Network.init();
