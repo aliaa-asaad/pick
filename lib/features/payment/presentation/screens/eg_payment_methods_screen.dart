@@ -5,26 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/app_widgets/custom_button.dart';
-import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
 import 'package:pick_up/features/payment/data/view_model/bloc/payment_bloc.dart';
 import 'package:pick_up/utilities/media_quary.dart';
 import 'package:pick_up/utilities/text_style.dart';
 
 class EGPaymentMethodsScreen extends StatefulWidget {
-    final int orderId;
-  const EGPaymentMethodsScreen({super.key, required this.orderId});
+  const EGPaymentMethodsScreen({
+    super.key,
+  });
 
   @override
   State<EGPaymentMethodsScreen> createState() => _EGPaymentMethodsScreenState();
 }
 
 class _EGPaymentMethodsScreenState extends State<EGPaymentMethodsScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    MyOrderBloc.instance.getOrderDetails(orderId: widget.orderId);
-  }
   int _selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
@@ -60,7 +54,7 @@ class _EGPaymentMethodsScreenState extends State<EGPaymentMethodsScreen> {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is PaymentError) {
-                return Center(
+                return const Center(
                   child: Text('هناك خطا ما'),
                 );
               }

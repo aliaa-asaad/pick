@@ -15,6 +15,15 @@ class EGPAymentCodeScreen extends StatefulWidget {
 
 class _EGPAymentCodeScreenState extends State<EGPAymentCodeScreen> {
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    PaymentBloc.instance. code = '';
+    PaymentBloc.instance. expiredDate = 'لا يوجد تاريخ انتهاء';
+    PaymentBloc.instance. qrCode = 'لا يوجد QR code';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -41,6 +50,10 @@ class _EGPAymentCodeScreenState extends State<EGPAymentCodeScreen> {
       body: SafeArea(
         child: BlocBuilder<PaymentBloc, PaymentState>(
           builder: (context, state) {
+            DateTime date =
+                PaymentBloc.instance.expiredDate != 'لا يوجد تاريخ انتهاء'
+                    ? DateTime.parse(PaymentBloc.instance.expiredDate)
+                    : DateTime(0);
             return SingleChildScrollView(
               padding: EdgeInsets.fromLTRB(24.0.r, 12.0.r, 24.0.r, 24.0.r),
               child: Column(
@@ -87,7 +100,31 @@ class _EGPAymentCodeScreenState extends State<EGPAymentCodeScreen> {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      child: Text(PaymentBloc.instance.expiredDate),
+                      child: Text(PaymentBloc.instance.expiredDate !=
+                              'لا يوجد تاريخ انتهاء'
+                          ? '${date.day}/${date.month}/${date.year}'
+                          : PaymentBloc.instance.expiredDate),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      'QR code',
+                      style: TextStyleHelper.body15,
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      //  height: 40,
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Text(PaymentBloc.instance.qrCode),
                     ),
                     const SizedBox(
                       height: 24.0,

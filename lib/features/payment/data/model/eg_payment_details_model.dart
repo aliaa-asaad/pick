@@ -48,7 +48,7 @@ class EGPaymentDetailsData {
   String? meezaReference;
   String? meezaQrCode;
   String? masaryCode;
-  
+
   String? amanCode;
 
   String? redirectTo;
@@ -58,10 +58,10 @@ class EGPaymentDetailsData {
   EGPaymentDetailsData.fromJson(Map<String, dynamic> json) {
     fawryCode = json['fawryCode'] ?? '';
     expireDate = json['expireDate'] ?? '';
-    meezaReference = json['meezaReference'] ?? '';
+    meezaReference = json['meezaReference'].toString() ?? '';
     meezaQrCode = json['meezaQrCode'] ?? '';
     masaryCode = json['masaryCode'] ?? '';
-  
+
     amanCode = json['amanCode'] ?? '';
     redirectTo = json['redirectTo'] ?? '';
   }
@@ -73,7 +73,7 @@ class EGPaymentDetailsData {
     data['meezaReference'] = meezaReference ?? '';
     data['meezaQrCode'] = meezaQrCode ?? '';
     data['masaryCode'] = masaryCode ?? '';
-  
+
     data['amanCode'] = amanCode ?? '';
     data['redirectTo'] = redirectTo ?? '';
     return data;

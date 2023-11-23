@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pick_up/features/auth/presentation/screens/otp_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/login_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/new_password_screen.dart';
+import 'package:pick_up/features/auth/presentation/screens/otp_screen.dart';
 import 'package:pick_up/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:pick_up/features/client_home/presentation/screens/home_screen.dart';
 import 'package:pick_up/features/my_order/data/model/all_orders_model.dart';
@@ -83,9 +83,7 @@ class AppRoutes {
 
       case Routes.egPaymentMethods:
         return AppRoutes.aniamtedNavigation(
-            screen: EGPaymentMethodsScreen(
-          orderId: settings.arguments as int,
-        ));
+            screen: const EGPaymentMethodsScreen());
       case Routes.egPaymentCode:
         return AppRoutes.aniamtedNavigation(
             screen: const EGPAymentCodeScreen());

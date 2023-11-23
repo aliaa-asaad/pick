@@ -82,6 +82,9 @@ class _ClientOrderScreenState extends State<ClientOrderScreen>
                                       log('tabController.index:${_tabController.index}');
                                       if (_tabController.index == 1) {
                                         log('1111111111111111111111111111111111111111');
+                                        MyOrderBloc.instance.getOrderDetails(
+                                            orderId: MyOrderBloc.instance
+                                                .allOrdersModel[index].id!);
                                         SharedHandler.instance!.getData(
                                                     key: SharedKeys()
                                                         .countryType,

@@ -34,6 +34,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   late EGPaymentDetailsData egPaymentDetails;
   String code = '';
   String expiredDate = 'لا يوجد تاريخ انتهاء';
+  String qrCode = 'لا يوجد QR code';
   final PaymentRepo _sendPaymentRepo = PaymentRepo();
   int paymentMethod = -1;
   isValidPaymentMethod() {
@@ -125,7 +126,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         AppRoutes.pushNamedNavigator(routeName: Routes.egPaymentCode);
       } else if (egPaymentDetails.meezaQrCode!.isNotEmpty) {
         code = egPaymentDetails.meezaReference!;
-        expiredDate = egPaymentDetails.meezaQrCode!;
+        qrCode = egPaymentDetails.meezaQrCode!;
         AppRoutes.pushNamedNavigator(routeName: Routes.egPaymentCode);
       } else if (egPaymentDetails.masaryCode!.isNotEmpty) {
         code = egPaymentDetails.masaryCode!;
