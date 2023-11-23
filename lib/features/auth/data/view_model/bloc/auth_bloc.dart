@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pick_up/config/end_points.dart';
 import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/model/auth_repo.dart';
@@ -107,7 +108,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       emit(AuthError());
     }
   }
- checkCountryValidation() {
+
+  checkCountryValidation() {
     emit(AuthLoading());
 
     if (countryType != -1) {
@@ -118,11 +120,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       emit(AuthError());
     }
   }
+
   _chooseType(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
       await SharedHandler.instance!.setData(SharedKeys().userType, value: type);
-      log('bloc shared :${SharedHandler.instance!.setData(SharedKeys().userType, value: type)}');
+      //  log('bloc shared :${SharedHandler.instance!.setData(SharedKeys().userType, value: type)}');
       log('bloc shared :${SharedHandler.instance!.getData(key: SharedKeys().userType, valueType: ValueType.int)}');
       log('bloc type :$type');
       emit(AuthLoaded());
@@ -131,19 +134,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       emit(AuthError());
     }
   }
- _chooseCountryType(AuthEvent events, Emitter emit) async {
+
+  _chooseCountryType(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
-      await SharedHandler.instance!.setData(SharedKeys().countryType, value: countryType);
-      log('bloc shared :${SharedHandler.instance!.setData(SharedKeys().countryType, value: countryType)}');
-      log('bloc shared :${SharedHandler.instance!.getData(key: SharedKeys().countryType, valueType: ValueType.int)}');
-      log('bloc country type :$countryType');
+      await SharedHandler.instance!
+          .setData(SharedKeys().countryType, value: countryType);
+      //   log('bloc shared :${SharedHandler.instance!.setData(SharedKeys().countryType, value: countryType)}');
+      if (SharedHandler.instance!.getData(
+              key: SharedKeys().countryType, valueType: ValueType.int) ==
+          0) {
+         ApiNames.baseUrl = 'https://pickupksa.com/Api/public/';
+              log(ApiNames.baseUrl);
+      } else {
+        log('country type is 1');
+        ApiNames.baseUrl = 'https://pickupksa.com/apiEg/public/';
+        log(ApiNames.baseUrl);
+      }
       emit(AuthLoaded());
     } catch (e) {
       log('choose country type error :${e.toString()}');
       emit(AuthError());
     }
   }
+
   _forgetPassword(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {

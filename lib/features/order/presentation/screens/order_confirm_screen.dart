@@ -125,7 +125,7 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                 SizedBox(
                   height: MediaQueryHelper.height * .02,
                 ),
-                const Divider(
+                /*  const Divider(
                   //thickness: 1.5,
                   color: Colors.grey,
                 ),
@@ -159,7 +159,7 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                 ),
                 SizedBox(
                   height: MediaQueryHelper.height * .02,
-                ),
+                ), */
                 const Divider(
                   //thickness: 1.5,
                   color: Colors.grey,
@@ -171,7 +171,7 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                         style: TextStyleHelper.subtitle17
                             .copyWith(color: const Color(0xff4F5E7B))),
                     const Spacer(),
-                    Text('300 ريال',
+                    Text('${OrderBloc.instance.orderDataModel.price} ريال',
                         style: TextStyleHelper.subtitle17
                             .copyWith(color: const Color(0xff4F5E7B))),
                   ],
@@ -185,6 +185,7 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                       if (OrderBloc.instance.isValidLocation()) {
                         log('valid');
                         /*  OrderBloc.instance.viewCounter(back: false); */
+
                         OrderBloc.instance.add(OrderSubmitClick());
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('حفظ البيانات')),

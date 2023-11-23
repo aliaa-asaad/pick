@@ -24,11 +24,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
   final SendOrderRepo _sendOrderDataRepo = SendOrderRepo();
   //late OrderImagesDataModel _orderImagesDataModel;
-  late OrderDataModel _orderDataModel;
+  late OrderDataModel orderDataModel;
   late OrderSubmitModel _orderSubmitModel;
 
 /////////////////////////////////////////////
-      final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int currentStep = 0;
   int carIndex = -1;
   List<Map<String, dynamic>> carCardData = [
@@ -62,7 +62,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   int orderDetailsTypeInitialIndex = -1;
   int orderDetailsTypeIndex = -1;
 
- 
   TextEditingController orderRecieveFloorController = TextEditingController();
   TextEditingController orderSendFloorController = TextEditingController();
   List<String> additionalService = [
@@ -77,12 +76,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   List<File> imagesList = [];
 
   ///////////////////////payment////////////////////
-TextEditingController cardNameController=TextEditingController();
-TextEditingController cardNumberController=TextEditingController();
-TextEditingController cardExpiredDateController=TextEditingController();
-TextEditingController cardCvvController=TextEditingController();
-TextEditingController promoCodeController=TextEditingController();
-  
+  TextEditingController cardNameController = TextEditingController();
+  TextEditingController cardNumberController = TextEditingController();
+  TextEditingController cardExpiredDateController = TextEditingController();
+  TextEditingController cardCvvController = TextEditingController();
+  TextEditingController promoCodeController = TextEditingController();
+
   bool isValidData() {
     log('carIndex:$carIndex');
     log('orderTypeIndex:$orderTypeIndex');
@@ -119,16 +118,23 @@ TextEditingController promoCodeController=TextEditingController();
 
   void viewCounter() {
     currentStep++;
-    
+
     emit(OrderCounter());
   }
 
   _sendOrderData(OrderEvent events, Emitter emit) async {
     emit(OrderLoading());
     try {
-      List<double> picupCoordinates=await LocationHandler.getLocationFromAddress(location: orderRecieveLocationController.text);
-      List<double> deliveryCoordinates=await LocationHandler.getLocationFromAddress(location: orderRecieveLocationController.text);
-      
+      List<double> picupCoordinates =
+          await LocationHandler.getLocationFromAddress(
+              location: orderRecieveLocationController.text);
+      List<double> deliveryCoordinates =
+          await LocationHandler.getLocationFromAddress(
+              location: orderSendLocationController.text);
+      log('picupCoordinates:${picupCoordinates[0]}');
+      log('picupCoordinates:${picupCoordinates[1]}');
+      log('deliveryCoordinates:${deliveryCoordinates[0]}');
+      log('deliveryCoordinates:${deliveryCoordinates[1]}');
       Map<String, dynamic> data = {
         "carType": carIndex,
         "shipmentType": orderTypeIndex,
@@ -137,18 +143,18 @@ TextEditingController promoCodeController=TextEditingController();
         "deleviryFloor": int.parse(orderSendFloorController.text),
         "elevatorAvilabel": elevatorAvilabelIndex,
         "extramanAvilabel": extramanAvilabelIndex,
-        'uploadaAndDownloadServices':orderDetailsTypeIndex,
-        'pickupLat':picupCoordinates[0],
-        'pickupLong':picupCoordinates[1],
-        'deleviryLat':deliveryCoordinates[0],
-        'deleviryLong':deliveryCoordinates[1],
+        'uploadaAndDownloadServices': orderDetailsTypeIndex,
+        'pickupLat': picupCoordinates[0],
+        'pickupLong': picupCoordinates[1],
+        'deleviryLat': deliveryCoordinates[0],
+        'deleviryLong': deliveryCoordinates[1],
         "pickupLocation": orderRecieveLocationController.text,
         // To Do : check loop for images
         "deleviryLocation": orderSendLocationController.text,
       };
 
-      _orderDataModel = await _sendOrderDataRepo.sendOrderRequest(data);
-      log('_sendOrderDataModel: $_orderDataModel');
+      orderDataModel = await _sendOrderDataRepo.sendOrderRequest(data);
+      log('_sendOrderDataModel: $orderDataModel');
       viewCounter();
       /* AppRoutes.pushNamedNavigator(
         routeName: Routes.payment, /*  replacement: true */
@@ -164,7 +170,7 @@ TextEditingController promoCodeController=TextEditingController();
     try {
       Map<String, dynamic> data = {};
       data = {
-        "order_id": _orderDataModel.orderId.toString(),
+        "order_id": orderDataModel.orderId.toString(),
       };
       for (int i = 0; i < imagesList.length; i++) {
         //  data['images[$i]'] = imagesList[i];
@@ -176,7 +182,7 @@ TextEditingController promoCodeController=TextEditingController();
 
       log('messages: ${data.toString()}');
       // data['order_id'] = _sendOrderDataModel.orderId;
-      _orderDataModel =
+      orderDataModel =
           await _sendOrderDataRepo.sendImagesRequest(FormData.fromMap(data));
       /* log('_sendOrderDataModel: $_sendOrderDataModel'); */
       log('send images success');
@@ -195,16 +201,15 @@ TextEditingController promoCodeController=TextEditingController();
     try {
       Map<String, dynamic> data = {};
       data = {
-        "order_id": _orderDataModel.orderId,
+        "order_id": orderDataModel.orderId,
       };
       log('submit data: ${data.toString()}');
-      _orderSubmitModel =
-          await _sendOrderDataRepo.sendSubmitRequest(data);
-
+      _orderSubmitModel = await _sendOrderDataRepo.sendSubmitRequest(data);
+      AppRoutes.pushNamedNavigator(routeName: Routes.clientNavBar);
       log('send images success');
-      AppRoutes.pushNamedNavigator(
+      /* AppRoutes.pushNamedNavigator(
         routeName: Routes.payment, /*  replacement: true */
-      );
+      ); */
       emit(OrderLoaded());
     } catch (e) {
       emit(OrderError('order Submit bloc error:$e'));

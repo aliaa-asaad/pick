@@ -22,7 +22,8 @@ abstract class Routes {
   static const String orderConfirm = "/order_confirm";
   static const String orderDetails = "/order_details";
   static const String driverOrderStatus = "/driver_order_status";
-  static const String payment = "/payment";
+  static const String egPaymentMethods = "/eg_payment_methods";
+  static const String egPaymentCode = "/eg_payment_code";
   static const String editProfile = "/edit_profile";
   static const String bills = "/bills";
   static const String about = "/about";

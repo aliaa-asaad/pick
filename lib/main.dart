@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pick_up/config/end_points.dart';
-import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/login_bloc/login_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/otp_bloc/otp_bloc.dart';
@@ -15,13 +14,13 @@ import 'package:pick_up/features/auth/data/view_model/register_bloc/register_blo
 import 'package:pick_up/features/chat/data/view_model/cubit/chat_cubit.dart';
 import 'package:pick_up/features/client_home/data/view_model/cubit/home_cubit.dart';
 import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
-import 'package:pick_up/features/nav_bar/client_nav_bar.dart';
 import 'package:pick_up/features/notification/data/view_model/cubit/notification_cubit.dart';
 import 'package:pick_up/features/on_boarding/view/screens/check_country_screen.dart';
-import 'package:pick_up/features/on_boarding/view/screens/on_boarding.dart';
+import 'package:pick_up/features/on_boarding/view/screens/check_screen.dart';
 import 'package:pick_up/features/order/data/view_model/bloc/order_bloc.dart';
+import 'package:pick_up/features/payment/data/view_model/bloc/payment_bloc.dart';
+import 'package:pick_up/features/payment/presentation/screens/eg_payment_methods_screen.dart';
 import 'package:pick_up/features/profile/data/view_model/bloc/profile_bloc.dart';
-import 'package:pick_up/features/splash/view/splash_screen.dart';
 import 'package:pick_up/handlers/localization.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/network/web_services.dart';
@@ -92,7 +91,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ChatCubit()..getChats(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => PaymentBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -111,7 +113,7 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: const [Locale("ar")],
         locale: const Locale("ar"),
-        home: const OnBoardingScreen(),
+        home: const CheckCountryScreen(),
       ),
     );
   }

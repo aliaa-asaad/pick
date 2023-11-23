@@ -16,7 +16,8 @@ import 'package:pick_up/features/on_boarding/view/screens/check_country_screen.d
 import 'package:pick_up/features/on_boarding/view/screens/check_screen.dart';
 import 'package:pick_up/features/on_boarding/view/screens/on_boarding.dart';
 import 'package:pick_up/features/order/presentation/screens/order_screen.dart';
-import 'package:pick_up/features/payment/presentation/screens/payment_screen.dart';
+import 'package:pick_up/features/payment/presentation/screens/eg_payment_code_screen.dart';
+import 'package:pick_up/features/payment/presentation/screens/eg_payment_methods_screen.dart';
 import 'package:pick_up/features/profile/presentation/screens/about_screen.dart';
 import 'package:pick_up/features/profile/presentation/screens/bills_screen.dart';
 import 'package:pick_up/features/profile/presentation/screens/call_center_screen.dart';
@@ -45,7 +46,7 @@ class AppRoutes {
         return AppRoutes.aniamtedNavigation(screen: const AuthScreen());
       case Routes.check:
         return AppRoutes.aniamtedNavigation(screen: const CheckScreen());
-        case Routes.checkCountry:
+      case Routes.checkCountry:
         return AppRoutes.aniamtedNavigation(screen: const CheckCountryScreen());
       case Routes.login:
         return AppRoutes.aniamtedNavigation(screen: const LoginScreen());
@@ -79,8 +80,15 @@ class AppRoutes {
                 orderModel: settings.arguments as Orders));
       case Routes.notification:
         return AppRoutes.aniamtedNavigation(screen: const NotificationScreen());
-      case Routes.payment:
-        return AppRoutes.aniamtedNavigation(screen: const PaymentScreen());
+
+      case Routes.egPaymentMethods:
+        return AppRoutes.aniamtedNavigation(
+            screen: EGPaymentMethodsScreen(
+          orderId: settings.arguments as int,
+        ));
+      case Routes.egPaymentCode:
+        return AppRoutes.aniamtedNavigation(
+            screen: const EGPAymentCodeScreen());
       case Routes.editProfile:
         return AppRoutes.aniamtedNavigation(screen: const EditProfileScreen());
       case Routes.bills:

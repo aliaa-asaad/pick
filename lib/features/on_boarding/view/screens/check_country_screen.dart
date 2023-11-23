@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:pick_up/config/end_points.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,11 +30,11 @@ class _CheckCountryScreenState extends State<CheckCountryScreen> {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> content = [
       {
-        'image': AppImages.egyptFlag,
+        'image': AppImages.saudiFlag,
       },
       {
-        'image': AppImages.saudiFlag,
-      }
+        'image': AppImages.egyptFlag,
+      },
     ];
 
     return Scaffold(
@@ -88,6 +89,7 @@ class _CheckCountryScreenState extends State<CheckCountryScreen> {
                               onTap: () {
                                 setState(() {
                                   _selectedIndex = index;
+                                  log('selsected$_selectedIndex');
                                   AuthBloc.instance.countryType =
                                       _selectedIndex;
                                   /* SharedHandler.instance!.setData(
@@ -95,8 +97,6 @@ class _CheckCountryScreenState extends State<CheckCountryScreen> {
                                       value: AuthBloc.instance.type); */
                                   AuthBloc.instance
                                       .add(ChooseCountryTypeClick());
-                                  log('country type= ${AuthBloc.instance.countryType}');
-                                  log('country shared= ${SharedHandler.instance!.getData(key: SharedKeys().countryType, valueType: ValueType.int)}');
                                 });
                               },
                             ),

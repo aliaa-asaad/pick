@@ -47,14 +47,14 @@ mixin Validations {
       return "الرجاء ادخال رقم الجوال";
     } else if (SharedHandler.instance!.getData(
                 key: SharedKeys().countryType, valueType: ValueType.int) ==
-            0 &&
+            1 &&
         phone.length < 11) {
       return "رقم الجوال يجب ان يتكون من 11 رقم";
     }
     else if (SharedHandler.instance!.getData(
                 key: SharedKeys().countryType, valueType: ValueType.int) ==
-            1 &&
-        phone.length < 11){
+            0 &&
+        phone.length < 14){
       return "رقم الجوال يجب ان يتكون من 14 ارقام";
     }
     return null;

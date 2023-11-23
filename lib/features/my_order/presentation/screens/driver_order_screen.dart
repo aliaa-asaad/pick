@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pick_up/features/my_order/data/view_model/bloc/my_order_bloc.dart';
 import 'package:pick_up/features/my_order/presentation/widgets/default_tab_bar.dart';
 import 'package:pick_up/features/my_order/presentation/widgets/order_status_card.dart';
+import 'package:pick_up/features/payment/data/view_model/bloc/payment_bloc.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
@@ -91,10 +92,12 @@ class _DriverOrderScreenState extends State<DriverOrderScreen>
                                   '0'
                               ? Center(
                                   child: Padding(
-                                    padding:  EdgeInsets.all(8.0.r),
+                                    padding: EdgeInsets.all(8.0.r),
                                     child: Text(
-                                        'بالرجاء الذهاب الي الحساب الشخصي واضافة بالبيانات المطلوبة',
-                                        style: TextStyleHelper.subtitle17,textAlign: TextAlign.center,),
+                                      'بالرجاء الذهاب الي الحساب الشخصي واضافة بالبيانات المطلوبة',
+                                      style: TextStyleHelper.subtitle17,
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 )
                               : MyOrderBloc.instance.allOrdersModel.isNotEmpty

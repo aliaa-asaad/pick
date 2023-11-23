@@ -1,7 +1,7 @@
 class OrderDataModel {
   String? message;
   int? orderId;
-  int? price;
+  num? price;
   OrderDataModel({this.message, this.orderId});
 
   OrderDataModel.fromJson(Map<String, dynamic> json) {
