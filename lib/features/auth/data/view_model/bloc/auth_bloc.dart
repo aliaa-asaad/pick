@@ -12,6 +12,7 @@ import 'package:pick_up/features/auth/data/view_model/otp_bloc/otp_bloc.dart';
 import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
+import 'package:pusher_beams/pusher_beams.dart';
 
 part 'auth_state.dart';
 
@@ -243,6 +244,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   _logout(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
+         await PusherBeams.instance.clearAllState();
       SharedHandler.instance!.clear(keys: [
         SharedKeys().driver,
         SharedKeys().user,

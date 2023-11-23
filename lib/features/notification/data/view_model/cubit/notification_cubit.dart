@@ -22,12 +22,15 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> getPusherBeams() async {
     try {
       emit(NotificationLoading());
-      await PusherBeams.instance.clearAllState();
+      // await PusherBeams.instance.clearAllState();
 
       await PusherBeams.instance.start(ApiNames.instanceID);
+
       if (AuthBloc.instance.type == 0) {
-        await PusherBeams.instance.setDeviceInterests(['user']);
+        log("users");
+        await PusherBeams.instance.setDeviceInterests(['client']);
       } else {
+        log('driver');
         await PusherBeams.instance.setDeviceInterests(['driver']);
       }
 

@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Container(
                 // padding: EdgeInsets.all(8.r),
-                height: MediaQueryHelper.height * 0.22,
+                height: 150,
                 width: MediaQueryHelper.width,
                 decoration: BoxDecoration(
                   borderRadius:
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                           if (state is HomeLoaded) {
                             return SizedBox(
-                              height: MediaQueryHelper.height * .2,
+                              height: MediaQueryHelper.height * .17,
                               width: MediaQueryHelper.width,
                               child: PageView.builder(
                                 controller: _pageController,
@@ -178,9 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const Text('null');
                         },
                       ),
-                      SizedBox(
-                        height: MediaQueryHelper.height * .01,
-                      ),
+                     /*  SizedBox(
+                        height: MediaQueryHelper.height * .005,
+                      ), */
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
