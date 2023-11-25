@@ -126,7 +126,7 @@ class _EGPAymentCodeScreenState extends State<EGPAymentCodeScreen> {
                       ),
                       child: Text(PaymentBloc.instance.qrCode),
                     ),
-                    const SizedBox(
+                   /*  const SizedBox(
                       height: 24.0,
                     ),
                     Row(
@@ -145,7 +145,7 @@ class _EGPAymentCodeScreenState extends State<EGPAymentCodeScreen> {
                           child: const Text('نسخ الكود'),
                         )
                       ],
-                    )
+                    ) */
                   ]),
             );
           },
