@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pick_up/config/end_points.dart';
+import 'package:pick_up/core/driver_model.dart';
 import 'package:pick_up/core/user_model.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/model/auth_repo.dart';
@@ -32,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       BlocProvider.of(AppRoutes.navigatorState.currentContext!);
   final AuthRepo _authRepo = AuthRepo();
   UserModel userModel = UserModel();
+  DriverModel driverModel = DriverModel();
   // late EmailVerifiactionModel _emailVerifiactionModel;
   late ForgetPasswordModel _forgetPasswordModel;
   int type = -1;
@@ -163,7 +165,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     emit(AuthLoading());
     try {
       Map<String, dynamic> data = {
-        'email': phoneController.text,
+        'phoneNumber': phoneController.text,
         'type': type,
       };
       log(data.toString());
@@ -190,7 +192,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
     try {
       /* if (_resetPasswordValidation()) { */
       Map<String, dynamic> data = {
-        'email': phoneController.text,
+        'phoneNumber': phoneController.text,
         'otp': [
           OTPBloc.instance.codeController1.text,
           OTPBloc.instance.codeController2.text,
@@ -201,9 +203,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
         "type": SharedHandler.instance!
             .getData(key: SharedKeys().userType, valueType: ValueType.int)
       };
-      userModel = await _authRepo.resetPasswordRequest(data);
+      /* userModel = await _authRepo.resetPasswordRequest(data);
       await SharedHandler.instance!
-          .setData(SharedKeys().user, value: userModel.client!.toJson());
+          .setData(SharedKeys().user, value: userModel.client!.toJson()); */
+      if (SharedHandler.instance!
+              .getData(key: SharedKeys().userType, valueType: ValueType.int) ==
+          0) {
+        userModel = await _authRepo.resetPasswordRequest(data);
+        SharedHandler.instance!
+            .setData(SharedKeys().user, value: userModel.client!.toJson());
+        SharedHandler.instance!
+            .setData(SharedKeys().token, value: userModel.authToken);
+        log('client login token: ${userModel.authToken}');
+        log('userModel: ${userModel.toString()}');
+      } else {
+        driverModel = await _authRepo.resetPasswordRequest(data);
+        SharedHandler.instance!
+            .setData(SharedKeys().driver, value: driverModel.client!.toJson());
+        SharedHandler.instance!
+            .setData(SharedKeys().token, value: driverModel.authToken);
+        log('driver login token: ${driverModel.authToken}');
+        log('driver login name: ${driverModel.client!.fullName}');
+        log('driver: ${driverModel.toString()}');
+      }
+
       await SharedHandler.instance!.setData(SharedKeys().isLogin, value: true);
       await SharedHandler.instance!
           .setData(SharedKeys().isNotFirstTime, value: true);
@@ -244,7 +267,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
   _logout(AuthEvent events, Emitter emit) async {
     emit(AuthLoading());
     try {
-      await PusherBeams.instance.clearAllState();
+      //await PusherBeams.instance.clearAllState();
       SharedHandler.instance!.clear(keys: [
         SharedKeys().driver,
         SharedKeys().user,
@@ -264,7 +287,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with Validations {
       type = -1;
       isForgetPassword = false;
       AppRoutes.pushNamedNavigator(
-          routeName: Routes.check, replacementAll: true);
+          routeName: Routes.checkCountry, replacementAll: true);
     } catch (e) {
       log('logout error :${e.toString()}');
       emit(AuthError());

@@ -64,7 +64,11 @@ class OTPBloc extends Bloc<OTPEvent, OTPState> with Validations {
     emit(OTPLoading());
     try {
       Map<String, dynamic> data = {
-        'phoneNumber': LoginBloc.instance.phoneNumberController.text.isNotEmpty
+        
+           
+        'phoneNumber': AuthBloc.instance.phoneController.text.isNotEmpty?
+        AuthBloc.instance.phoneController.text:
+        LoginBloc.instance.phoneNumberController.text.isNotEmpty
             ? LoginBloc.instance.phoneNumberController.text
             : RegisterBloc.instance.phoneNumberController.text,
         'otp': [

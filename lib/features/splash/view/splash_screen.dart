@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       routeName: Routes.driverNavBar, replacement: true);
             } else {
               AppRoutes.pushNamedNavigator(
-                  routeName: Routes.check, replacement: true);
+                  routeName: Routes.checkCountry, replacement: true);
             }
            
           } else {

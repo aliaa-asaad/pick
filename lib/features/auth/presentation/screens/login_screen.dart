@@ -8,6 +8,7 @@ import 'package:pick_up/app_widgets/custom_form_field.dart';
 import 'package:pick_up/core/validator.dart';
 import 'package:pick_up/features/auth/data/view_model/bloc/auth_bloc.dart';
 import 'package:pick_up/features/auth/data/view_model/login_bloc/login_bloc.dart';
+import 'package:pick_up/handlers/shared_handler.dart';
 import 'package:pick_up/routing/navigator.dart';
 import 'package:pick_up/routing/routes.dart';
 import 'package:pick_up/utilities/images.dart';
@@ -28,7 +29,8 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        iconTheme: IconTheme.of(context).copyWith(color: Colors.black,size: 17.r),
+        iconTheme:
+            IconTheme.of(context).copyWith(color: Colors.black, size: 17.r),
         elevation: 0.0,
       ),
       body: SafeArea(
@@ -86,21 +88,27 @@ class _LoginScreenState extends State<LoginScreen> with Validations {
                     SizedBox(
                       height: MediaQueryHelper.height * .02,
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton(
-                        onPressed: () {
-                          AuthBloc.instance.isForgetPassword = true;
-                          AppRoutes.pushNamedNavigator(
-                              routeName: Routes.forgetPassword);
-                        },
-                        child: Text(
-                          'هل نسيت كلمة المرور؟',
-                          style: TextStyleHelper.body15.copyWith(
-                              color: Theme.of(context).colorScheme.primary),
-                        ),
-                      ),
-                    ),
+                    SharedHandler.instance!.getData(
+                                key: SharedKeys().countryType,
+                                valueType: ValueType.int) ==
+                            0
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton(
+                              onPressed: () {
+                                AuthBloc.instance.isForgetPassword = true;
+                                AppRoutes.pushNamedNavigator(
+                                    routeName: Routes.forgetPassword);
+                              },
+                              child: Text(
+                                'هل نسيت كلمة المرور؟',
+                                style: TextStyleHelper.body15.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
                     // if (state is loginLoaded) {
                     CustomButton(
                       width: state is LoginLoading
